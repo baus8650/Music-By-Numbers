@@ -7,22 +7,26 @@
 
 import UIKit
 
+@IBDesignable
 class PCCircle: UIView {
 
+    @IBInspectable var setShape = [0,1,4] {
+        didSet{
+            
+            self.setNeedsDisplay()
+            
+        }
+    }
     
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         
+        
         let PCCircleFrame = CGRect(
-            x: 13.0 / 2,
-            y: 13.0 / 2,
-            width: bounds.width - 13.0,
-            height: bounds.height - 13.0)
+            x: 63.0 / 2,
+            y: 63.0 / 2,
+            width: bounds.width - 63.0,
+            height: bounds.height - 63.0)
 
-//        let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-//        let radius = max(bounds.width - 40 / 2, bounds.height - 40 / 2)
-//        let smallRect = CGRect(x: 0.0, y: 0.0, width: bounds.width - 40, height: bounds.height - 40)
         let path = UIBezierPath(ovalIn: PCCircleFrame)
 
 
@@ -32,34 +36,41 @@ class PCCircle: UIView {
         let points = getCirclePoints(centerPoint: CGPoint(x: PCCircleFrame.width / 2, y: PCCircleFrame.height / 2), radius: PCCircleFrame.width / 2, n: 12)
         
         path.stroke()
+        let set = UIBezierPath()
+        
+        drawSetShape(points: points, set: self.setShape)
         
         for i in 0..<points.count {
             var point = CGPoint(x: points[i].x, y: points[i].y)
-            point.x += 2
-            point.y += 2
+            point.x += 27
+            point.y += 27
             
             let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize( width: 10.0, height: 10.0)))
             circle.lineWidth = 2
-//            circle.stroke()
-//            UIColor.white.setFill()
             circle.fill()
         }
         
-        let set = UIBezierPath()
+    }
+    
+    func drawSetShape(points: [CGPoint], set: [Int]) {
+        let setShape = UIBezierPath()
         
-        set.move(to: CGPoint(x: points[9].x + 5, y: points[9].y + 5))
-        set.addLine(to: CGPoint(x: points[10].x + 5, y: points[10].y + 5))
-        set.addLine(to: CGPoint(x: points[1].x + 5, y: points[1].y + 5))
-        set.addLine(to: CGPoint(x: points[9].x + 5, y: points[9].y + 5))
-        
-        set.stroke()
-        
-        
+        if set != [Int]() {
+            setShape.move(to: CGPoint(x: points[set[0]].x + 32, y: points[set[0]].y + 32))
+            for i in 1..<set.count {
+                setShape.addLine(to: CGPoint(x: points[set[i]].x + 32, y: points[set[i]].y + 32))
+            }
+            setShape.addLine(to: CGPoint(x: points[set[0]].x + 32, y: points[set[0]].y + 32))
+            UIColor.blue.setStroke()
+            setShape.stroke()
+        } else {
+            setShape.move(to: CGPoint(x: points[0].x + 32, y: points[0].y + 32))
+        }
     }
     
     func getCirclePoints(centerPoint point: CGPoint, radius: CGFloat, n: Int)->[CGPoint] {
         
-        let result: [CGPoint] = stride(from: 0.0, to: 360.0, by: Double(360 / n)).map {
+        let result: [CGPoint] = stride(from: 270.0, to: 630.0, by: Double(360 / n)).map {
             
             let bearing = CGFloat($0) * .pi / 180
             let x = point.x + radius * cos(bearing)
@@ -68,6 +79,7 @@ class PCCircle: UIView {
         }
         return result
     }
+    
     
     
 }

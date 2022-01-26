@@ -24,9 +24,7 @@
 		22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C49A279D39E7008FFE82 /* SetViewModel.swift */; };
 		22E5C49E279D3A31008FFE82 /* SetClasses.json in Resources */ = {isa = PBXBuildFile; fileRef = 22E5C49D279D3A31008FFE82 /* SetClasses.json */; };
 		22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C49F279E1F89008FFE82 /* Set.swift */; };
-		22E5C4A3279E21D3008FFE82 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 22E5C4A2279E21D3008FFE82 /* Charts */; };
 		22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C4A4279E29C0008FFE82 /* SetViewController.swift */; };
-		22E5C4A7279E3BAA008FFE82 /* SetGraphLabelFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C4A6279E3BAA008FFE82 /* SetGraphLabelFormatter.swift */; };
 		22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +49,6 @@
 		22E5C49D279D3A31008FFE82 /* SetClasses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SetClasses.json; sourceTree = "<group>"; };
 		22E5C49F279E1F89008FFE82 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		22E5C4A4279E29C0008FFE82 /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
-		22E5C4A6279E3BAA008FFE82 /* SetGraphLabelFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGraphLabelFormatter.swift; sourceTree = "<group>"; };
 		22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCCircle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,7 +57,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22E5C4A3279E21D3008FFE82 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +133,6 @@
 		22E5C499279D39D1008FFE82 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				22E5C4A6279E3BAA008FFE82 /* SetGraphLabelFormatter.swift */,
 				22E5C49A279D39E7008FFE82 /* SetViewModel.swift */,
 			);
 			path = "View Models";
@@ -168,7 +163,6 @@
 			);
 			name = "Music By Numbers";
 			packageProductDependencies = (
-				22E5C4A2279E21D3008FFE82 /* Charts */,
 			);
 			productName = "Music By Numbers";
 			productReference = 22B94F5D2739E211002F66A0 /* Music By Numbers.app */;
@@ -199,7 +193,6 @@
 			);
 			mainGroup = 22B94F542739E211002F66A0;
 			packageReferences = (
-				22E5C4A1279E21D3008FFE82 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 22B94F5E2739E211002F66A0 /* Products */;
 			projectDirPath = "";
@@ -239,7 +232,6 @@
 				22B94F752739F447002F66A0 /* CollectionViewCell.swift in Sources */,
 				22B29D1A279A7E77006776F7 /* PCollectionViewCell.swift in Sources */,
 				22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */,
-				22E5C4A7279E3BAA008FFE82 /* SetGraphLabelFormatter.swift in Sources */,
 				22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */,
 				22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */,
 				22B29D24279A8AB2006776F7 /* CustomCollectionViewLayout.swift in Sources */,
@@ -464,25 +456,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		22E5C4A1279E21D3008FFE82 /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielgindi/Charts.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		22E5C4A2279E21D3008FFE82 /* Charts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 22E5C4A1279E21D3008FFE82 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = Charts;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 22B94F552739E211002F66A0 /* Project object */;
 }

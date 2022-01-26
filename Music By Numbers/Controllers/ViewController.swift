@@ -17,21 +17,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var normalForm: [Int]?
     var primeForm: [Int]?
     
-//    var userRow = Row(row: [["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""],
-//                            ["","","","","","","","","","","","","",""]])
-    
     var userRow = Row(row: [[]])
     
     var matrixRow = [[String]]()
@@ -52,9 +37,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBAction func generateSet(_ sender: Any) {
         setViewModel = SetViewModel()
         normalForm = setViewModel?.findNormalForm(pcSet: selectedCells)
-        primeForm = setViewModel?.findPrimeForm(normalForm: selectedCells)
-//        print(setViewModel?.findNormalForm(pcSet: selectedCells))
-//        print(setViewModel?.findPrimeForm(normalForm: selectedCells))
+        primeForm = setViewModel?.findNormalForm(pcSet: (setViewModel?.findPrimeForm(normalForm: selectedCells))!)
+
     }
     
     @objc func handleTap() {
@@ -66,18 +50,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         collectionView.delegate = self
         collectionView.dataSource = self
 //        collectionView.layer.borderWidth = 1
+//        rowTextField.text! = "02468t13579e"
+        generateMatrix(rowString: "02468t13579e")
+        
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
               flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
             }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        selectedCells = [Int]()
+        collectionView.reloadData()
+    }
+    
     @IBAction func generatePressed(_ sender: UIButton) {
+        generateMatrix(rowString: rowTextField.text!)
+    }
+    
+    func generateMatrix(rowString: String) {
         userRow.row = [[]]
         matrixRow = [[String]]()
         var normalizedRow: [Int] = []
         var invertedRow: [Int] = []
         
-        let rowArray = rowTextField.text!.map(String.init)
+        let rowArray = rowString.map(String.init)
         let rowSet = Set(rowArray)
         if rowSet.count < rowArray.count {
 //        if rowArray.count < 12 || rowSet.count < 12 {
@@ -204,7 +200,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             if indexPath.row == 0 {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PCollectionViewCell", for: indexPath) as! PCollectionViewCell
                 cell.labelLabel.attributedText = setBaseline(for: "P\(userRow.row[indexPath.section][indexPath.row])", location: 1, length: prLabels[indexPath.section - 1].count)
-//                print("FROM P CELL \(prLabels[indexPath.section])")
+
                 cell.backgroundColor = UIColor(named: "default")
                 return cell
             } else if indexPath.row == userRow.row[0].count - 1 {
@@ -228,7 +224,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
         cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
         selectedCells.append(Int(cell.cellLabel.text!)!)
-        print(selectedCells)
+//        print(selectedCells)
     }
     // MARK: - FLOW LAYOUT METHOD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -248,6 +244,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             if let setVC = segue.destination as? SetViewController {
                 setVC.normalForm = self.normalForm
                 setVC.primeForm = self.primeForm
+                setVC.workingSet = self.normalForm!
             }
         }
     }
