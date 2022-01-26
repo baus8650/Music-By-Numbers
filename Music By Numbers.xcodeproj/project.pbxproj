@@ -7,15 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22B29D1A279A7E77006776F7 /* PCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D19279A7E77006776F7 /* PCollectionViewCell.swift */; };
+		22B29D1C279A7E8C006776F7 /* RCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1B279A7E8C006776F7 /* RCollectionViewCell.swift */; };
+		22B29D1E279A7E91006776F7 /* ICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */; };
+		22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */; };
+		22B29D22279A7EEA006776F7 /* BlankCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D21279A7EEA006776F7 /* BlankCollectionViewCell.swift */; };
+		22B29D24279A8AB2006776F7 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D23279A8AB2006776F7 /* CustomCollectionViewLayout.swift */; };
 		22B94F612739E211002F66A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F602739E211002F66A0 /* AppDelegate.swift */; };
 		22B94F632739E211002F66A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F622739E211002F66A0 /* SceneDelegate.swift */; };
 		22B94F652739E211002F66A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F642739E211002F66A0 /* ViewController.swift */; };
 		22B94F682739E211002F66A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22B94F662739E211002F66A0 /* Main.storyboard */; };
 		22B94F6A2739E212002F66A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22B94F692739E212002F66A0 /* Assets.xcassets */; };
 		22B94F6D2739E212002F66A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22B94F6B2739E212002F66A0 /* LaunchScreen.storyboard */; };
+		22B94F752739F447002F66A0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F742739F447002F66A0 /* CollectionViewCell.swift */; };
+		22B94F7A273B71D9002F66A0 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F79273B71D9002F66A0 /* Row.swift */; };
+		22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C49A279D39E7008FFE82 /* SetViewModel.swift */; };
+		22E5C49E279D3A31008FFE82 /* SetClasses.json in Resources */ = {isa = PBXBuildFile; fileRef = 22E5C49D279D3A31008FFE82 /* SetClasses.json */; };
+		22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C49F279E1F89008FFE82 /* Set.swift */; };
+		22E5C4A3279E21D3008FFE82 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 22E5C4A2279E21D3008FFE82 /* Charts */; };
+		22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C4A4279E29C0008FFE82 /* SetViewController.swift */; };
+		22E5C4A7279E3BAA008FFE82 /* SetGraphLabelFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C4A6279E3BAA008FFE82 /* SetGraphLabelFormatter.swift */; };
+		22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22B29D19279A7E77006776F7 /* PCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCollectionViewCell.swift; sourceTree = "<group>"; };
+		22B29D1B279A7E8C006776F7 /* RCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCollectionViewCell.swift; sourceTree = "<group>"; };
+		22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICollectionViewCell.swift; sourceTree = "<group>"; };
+		22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RICollectionViewCell.swift; sourceTree = "<group>"; };
+		22B29D21279A7EEA006776F7 /* BlankCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankCollectionViewCell.swift; sourceTree = "<group>"; };
+		22B29D23279A8AB2006776F7 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
 		22B94F5D2739E211002F66A0 /* Music By Numbers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Music By Numbers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B94F602739E211002F66A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22B94F622739E211002F66A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +45,14 @@
 		22B94F692739E212002F66A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22B94F6C2739E212002F66A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22B94F6E2739E212002F66A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22B94F742739F447002F66A0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		22B94F79273B71D9002F66A0 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		22E5C49A279D39E7008FFE82 /* SetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModel.swift; sourceTree = "<group>"; };
+		22E5C49D279D3A31008FFE82 /* SetClasses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SetClasses.json; sourceTree = "<group>"; };
+		22E5C49F279E1F89008FFE82 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		22E5C4A4279E29C0008FFE82 /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
+		22E5C4A6279E3BAA008FFE82 /* SetGraphLabelFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGraphLabelFormatter.swift; sourceTree = "<group>"; };
+		22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCCircle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22E5C4A3279E21D3008FFE82 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +86,69 @@
 		22B94F5F2739E211002F66A0 /* Music By Numbers */ = {
 			isa = PBXGroup;
 			children = (
+				22E5C49C279D3A0D008FFE82 /* Resources */,
 				22B94F602739E211002F66A0 /* AppDelegate.swift */,
 				22B94F622739E211002F66A0 /* SceneDelegate.swift */,
-				22B94F642739E211002F66A0 /* ViewController.swift */,
-				22B94F662739E211002F66A0 /* Main.storyboard */,
+				22B94F77273B71B9002F66A0 /* Controllers */,
+				22B94F76273B71B1002F66A0 /* Models */,
+				22E5C499279D39D1008FFE82 /* View Models */,
+				22B94F78273B71C2002F66A0 /* Views */,
 				22B94F692739E212002F66A0 /* Assets.xcassets */,
 				22B94F6B2739E212002F66A0 /* LaunchScreen.storyboard */,
 				22B94F6E2739E212002F66A0 /* Info.plist */,
 			);
 			path = "Music By Numbers";
+			sourceTree = "<group>";
+		};
+		22B94F76273B71B1002F66A0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				22B94F79273B71D9002F66A0 /* Row.swift */,
+				22E5C49F279E1F89008FFE82 /* Set.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		22B94F77273B71B9002F66A0 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				22B94F642739E211002F66A0 /* ViewController.swift */,
+				22E5C4A4279E29C0008FFE82 /* SetViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		22B94F78273B71C2002F66A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				22B94F742739F447002F66A0 /* CollectionViewCell.swift */,
+				22B94F662739E211002F66A0 /* Main.storyboard */,
+				22B29D19279A7E77006776F7 /* PCollectionViewCell.swift */,
+				22B29D21279A7EEA006776F7 /* BlankCollectionViewCell.swift */,
+				22B29D1B279A7E8C006776F7 /* RCollectionViewCell.swift */,
+				22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */,
+				22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */,
+				22B29D23279A8AB2006776F7 /* CustomCollectionViewLayout.swift */,
+				22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		22E5C499279D39D1008FFE82 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				22E5C4A6279E3BAA008FFE82 /* SetGraphLabelFormatter.swift */,
+				22E5C49A279D39E7008FFE82 /* SetViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		22E5C49C279D3A0D008FFE82 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				22E5C49D279D3A31008FFE82 /* SetClasses.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +167,9 @@
 			dependencies = (
 			);
 			name = "Music By Numbers";
+			packageProductDependencies = (
+				22E5C4A2279E21D3008FFE82 /* Charts */,
+			);
 			productName = "Music By Numbers";
 			productReference = 22B94F5D2739E211002F66A0 /* Music By Numbers.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +198,9 @@
 				Base,
 			);
 			mainGroup = 22B94F542739E211002F66A0;
+			packageReferences = (
+				22E5C4A1279E21D3008FFE82 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 22B94F5E2739E211002F66A0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22B94F6D2739E212002F66A0 /* LaunchScreen.storyboard in Resources */,
+				22E5C49E279D3A31008FFE82 /* SetClasses.json in Resources */,
 				22B94F6A2739E212002F66A0 /* Assets.xcassets in Resources */,
 				22B94F682739E211002F66A0 /* Main.storyboard in Resources */,
 			);
@@ -140,7 +231,20 @@
 			files = (
 				22B94F652739E211002F66A0 /* ViewController.swift in Sources */,
 				22B94F612739E211002F66A0 /* AppDelegate.swift in Sources */,
+				22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */,
 				22B94F632739E211002F66A0 /* SceneDelegate.swift in Sources */,
+				22B29D1C279A7E8C006776F7 /* RCollectionViewCell.swift in Sources */,
+				22B29D1E279A7E91006776F7 /* ICollectionViewCell.swift in Sources */,
+				22B94F7A273B71D9002F66A0 /* Row.swift in Sources */,
+				22B94F752739F447002F66A0 /* CollectionViewCell.swift in Sources */,
+				22B29D1A279A7E77006776F7 /* PCollectionViewCell.swift in Sources */,
+				22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */,
+				22E5C4A7279E3BAA008FFE82 /* SetGraphLabelFormatter.swift in Sources */,
+				22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */,
+				22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */,
+				22B29D24279A8AB2006776F7 /* CustomCollectionViewLayout.swift in Sources */,
+				22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */,
+				22B29D22279A7EEA006776F7 /* BlankCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +464,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22E5C4A1279E21D3008FFE82 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22E5C4A2279E21D3008FFE82 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22E5C4A1279E21D3008FFE82 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 22B94F552739E211002F66A0 /* Project object */;
 }

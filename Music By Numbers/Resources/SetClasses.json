@@ -1,0 +1,1378 @@
+
+{
+    {
+        "cardinality": 2,
+        "dyads": [
+            {
+                "primeForm": [0,1],
+                "forteNumber": "2-1",
+                "intervalVector": "<100000>"
+            },
+            
+            {
+                "primeForm": [0,2],
+                "forteNumber": "2-2",
+                "intervalVector": "<010000>"
+            },
+            
+            {
+                "primeForm": [0,3],
+                "forteNumber": "2-3",
+                "intervalVector": "<001000>"
+            },
+            
+            {
+                "primeForm": [0,4],
+                "forteNumber": "2-4",
+                "intervalVector": "<000100>"
+            },
+            
+            {
+                "primeForm": [0,5],
+                "forteNumber": "2-5",
+                "intervalVector": "<000010>"
+            },
+            
+            {
+                "primeForm": [0,6],
+                "forteNumber": "2-6",
+                "intervalVector": "<000001>"
+            }
+        ]
+    },
+    {
+        "cardinality": 3,
+        "trichords": [
+            {
+                "primeForm": [0,1,2],
+                "forteNumber": "3-1",
+                "intervalVector": "<210000>"
+            },
+            
+            {
+                "primeForm": [0,1,3],
+                "forteNumber": "3-2",
+                "intervalVector": "<111000>"
+            },
+            
+            {
+                "primeForm": [0,1,4],
+                "forteNumber": "3-3",
+                "intervalVector": "<101100>"
+            },
+            
+            {
+                "primeForm": [0,1,5],
+                "forteNumber": "3-4",
+                "intervalVector": "<100110>"
+            },
+            
+            {
+                "primeForm": [0,1,6],
+                "forteNumber": "3-5",
+                "intervalVector": "<100011>"
+            },
+            
+            {
+                "primeForm": [0,2,4],
+                "forteNumber": "3-6",
+                "intervalVector": "<020100>"
+            },
+            
+            {
+                "primeForm": [0,2,5],
+                "forteNumber": "3-7",
+                "intervalVector": "<011010>"
+            },
+            
+            {
+                "primeForm": [0,2,6],
+                "forteNumber": "3-8",
+                "intervalVector": "<010101>"
+            },
+            
+            {
+                "primeForm": [0,2,7],
+                "forteNumber": "3-9",
+                "intervalVector": "<010020>"
+            },
+            
+            {
+                "primeForm": [0,3,6],
+                "forteNumber": "3-10",
+                "intervalVector": "<002001>"
+            },
+            
+            {
+                "primeForm": [0,3,7],
+                "forteNumber": "3-11",
+                "intervalVector": "<001110>"
+            },
+            
+            {
+                "primeForm": [0,4,8],
+                "forteNumber": "3-12",
+                "intervalVector": "<000300>"
+            }
+        ]
+    },
+    
+    {
+        "cardinality": 4,
+        "tetrachords": [
+            {
+                "primeForm": [0,1,2,3],
+                "forteNumber": "4-1",
+                "intervalVector": "<321000>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4],
+                "forteNumber": "4-2",
+                "intervalVector": "<221100>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5],
+                "forteNumber": "4-4",
+                "intervalVector": "<211110>"
+            },
+            
+            {
+                "primeForm": [0,1,2,6],
+                "forteNumber": "4-5",
+                "intervalVector": "<210111>"
+            },
+            
+            {
+                "primeForm": [0,1,2,7],
+                "forteNumber": "4-6",
+                "intervalVector": "<210021>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4],
+                "forteNumber": "4-3",
+                "intervalVector": "<212100>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5],
+                "forteNumber": "4-11",
+                "intervalVector": "<121110>"
+            },
+            
+            {
+                "primeForm": [0,1,3,6],
+                "forteNumber": "4-13",
+                "intervalVector": "<112011>"
+            },
+            
+            {
+                "primeForm": [0,1,3,7],
+                "forteNumber": "4-Z29",
+                "intervalVector": "<111111>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5],
+                "forteNumber": "4-7",
+                "intervalVector": "<201210>"
+            },
+            
+            {
+                "primeForm": [0,1,4,6],
+                "forteNumber": "4-Z15",
+                "intervalVector": "<111111>"
+            },
+            
+            {
+                "primeForm": [0,1,4,7],
+                "forteNumber": "4-18",
+                "intervalVector": "<102111>"
+            },
+            
+            {
+                "primeForm": [0,1,4,8],
+                "forteNumber": "4-19",
+                "intervalVector": "<101310>"
+            },
+            
+            {
+                "primeForm": [0,1,5,6],
+                "forteNumber": "4-8",
+                "intervalVector": "<200121>"
+            },
+            
+            {
+                "primeForm": [0,1,5,7],
+                "forteNumber": "4-16",
+                "intervalVector": "<110121>"
+            },
+            
+            {
+                "primeForm": [0,1,5,8],
+                "forteNumber": "4-20",
+                "intervalVector": "<101220>"
+            },
+            
+            {
+                "primeForm": [0,1,6,7],
+                "forteNumber": "4-9",
+                "intervalVector": "<200022>"
+            },
+            
+            {
+                "primeForm": [0,2,3,5],
+                "forteNumber": "4-10",
+                "intervalVector": "<122010>"
+            },
+            
+            {
+                "primeForm": [0,2,3,6],
+                "forteNumber": "4-12",
+                "intervalVector": "<112101>"
+            },
+            
+            {
+                "primeForm": [0,2,3,7],
+                "forteNumber": "4-14",
+                "intervalVector": "<111120>"
+            },
+            
+            {
+                "primeForm": [0,2,4,6],
+                "forteNumber": "4-21",
+                "intervalVector": "<030201>"
+            },
+            
+            {
+                "primeForm": [0,2,4,7],
+                "forteNumber": "4-22",
+                "intervalVector": "<021120>"
+            },
+            
+            {
+                "primeForm": [0,2,4,8],
+                "forteNumber": "4-24",
+                "intervalVector": "<020301>"
+            },
+            
+            {
+                "primeForm": [0,2,5,7],
+                "forteNumber": "4-23",
+                "intervalVector": "<021030>"
+            },
+            
+            {
+                "primeForm": [0,2,5,8],
+                "forteNumber": "4-27",
+                "intervalVector": "<012111>"
+            },
+            
+            {
+                "primeForm": [0,2,6,8],
+                "forteNumber": "4-25",
+                "intervalVector": "<020202>"
+            },
+            
+            {
+                "primeForm": [0,3,4,7],
+                "forteNumber": "4-17",
+                "intervalVector": "<102210>"
+            },
+            
+            {
+                "primeForm": [0,3,5,8],
+                "forteNumber": "4-26",
+                "intervalVector": "<012120>"
+            },
+            
+            {
+                "primeForm": [0,3,6,9],
+                "forteNumber": "4-28",
+                "intervalVector": "<004002>"
+            }
+        ]
+    },
+    
+    {
+        "cardinality": 5,
+        "pentachords": [
+            {
+                "primeForm": [0,1,2,3,4],
+                "forteNumber": "5-1",
+                "intervalVector": "<432100>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5],
+                "forteNumber": "5-2",
+                "intervalVector": "<332110>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6],
+                "forteNumber": "5-4",
+                "intervalVector": "<322111>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,7],
+                "forteNumber": "5-5",
+                "intervalVector": "<321121>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5],
+                "forteNumber": "5-3",
+                "intervalVector": "<322210>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6],
+                "forteNumber": "5-9",
+                "intervalVector": "<231211>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,7],
+                "forteNumber": "5-Z36",
+                "intervalVector": "<222121>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,8],
+                "forteNumber": "5-13",
+                "intervalVector": "<221311>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,6],
+                "forteNumber": "5-6",
+                "intervalVector": "<311221>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,7],
+                "forteNumber": "5-14",
+                "intervalVector": "<221131>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,8],
+                "forteNumber": "5-Z38",
+                "intervalVector": "<212221>"
+            },
+            
+            {
+                "primeForm": [0,1,2,6,7],
+                "forteNumber": "5-7",
+                "intervalVector": "<310132>"
+            },
+            
+            {
+                "primeForm": [0,1,2,6,8],
+                "forteNumber": "5-15",
+                "intervalVector": "<220222>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6],
+                "forteNumber": "5-10",
+                "intervalVector": "<223111>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,7],
+                "forteNumber": "5-16",
+                "intervalVector": "<213211>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,8],
+                "forteNumber": "5-Z17",
+                "intervalVector": "<212320>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,6],
+                "forteNumber": "5-Z12",
+                "intervalVector": "<222121>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,7],
+                "forteNumber": "5-24",
+                "intervalVector": "<131221>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,8],
+                "forteNumber": "5-27",
+                "intervalVector": "<122230>"
+            },
+            
+            {
+                "primeForm": [0,1,3,6,7],
+                "forteNumber": "5-19",
+                "intervalVector": "<212122>"
+            },
+            
+            {
+                "primeForm": [0,1,3,6,8],
+                "forteNumber": "5-29",
+                "intervalVector": "<122131>"
+            },
+            
+            {
+                "primeForm": [0,1,3,6,9],
+                "forteNumber": "5-31",
+                "intervalVector": "<114112>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5,7],
+                "forteNumber": "5-Z18",
+                "intervalVector": "<212221>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5,8],
+                "forteNumber": "5-21",
+                "intervalVector": "<202420>"
+            },
+            
+            {
+                "primeForm": [0,1,4,6,8],
+                "forteNumber": "5-30",
+                "intervalVector": "<121321>"
+            },
+            
+            {
+                "primeForm": [0,1,4,6,9],
+                "forteNumber": "5-32",
+                "intervalVector": "<113221>"
+            },
+            
+            {
+                "primeForm": [0,1,4,7,8],
+                "forteNumber": "5-22",
+                "intervalVector": "<202321>"
+            },
+            
+            {
+                "primeForm": [0,1,5,6,8],
+                "forteNumber": "5-20",
+                "intervalVector": "<211231>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,6],
+                "forteNumber": "5-8",
+                "intervalVector": "<232201>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,7],
+                "forteNumber": "5-11",
+                "intervalVector": "<222220>"
+            },
+            
+            {
+                "primeForm": [0,2,3,5,7],
+                "forteNumber": "5-23",
+                "intervalVector": "<132130>"
+            },
+            
+            {
+                "primeForm": [0,2,3,5,8],
+                "forteNumber": "5-25",
+                "intervalVector": "<123121>"
+            },
+            
+            {
+                "primeForm": [0,2,3,6,8],
+                "forteNumber": "5-28",
+                "intervalVector": "<122212>"
+            },
+            
+            {
+                "primeForm": [0,2,4,5,8],
+                "forteNumber": "5-26",
+                "intervalVector": "<122311>"
+            },
+            
+            {
+                "primeForm": [0,2,4,6,8],
+                "forteNumber": "5-33",
+                "intervalVector": "<040402>"
+            },
+            
+            {
+                "primeForm": [0,2,4,6,9],
+                "forteNumber": "5-34",
+                "intervalVector": "<032221>"
+            },
+            
+            {
+                "primeForm": [0,2,4,7,9],
+                "forteNumber": "5-35",
+                "intervalVector": "<032140>"
+            },
+            
+            {
+                "primeForm": [0,3,4,5,8],
+                "forteNumber": "5-Z37",
+                "intervalVector": "<212320>"
+            },
+            
+        ]
+    },
+    
+    {
+        "cardinality": 6,
+        "hexachords": [
+            
+            {
+                "primeForm": [0,1,2,3,4,5],
+                "forteNumber": "6-1",
+                "intervalVector": "<543210>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6],
+                "forteNumber": "6-2",
+                "intervalVector": "<443211>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,7],
+                "forteNumber": "6-Z36",
+                "intervalVector": "<433221>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,8],
+                "forteNumber": "6-Z37",
+                "intervalVector": "<432321>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,7],
+                "forteNumber": "6-9",
+                "intervalVector": "<342231>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,8],
+                "forteNumber": "6-Z40",
+                "intervalVector": "<333231>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6,7],
+                "forteNumber": "6-5",
+                "intervalVector": "<422232>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6,8],
+                "forteNumber": "6-Z41",
+                "intervalVector": "<332232>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6,9],
+                "forteNumber": "6-Z42",
+                "intervalVector": "<324222>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,7,8],
+                "forteNumber": "6-Z38",
+                "intervalVector": "<421242>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,8],
+                "forteNumber": "6-15",
+                "intervalVector": "<323421>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,8],
+                "forteNumber": "6-22",
+                "intervalVector": "<241422>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,9],
+                "forteNumber": "6-Z46",
+                "intervalVector": "<233331>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,7,8],
+                "forteNumber": "6-Z17",
+                "intervalVector": "<322332>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,7,9],
+                "forteNumber": "6-Z47",
+                "intervalVector": "<233241>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,6,9],
+                "forteNumber": "6-Z44",
+                "intervalVector": "<313431>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,7,8],
+                "forteNumber": "6-18",
+                "intervalVector": "<322242>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,7,9],
+                "forteNumber": "6-Z48",
+                "intervalVector": "<232341>"
+            },
+            
+            {
+                "primeForm": [0,1,2,6,7,8],
+                "forteNumber": "6-7",
+                "intervalVector": "<420243>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,7],
+                "forteNumber": "6-Z10",
+                "intervalVector": "<333321>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,8],
+                "forteNumber": "6-14",
+                "intervalVector": "<323430>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,9],
+                "forteNumber": "6-27",
+                "intervalVector": "<225222>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,7,9],
+                "forteNumber": "6-Z49",
+                "intervalVector": "<224322>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,7,9],
+                "forteNumber": "6-34",
+                "intervalVector": "<142422>"
+            },
+            
+            {
+                "primeForm": [0,1,3,6,7,9],
+                "forteNumber": "6-30",
+                "intervalVector": "<224223>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5,6,8],
+                "forteNumber": "6-16",
+                "intervalVector": "<322431>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5,7,9],
+                "forteNumber": "6-31",
+                "intervalVector": "<223431>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5,8,9],
+                "forteNumber": "6-20",
+                "intervalVector": "<303630>"
+            },
+            
+            {
+                "primeForm": [0,1,4,6,7,9],
+                "forteNumber": "6-Z50",
+                "intervalVector": "<224232>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,5,7],
+                "forteNumber": "6-8",
+                "intervalVector": "<343230>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,6,8],
+                "forteNumber": "6-21",
+                "intervalVector": "<242412>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,6,9],
+                "forteNumber": "6-Z45",
+                "intervalVector": "<234222>"
+            },
+            
+            {
+                "primeForm": [0,2,3,5,7,9],
+                "forteNumber": "6-33",
+                "intervalVector": "<143241>"
+            },
+            
+            {
+                "primeForm": [0,2,4,5,7,9],
+                "forteNumber": "6-32",
+                "intervalVector": "<143250>"
+            },
+            
+            {
+                "primeForm": [0,2,4,6,8,10],
+                "forteNumber": "6-35",
+                "intervalVector": "<060603>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6],
+                "forteNumber": "6-Z3",
+                "intervalVector": "<433221>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,6],
+                "forteNumber": "6-Z4",
+                "intervalVector": "<432321>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,7],
+                "forteNumber": "6-Z11",
+                "intervalVector": "<333231>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,7],
+                "forteNumber": "6-Z12",
+                "intervalVector": "<332232>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,7],
+                "forteNumber": "6-Z13",
+                "intervalVector": "<324222>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,6,7],
+                "forteNumber": "6-Z6",
+                "intervalVector": "<421242>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,8],
+                "forteNumber": "6-Z24",
+                "intervalVector": "<233331>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,6,8],
+                "forteNumber": "6-Z43",
+                "intervalVector": "<322332>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,6,8],
+                "forteNumber": "6-Z25",
+                "intervalVector": "<233241>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,7,8],
+                "forteNumber": "6-Z19",
+                "intervalVector": "<313431>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,7,8],
+                "forteNumber": "6-Z26",
+                "intervalVector": "<232341>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,5,8],
+                "forteNumber": "6-Z39",
+                "intervalVector": "<333321>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,6,9],
+                "forteNumber": "6-Z28",
+                "intervalVector": "<224322>"
+            },
+            
+            {
+                "primeForm": [0,2,3,6,7,9],
+                "forteNumber": "6-Z29",
+                "intervalVector": "<224232>"
+            },
+            
+            {
+                "primeForm": [0,2,3,5,6,8],
+                "forteNumber": "6-Z23",
+                "intervalVector": "<234222>"
+            },
+            
+            
+        ]
+    },
+    
+    {
+        "cardinality": 7,
+        "septachords": [
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6],
+                "forteNumber": "7-1",
+                "intervalVector": "<654321>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,7],
+                "forteNumber": "7-2",
+                "intervalVector": "<554331>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7],
+                "forteNumber": "7-4",
+                "intervalVector": "<544332>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,7],
+                "forteNumber": "7-5",
+                "intervalVector": "<544431>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,8],
+                "forteNumber": "7-3",
+                "intervalVector": "<453432>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,8],
+                "forteNumber": "7-9",
+                "intervalVector": "<444342>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,8],
+                "forteNumber": "7-Z36",
+                "intervalVector": "<444342>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,6,8],
+                "forteNumber": "7-13",
+                "intervalVector": "<443532>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,7,8],
+                "forteNumber": "7-6",
+                "intervalVector": "<533442>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,7,8],
+                "forteNumber": "7-14",
+                "intervalVector": "<443352>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,7,8],
+                "forteNumber": "7-Z38",
+                "intervalVector": "<434442>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6,7,8],
+                "forteNumber": "7-7",
+                "intervalVector": "<532353>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,7,8],
+                "forteNumber": "7-15",
+                "intervalVector": "<442443>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,9],
+                "forteNumber": "7-10",
+                "intervalVector": "<445332>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,9],
+                "forteNumber": "7-16",
+                "intervalVector": "<435432>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,6,9],
+                "forteNumber": "7-Z17",
+                "intervalVector": "<434541>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,7,9],
+                "forteNumber": "7-Z12",
+                "intervalVector": "<444342>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,7,9],
+                "forteNumber": "7-24",
+                "intervalVector": "<535442>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,7,9],
+                "forteNumber": "7-27",
+                "intervalVector": "<344451>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6,7,9],
+                "forteNumber": "7-19",
+                "intervalVector": "<434343>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,7,9],
+                "forteNumber": "7-29",
+                "intervalVector": "<344352>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,7,9],
+                "forteNumber": "7-31",
+                "intervalVector": "<336333>"
+            },
+            
+            {
+                "primeForm": [0,1,4,5,6,7,9],
+                "forteNumber": "7-Z18",
+                "intervalVector": "<434442>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,8,9],
+                "forteNumber": "7-21",
+                "intervalVector": "<424641>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,8,9],
+                "forteNumber": "7-30",
+                "intervalVector": "<342542>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,8,9],
+                "forteNumber": "7-32",
+                "intervalVector": "<335442>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,6,8,9],
+                "forteNumber": "7-22",
+                "intervalVector": "<424542>"
+            },
+            
+            {
+                "primeForm": [0,1,2,5,6,7,9],
+                "forteNumber": "7-20",
+                "intervalVector": "<433452>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,5,6,8],
+                "forteNumber": "7-8",
+                "intervalVector": "<454422>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,6,8],
+                "forteNumber": "7-11",
+                "intervalVector": "<444441>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,5,7,9],
+                "forteNumber": "7-23",
+                "intervalVector": "<354351>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,6,7,9],
+                "forteNumber": "7-25",
+                "intervalVector": "<345342>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,6,7,9],
+                "forteNumber": "7-28",
+                "intervalVector": "<344433>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,7,9],
+                "forteNumber": "7-26",
+                "intervalVector": "<344532>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,8,10],
+                "forteNumber": "7-33",
+                "intervalVector": "<262623>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,8,10],
+                "forteNumber": "7-34",
+                "intervalVector": "<254442>"
+            },
+            
+            {
+                "primeForm": [0,1,3,5,6,8,10],
+                "forteNumber": "7-35",
+                "intervalVector": "<254361>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,7,8],
+                "forteNumber": "7-Z37",
+                "intervalVector": "<434541>"
+            },
+        ]
+    },
+    
+    {
+        "cardinality": 8,
+        "octachords": [
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,7],
+                "forteNumber": "8-1",
+                "intervalVector": "<765442>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,8],
+                "forteNumber": "8-2",
+                "intervalVector": "<665542>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,7,8],
+                "forteNumber": "8-4",
+                "intervalVector": "<655552>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7,8],
+                "forteNumber": "8-5",
+                "intervalVector": "<654553>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,7,8],
+                "forteNumber": "8-6",
+                "intervalVector": "<654463>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,9],
+                "forteNumber": "8-3",
+                "intervalVector": "<656542>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,7,9],
+                "forteNumber": "8-11",
+                "intervalVector": "<565552>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7,9],
+                "forteNumber": "8-13",
+                "intervalVector": "<556453>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,7,9],
+                "forteNumber": "8-Z29",
+                "intervalVector": "<555553>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,8,9],
+                "forteNumber": "8-7",
+                "intervalVector": "<645652>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,8,9],
+                "forteNumber": "8-Z15",
+                "intervalVector": "<555553>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,8,9],
+                "forteNumber": "8-18",
+                "intervalVector": "<546553>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,6,8,9],
+                "forteNumber": "8-19",
+                "intervalVector": "<545752>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,7,8,9],
+                "forteNumber": "8-8",
+                "intervalVector": "<644563>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,7,8,9],
+                "forteNumber": "8-16",
+                "intervalVector": "<554563>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,7,8,9],
+                "forteNumber": "8-20",
+                "intervalVector": "<545662>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,6,7,8,9],
+                "forteNumber": "8-9",
+                "intervalVector": "<644464>"
+            },
+            
+            {
+                "primeForm": [0,2,3,4,5,6,7,9],
+                "forteNumber": "8-10",
+                "intervalVector": "<566452>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,6,7,9],
+                "forteNumber": "8-12",
+                "intervalVector": "<556543>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,6,7,9],
+                "forteNumber": "8-14",
+                "intervalVector": "<555562>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,8,10],
+                "forteNumber": "8-21",
+                "intervalVector": "<474643>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,6,8,10],
+                "forteNumber": "8-22",
+                "intervalVector": "<465562>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,6,8,10],
+                "forteNumber": "8-24",
+                "intervalVector": "<464743>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,5,7,8,10],
+                "forteNumber": "8-23",
+                "intervalVector": "<465472>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,5,7,8,10],
+                "forteNumber": "8-27",
+                "intervalVector": "<456553>"
+            },
+            
+            {
+                "primeForm": [0,1,2,4,6,7,8,10],
+                "forteNumber": "8-25",
+                "intervalVector": "<464644>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,6,8,9],
+                "forteNumber": "8-17",
+                "intervalVector": "<546652>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,5,7,8,10],
+                "forteNumber": "8-26",
+                "intervalVector": "<456562>"
+            },
+            
+            {
+                "primeForm": [0,1,3,4,6,7,9,10],
+                "forteNumber": "8-28",
+                "intervalVector": "<448444>"
+            }
+        ]
+    },
+    
+    {
+        "cardinality": 9,
+        "nonachords": [
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,7,8],
+                "forteNumber": "9-1",
+                "intervalVector": "<876663>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,7,9],
+                "forteNumber": "9-2",
+                "intervalVector": "<777663>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,8,9],
+                "forteNumber": "9-3",
+                "intervalVector": "<767763>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,5,7,8,9],
+                "forteNumber": "9-4",
+                "intervalVector": "<766773>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7,8,9],
+                "forteNumber": "9-5",
+                "intervalVector": "<766674>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,8,10],
+                "forteNumber": "9-6",
+                "intervalVector": "<686763>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,5,7,8,10],
+                "forteNumber": "9-7",
+                "intervalVector": "<677673>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7,8,10],
+                "forteNumber": "9-8",
+                "intervalVector": "<676764>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,5,6,7,8,10],
+                "forteNumber": "9-9",
+                "intervalVector": "<676683>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7,9,10],
+                "forteNumber": "9-10",
+                "intervalVector": "<668664>"
+            }
+            
+            {
+                "primeForm": [0,1,2,3,5,6,7,9,10],
+                "forteNumber": "9-11",
+                "intervalVector": "<667773>"
+            }
+            
+            {
+                "primeForm": [0,1,2,4,5,6,8,9,10],
+                "forteNumber": "9-12",
+                "intervalVector": "<666963"
+            }
+            
+            
+        ]
+    },
+    
+    {
+        "cardinality": 10,
+        "decachords": [
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,7,8,9],
+                "forteNumber": "10-1",
+                "intervalVector": "<988884>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,7,8,10],
+                "forteNumber": "10-2",
+                "intervalVector": "<898884>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,7,9,10],
+                "forteNumber": "10-3",
+                "intervalVector": "<889884>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,6,8,9,10],
+                "forteNumber": "10-4",
+                "intervalVector": "<888984>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,5,7,8,9,10],
+                "forteNumber": "10-5",
+                "intervalVector": "<888894>"
+            },
+            
+            {
+                "primeForm": [0,1,2,3,4,6,7,8,9,10],
+                "forteNumber": "10-6",
+                "intervalVector": "<888885>"
+            },
+            
+        ]
+    },
+    
+}
