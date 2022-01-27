@@ -7,11 +7,19 @@
 
 import Foundation
 
-struct PCSet {
-    var userSet: [Int]?
-    var cardinality: Int?
-    var normalForm: [Int]?
-    var primeForm: [Int]?
-    var forteNumber: String?
-    var intervalVector: String?
+struct userSet: Decodable {
+    var userSet: [Int]
+    var normalForm: [Int]
+    var set: PCSet
+}
+
+struct ListSets: Decodable {
+    var pcSets: [PCSet]
+}
+
+struct PCSet: Decodable {
+    var cardinality: Int
+    var primeForm: [Int]
+    var forteNumber: String
+    var intervalVector: String
 }

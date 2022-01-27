@@ -36,7 +36,7 @@ class PCCircle: UIView {
         let points = getCirclePoints(centerPoint: CGPoint(x: PCCircleFrame.width / 2, y: PCCircleFrame.height / 2), radius: PCCircleFrame.width / 2, n: 12)
         
         path.stroke()
-        let set = UIBezierPath()
+//        let set = UIBezierPath()
         
         drawSetShape(points: points, set: self.setShape)
         

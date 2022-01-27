@@ -36,6 +36,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBAction func generateSet(_ sender: Any) {
         setViewModel = SetViewModel()
+        
         normalForm = setViewModel?.findNormalForm(pcSet: selectedCells)
         primeForm = setViewModel?.findNormalForm(pcSet: (setViewModel?.findPrimeForm(normalForm: selectedCells))!)
 
@@ -52,6 +53,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 //        collectionView.layer.borderWidth = 1
 //        rowTextField.text! = "02468t13579e"
         generateMatrix(rowString: "02468t13579e")
+        rowTextField.delegate = self
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
               flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
@@ -221,10 +223,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-
-        cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
-        selectedCells.append(Int(cell.cellLabel.text!)!)
-//        print(selectedCells)
+        if !selectedCells.contains(Int(cell.cellLabel.text!)!) {
+            cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
+            selectedCells.append(Int(cell.cellLabel.text!)!)
+            var selectedSet = Set(selectedCells)
+            selectedCells = Array(selectedSet)
+            print(selectedCells)
+        }
     }
     // MARK: - FLOW LAYOUT METHOD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -253,6 +258,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        generateMatrix(rowString: rowTextField.text!)
         rowTextField.resignFirstResponder() // dismiss keyboard
         return true
     }
