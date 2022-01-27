@@ -35,7 +35,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var rowTextField: UITextField!
     
     @IBAction func generateSet(_ sender: Any) {
-        setViewModel = SetViewModel()
+        setViewModel = SetViewModel(set: selectedCells)
         
         normalForm = setViewModel?.findNormalForm(pcSet: selectedCells)
         primeForm = setViewModel?.findNormalForm(pcSet: (setViewModel?.findPrimeForm(normalForm: selectedCells))!)
