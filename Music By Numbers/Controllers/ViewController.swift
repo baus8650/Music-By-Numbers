@@ -154,9 +154,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return iriLabels
     }
     
+    @IBOutlet var setInfoButton: UIButton!
     @IBAction func clearSelectionPressed(_ sender: UIButton) {
         collectionView.reloadData()
         selectedCells = [Int]()
+        setInfoButton.isEnabled = false
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -229,6 +231,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             var selectedSet = Set(selectedCells)
             selectedCells = Array(selectedSet)
             print(selectedCells)
+        }
+        if selectedCells.count >= 2 {
+            setInfoButton.isEnabled = true
+        } else {
+            setInfoButton.isEnabled = false
         }
     }
     // MARK: - FLOW LAYOUT METHOD

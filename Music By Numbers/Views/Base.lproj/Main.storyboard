@@ -195,7 +195,7 @@
                                     <action selector="clearSelectionPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T4c-rZ-vYq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sf-zm-3MN">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sf-zm-3MN">
                                 <rect key="frame" x="139" y="762" width="150" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Get Set Information"/>
@@ -226,6 +226,7 @@
                     <connections>
                         <outlet property="collectionView" destination="tko-Op-zMh" id="RiP-0m-d3h"/>
                         <outlet property="rowTextField" destination="WUn-71-Kd4" id="VFP-BV-ivM"/>
+                        <outlet property="setInfoButton" destination="2Sf-zm-3MN" id="xVb-or-mt3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

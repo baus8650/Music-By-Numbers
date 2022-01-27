@@ -12,12 +12,9 @@ class SetViewController: UIViewController, UITextFieldDelegate {
     var normalForm: [Int]?
     var primeForm: [Int]? {
         didSet {
-            print("prime did set \(primeForm!)")
             if primeForm!.count >= 2 {
-//            var localNorm = setViewModel.findNormalForm(pcSet: workingSet)
                 guard let index = listOfSets?.pcSets.firstIndex(where: { $0.primeForm == self.primeForm }) else { return }
                 setIndex = index
-                print("prime INDEX \(index)")
                 
                 populateText(workingSet: self.primeForm!, setIndex: index)
             }
@@ -25,12 +22,9 @@ class SetViewController: UIViewController, UITextFieldDelegate {
     }
     var workingSet = [Int]() {
         didSet {
-            print("set did set \(workingSet)")
             if workingSet.count >= 2 {
-//            var localNorm = setViewModel.findNormalForm(pcSet: workingSet)
                 guard let index = listOfSets?.pcSets.firstIndex(where: { $0.primeForm == setViewModel.findPrimeForm(normalForm: workingSet) }) else { return }
                 setIndex = index
-                print("INDEX \(index)")
                 
                 populateText(workingSet: workingSet, setIndex: index)
             }
@@ -40,10 +34,10 @@ class SetViewController: UIViewController, UITextFieldDelegate {
     var listOfSets: ListSets? {
         didSet {
             
-//            guard let index = listOfSets?.pcSets.firstIndex(where: { $0.primeForm == setViewModel.findPrimeForm(normalForm: workingSet) }) else { return }
-//            setIndex = index
-//
-//            populateText(workingSet: workingSet, setIndex: index)
+            guard let index = listOfSets?.pcSets.firstIndex(where: { $0.primeForm == setViewModel.findPrimeForm(normalForm: workingSet) }) else { return }
+            setIndex = index
+
+            populateText(workingSet: workingSet, setIndex: index)
         }
     }
     
@@ -92,12 +86,10 @@ Interval class vector:
 
     @IBAction func PC0Recognizer(_ sender: UITapGestureRecognizer) {
         tapFunction(pc: 0, workingSet: self.workingSet)
-        print("0 tapped \(self.workingSet)")
     }
     
     @IBAction func PC1Recognizer(_ sender: UITapGestureRecognizer) {
         tapFunction(pc: 1, workingSet: self.workingSet)
-        print("1 tapped \(self.workingSet)")
     }
     @IBAction func PC2Recognizer(_ sender: UITapGestureRecognizer) {
         tapFunction(pc: 2, workingSet: self.workingSet)
@@ -178,7 +170,7 @@ Interval class vector:
         setViewModel = SetViewModel()
         pcCircleView?.setShape = workingSet
         parseJSON("SetClasses")
-//        populateText(workingSet: workingSet, setIndex: setIndex ?? 0)
+
         
     }
     
@@ -187,32 +179,10 @@ Interval class vector:
             var rotatedSet = [Int]()
             for i in workingSet {
                 switch i {
-                case 0:
-                    rotatedSet.append(1)
-                case 1:
-                    rotatedSet.append(2)
-                case 2:
-                    rotatedSet.append(3)
-                case 3:
-                    rotatedSet.append(4)
-                case 4:
-                    rotatedSet.append(5)
-                case 5:
-                    rotatedSet.append(6)
-                case 6:
-                    rotatedSet.append(7)
-                case 7:
-                    rotatedSet.append(8)
-                case 8:
-                    rotatedSet.append(9)
-                case 9:
-                    rotatedSet.append(10)
-                case 10:
-                    rotatedSet.append(11)
                 case 11:
                     rotatedSet.append(0)
                 default:
-                    print("unexpected PC")
+                    rotatedSet.append(i+1)
                 }
             }
             self.workingSet = rotatedSet
@@ -223,30 +193,8 @@ Interval class vector:
                 switch i {
                 case 0:
                     rotatedSet.append(11)
-                case 1:
-                    rotatedSet.append(0)
-                case 2:
-                    rotatedSet.append(1)
-                case 3:
-                    rotatedSet.append(2)
-                case 4:
-                    rotatedSet.append(3)
-                case 5:
-                    rotatedSet.append(4)
-                case 6:
-                    rotatedSet.append(5)
-                case 7:
-                    rotatedSet.append(6)
-                case 8:
-                    rotatedSet.append(7)
-                case 9:
-                    rotatedSet.append(8)
-                case 10:
-                    rotatedSet.append(9)
-                case 11:
-                    rotatedSet.append(10)
                 default:
-                    print("unexpected PC")
+                    rotatedSet.append(i-1)
                 }
             }
             self.workingSet = rotatedSet

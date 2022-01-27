@@ -12,7 +12,6 @@
 		22B29D1E279A7E91006776F7 /* ICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */; };
 		22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */; };
 		22B29D22279A7EEA006776F7 /* BlankCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D21279A7EEA006776F7 /* BlankCollectionViewCell.swift */; };
-		22B29D24279A8AB2006776F7 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D23279A8AB2006776F7 /* CustomCollectionViewLayout.swift */; };
 		22B94F612739E211002F66A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F602739E211002F66A0 /* AppDelegate.swift */; };
 		22B94F632739E211002F66A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F622739E211002F66A0 /* SceneDelegate.swift */; };
 		22B94F652739E211002F66A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F642739E211002F66A0 /* ViewController.swift */; };
@@ -34,7 +33,6 @@
 		22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICollectionViewCell.swift; sourceTree = "<group>"; };
 		22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RICollectionViewCell.swift; sourceTree = "<group>"; };
 		22B29D21279A7EEA006776F7 /* BlankCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankCollectionViewCell.swift; sourceTree = "<group>"; };
-		22B29D23279A8AB2006776F7 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
 		22B94F5D2739E211002F66A0 /* Music By Numbers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Music By Numbers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B94F602739E211002F66A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22B94F622739E211002F66A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				22B29D1B279A7E8C006776F7 /* RCollectionViewCell.swift */,
 				22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */,
 				22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */,
-				22B29D23279A8AB2006776F7 /* CustomCollectionViewLayout.swift */,
 				22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */,
 			);
 			path = Views;
@@ -234,7 +231,6 @@
 				22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */,
 				22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */,
 				22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */,
-				22B29D24279A8AB2006776F7 /* CustomCollectionViewLayout.swift in Sources */,
 				22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */,
 				22B29D22279A7EEA006776F7 /* BlankCollectionViewCell.swift in Sources */,
 			);
