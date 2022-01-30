@@ -7,11 +7,19 @@
 
 import UIKit
 
-@IBDesignable
+//@IBDesignable
 class PCCircle: UIView {
-
+    
     @IBInspectable var setShape = [0,1,4] {
         didSet{
+            
+            self.setNeedsDisplay()
+            
+        }
+    }
+    
+    @IBInspectable var axisPoints = [[Int]]() {
+        didSet {
             
             self.setNeedsDisplay()
             
@@ -26,17 +34,18 @@ class PCCircle: UIView {
             y: 63.0 / 2,
             width: bounds.width - 63.0,
             height: bounds.height - 63.0)
-
+        
         let path = UIBezierPath(ovalIn: PCCircleFrame)
-
-
-
+        
+        
+        
         path.lineWidth = 3.0
         
         let points = getCirclePoints(centerPoint: CGPoint(x: PCCircleFrame.width / 2, y: PCCircleFrame.height / 2), radius: PCCircleFrame.width / 2, n: 12)
         
         path.stroke()
-//        let set = UIBezierPath()
+        //        let set = UIBezierPath()
+        drawAxis(points: points, axis: self.axisPoints)
         
         drawSetShape(points: points, set: self.setShape)
         
@@ -49,6 +58,49 @@ class PCCircle: UIView {
             circle.lineWidth = 2
             circle.fill()
         }
+        
+        
+        
+        //        let angleInRadians: CGFloat = 180 * .pi / 180
+        //        let length: CGFloat = 500
+        //        let axis = UIBezierPath()
+        //        axis.move(to: CGPoint(x: PCCircleFrame.width / 2, y: PCCircleFrame.height / 2))
+        //        axis.addLine(to: CGPoint(x: -sin(angleInRadians) * length, y: cos(angleInRadians) * length))
+        //        axis.stroke()
+    }
+    
+    func drawAxis(points: [CGPoint], axis: [[Int]]) {
+        let axisLine = UIBezierPath()
+        
+        if axis.count > 1 {
+            
+        }
+        
+        if axis.count == 1 {
+            if axis == [[]] {
+                
+            } else {
+            axisLine.move(to: CGPoint(x: points[axis[0][0]].x + 32, y: points[axis[0][0]].y + 32))
+            axisLine.addLine(to: CGPoint(x: points[axis[0][1]].x + 32, y: points[axis[0][1]].y + 32))
+            UIColor.red.setStroke()
+            axisLine.stroke()
+            }
+        } else if axis.count == 2 {
+            
+            let firstAvX = ((points[axis[0][0]].x + points[axis[0][1]].x) / 2) + 32
+            let secondAvX = ((points[axis[0][0]].y + points[axis[0][1]].y) / 2) + 32
+            
+            let firstAvY = ((points[axis[1][0]].x + points[axis[1][1]].x) / 2) + 32
+            let secondAvY = ((points[axis[1][0]].y + points[axis[1][1]].y) / 2) + 32
+            
+            axisLine.move(to: CGPoint(x: firstAvX , y: secondAvX))
+            axisLine.addLine(to: CGPoint(x: firstAvY, y: secondAvY))
+            
+            UIColor.red.setStroke()
+            axisLine.stroke()
+            
+        }
+        
         
     }
     

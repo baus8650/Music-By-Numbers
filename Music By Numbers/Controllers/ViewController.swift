@@ -18,6 +18,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var primeForm: [Int]?
     
     var userRow = Row(row: [[]])
+    var loneRow = [Int]()
     
     var matrixRow = [[String]]()
     var selectedCells = [Int]()
@@ -31,6 +32,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let margin: CGFloat = 1
     
+    @IBOutlet var loneRowCollectionView: UICollectionView!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var rowTextField: UITextField!
     
@@ -38,10 +41,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         setViewModel = SetViewModel(set: selectedCells)
         
         normalForm = setViewModel?.findNormalForm(pcSet: selectedCells)
-        primeForm = setViewModel?.findNormalForm(pcSet: (setViewModel?.findPrimeForm(normalForm: selectedCells))!)
+        primeForm = setViewModel?.findPrimeForm(normalForm: normalForm!)
 
     }
     
+    @IBAction func locatSets(_ sender: UIButton) {
+        let ac = UIAlertController(title: "Enter set", message: "Please enter a set you would like to locate in the row.", preferredStyle: .alert)
+        ac.addTextField()
+        
+        let submitAction = UIAlertAction(title: "Search", style: .default) { [unowned ac] _ in
+                let answer = ac.textFields![0]
+                // do something interesting with "answer" here
+            }
+        ac.addAction(submitAction)
+        present(ac, animated: true)
+        return
+    }
     @objc func handleTap() {
         rowTextField.resignFirstResponder() // dismiss keyoard
     }
@@ -50,7 +65,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-//        collectionView.layer.borderWidth = 1
+        loneRowCollectionView.delegate = self
+        loneRowCollectionView.dataSource = self
+//       collectionView.layer.borderWidth = 1
 //        rowTextField.text! = "02468t13579e"
         generateMatrix(rowString: "02468t13579e")
         rowTextField.delegate = self
@@ -100,7 +117,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     normalizedRow.append(Int(i)!)
                 }
             }
-            
+            loneRow = normalizedRow
+            print("LONE ROW \(loneRow)")
             normalizedRow = normalizedRow.map { mod($0-normalizedRow[0],12) }
             for i in normalizedRow {
                 invertedRow.append((abs((i-12)%12)))
@@ -124,6 +142,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             userRow.row = matrixRow
             
             collectionView.reloadData()
+            loneRowCollectionView.reloadData()
             rowTextField.text = ""
             rowTextField.resignFirstResponder()
         }
@@ -162,16 +181,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == loneRowCollectionView {
+            return loneRow.count
+        } else {
         return userRow.row[0].count
+        }
         
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if collectionView == loneRowCollectionView {
+            return 1
+        } else {
         return userRow.row[0].count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
+        if collectionView == loneRowCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoneCell", for: indexPath) as! LoneCollectionViewCell
+            cell.cellLabel.text = String(loneRow[indexPath.row])
+            cell.layer.borderWidth = 1
+            return cell
+        } else {
+        
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath) as! BlankCollectionViewCell
             cell.backgroundColor = UIColor(named: "default")
@@ -221,25 +255,45 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 return cell
             }
         }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if collectionView == loneRowCollectionView {
+            
+        } else {
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         if !selectedCells.contains(Int(cell.cellLabel.text!)!) {
             cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
             selectedCells.append(Int(cell.cellLabel.text!)!)
-            var selectedSet = Set(selectedCells)
+            let selectedSet = Set(selectedCells)
             selectedCells = Array(selectedSet)
             print(selectedCells)
+        } else {
+            selectedCells = selectedCells.filter { return $0 != Int(cell.cellLabel.text!)! }
+            cell.backgroundColor = UIColor(named: "default")
         }
         if selectedCells.count >= 2 {
             setInfoButton.isEnabled = true
         } else {
             setInfoButton.isEnabled = false
         }
+        }
     }
     // MARK: - FLOW LAYOUT METHOD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if collectionView == loneRowCollectionView {
+            let noOfCellsInRow = loneRow.count   //number of column you want
+            let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+            let totalSpace = flowLayout.sectionInset.left
+            + flowLayout.sectionInset.right
+            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+
+            let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+            return CGSize(width: size, height: size)
+        } else {
 
         let noOfCellsInRow = userRow.row[0].count   //number of column you want
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -249,13 +303,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         return CGSize(width: size, height: size)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MatrixToSet" {
             if let setVC = segue.destination as? SetViewController {
-                setVC.normalForm = self.normalForm
-                setVC.primeForm = self.primeForm
+                setVC.normalForm = self.normalForm!
+                setVC.primeForm = self.primeForm!
                 setVC.workingSet = self.normalForm!
             }
         }
