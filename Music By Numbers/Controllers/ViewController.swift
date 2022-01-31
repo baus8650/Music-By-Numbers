@@ -42,6 +42,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         normalForm = setViewModel?.findNormalForm(pcSet: selectedCells)
         primeForm = setViewModel?.findPrimeForm(normalForm: normalForm!)
+        let destVC = tabBarController?.viewControllers![2] as! UINavigationController
+        let setVC = destVC.topViewController as! SetViewController
+        
+        setVC.normalForm = self.normalForm!
+        setVC.primeForm = self.primeForm!
+        setVC.workingSet = self.normalForm!
+        tabBarController?.selectedIndex = 2
 
     }
     
@@ -65,11 +72,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        loneRowCollectionView.delegate = self
-        loneRowCollectionView.dataSource = self
 //       collectionView.layer.borderWidth = 1
 //        rowTextField.text! = "02468t13579e"
-        generateMatrix(rowString: "02468t13579e")
+        generateMatrix(rowString: "t50e96137824")
         rowTextField.delegate = self
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -78,8 +83,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        selectedCells = [Int]()
-        collectionView.reloadData()
+//        selectedCells = [Int]()
+//        collectionView.reloadData()
     }
     
     @IBAction func generatePressed(_ sender: UIButton) {
@@ -142,7 +147,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             userRow.row = matrixRow
             
             collectionView.reloadData()
-            loneRowCollectionView.reloadData()
             rowTextField.text = ""
             rowTextField.resignFirstResponder()
         }
@@ -181,30 +185,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == loneRowCollectionView {
-            return loneRow.count
-        } else {
+        
         return userRow.row[0].count
-        }
+        
         
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if collectionView == loneRowCollectionView {
-            return 1
-        } else {
+        
         return userRow.row[0].count
-        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        if collectionView == loneRowCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoneCell", for: indexPath) as! LoneCollectionViewCell
-            cell.cellLabel.text = String(loneRow[indexPath.row])
-            cell.layer.borderWidth = 1
-            return cell
-        } else {
         
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath) as! BlankCollectionViewCell
@@ -255,14 +248,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 return cell
             }
         }
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if collectionView == loneRowCollectionView {
-            
-        } else {
+        
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         if !selectedCells.contains(Int(cell.cellLabel.text!)!) {
             cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
@@ -279,21 +269,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         } else {
             setInfoButton.isEnabled = false
         }
-        }
     }
     // MARK: - FLOW LAYOUT METHOD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if collectionView == loneRowCollectionView {
-            let noOfCellsInRow = loneRow.count   //number of column you want
-            let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-            let totalSpace = flowLayout.sectionInset.left
-            + flowLayout.sectionInset.right
-            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
-
-            let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
-            return CGSize(width: size, height: size)
-        } else {
 
         let noOfCellsInRow = userRow.row[0].count   //number of column you want
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -303,7 +281,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         return CGSize(width: size, height: size)
-        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

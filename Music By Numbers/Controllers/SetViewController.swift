@@ -253,6 +253,10 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         searchField.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        update(set: self.workingSet, axisPoints: [[]])
+    }
+    
     // MARK: - Helper Functions
     
     func update(set: [Int], axisPoints: [[Int]]) {
