@@ -9,8 +9,6 @@ import Foundation
 
 class SetViewModel {
     
-    var pcCircleView: PCCircle!
-    
     var startSet: [Int]?
     
     var setIndex: Binder<Int?> = Binder(nil)
@@ -21,7 +19,8 @@ class SetViewModel {
     var setDescription = Binder("")
     
     init(set: [Int]) {
-        self.startSet = set
+        self.workingSet.value = set
+        
     }
     
     func calculate(set: String) {
@@ -37,9 +36,14 @@ class SetViewModel {
             }
         }
         let newNormal = findNormalForm(pcSet: workingRow)
-        print("FROM VIEW MODEL \(newNormal)")
-        self.pcCircleView.setShape = newNormal
         self.workingSet.value = newNormal
+        self.searchField.value = ""
+        populateText(workingSet: self.workingSet.value)
+    }
+    
+    func clear() {
+        self.workingSet.value = [Int]()
+        self.setDescription.value = ""
         self.searchField.value = ""
     }
     
@@ -47,6 +51,7 @@ class SetViewModel {
         let invertedForm = invertForm(normalizedForm: workingSet)
         let newNormal = findNormalForm(pcSet: invertedForm)
         self.workingSet.value = newNormal
+        populateText(workingSet: self.workingSet.value)
     }
     
     func rotateLeft(set: [Int]) {
@@ -60,6 +65,7 @@ class SetViewModel {
             }
         }
         self.workingSet.value = rotatedSet
+        populateText(workingSet: self.workingSet.value)
         
     }
     
@@ -74,7 +80,7 @@ class SetViewModel {
             }
         }
         self.workingSet.value = rotatedSet
-
+        populateText(workingSet: self.workingSet.value)
     }
     
     func compliment(set: [Int]) {
@@ -84,6 +90,7 @@ class SetViewModel {
             let normCompliment = findNormalForm(pcSet: compliment)
             self.workingSet.value = normCompliment
         }
+        populateText(workingSet: self.workingSet.value)
     }
     
     func tapFunction(pc: Int, workingSet: [Int]) {
@@ -92,7 +99,6 @@ class SetViewModel {
             let newNormal = compSet.filter { return $0 != pc }
             if newNormal.count >= 2 {
                 let reduceNormal = findNormalForm(pcSet: newNormal)
-                pcCircleView.setShape = reduceNormal
                 self.workingSet.value = reduceNormal
             } else {
                 self.workingSet.value = newNormal
@@ -101,19 +107,26 @@ class SetViewModel {
             compSet.append(pc)
             if compSet.count >= 2 {
                 let newNormal = findNormalForm(pcSet: compSet)
-                pcCircleView.setShape = newNormal
                 self.workingSet.value = newNormal
             } else {
                 self.workingSet.value = compSet
             }
         }
+        populateText(workingSet: self.workingSet.value)
     }
     
     func populateText(workingSet: [Int]) {
-        print("called populate text")
-        guard let index = listOfSets.value?.pcSets.firstIndex(where: { $0.primeForm == findPrimeForm(normalForm: workingSet) }) else { return }
-        self.setIndex.value = index
-        print("FROM MODEL \(index)")
+        print("WORKING SET")
+        if workingSet.count < 2 {
+            print("We GOT HERE")
+            self.setDescription.value = """
+Normal form:
+Prime form:
+Forte number:
+Interval class vector:
+"""
+            return
+        }
         if workingSet.count > 10 {
             let primeForm = findPrimeForm(normalForm: workingSet)
             var primeDisplay = "("
@@ -145,7 +158,9 @@ class SetViewModel {
     Normal form: \(normDisplay)
     Prime form: \(primeDisplay)
     """
-        } else {
+        } else if workingSet.count >= 2 {
+            guard let index = listOfSets.value?.pcSets.firstIndex(where: { $0.primeForm == findPrimeForm(normalForm: workingSet) }) else { return }
+            self.setIndex.value = index
             let forteNumber = listOfSets.value?.pcSets[setIndex.value ?? 0].forteNumber
             let primeForm = listOfSets.value?.pcSets[setIndex.value ?? 0].primeForm
             var primeDisplay = "("
@@ -160,7 +175,7 @@ class SetViewModel {
             }
             primeDisplay += ")"
             let intervalVector = listOfSets.value?.pcSets[setIndex.value ?? 0].intervalVector
-            let normalForm = findNormalForm(pcSet: self.workingSet.value)
+            let normalForm = findNormalForm(pcSet: workingSet)
             var normDisplay = "["
             for i in normalForm {
                 
@@ -213,6 +228,64 @@ Interval class vector: \(intervalVector!)
         return calculatedSets
     }
 
+    func findNewTieBreaker(ties: [[Int]: [Int]]) -> [Int] {
+        var sets = [[Int]]()
+//        var primeForm: [Int]?
+        for (key, _) in ties {
+            sets.append(key)
+        }
+        
+        if sets.count == 1 {
+            var normalForm = [Int]()
+            for i in sets[0] {
+                if i < 12 {
+                    normalForm.append(i)
+                } else {
+                    normalForm.append(i-12)
+                }
+            }
+            
+            return normalForm
+        }
+        
+        for i in 1..<sets[0].count {
+            if sets[0][i] < sets[1][i] {
+                var normalForm = [Int]()
+                for i in sets[0] {
+                    if i < 12 {
+                        normalForm.append(i)
+                    } else {
+                        normalForm.append(i-12)
+                    }
+                }
+                
+                return normalForm
+            } else if sets[1][i] < sets[0][i] {
+                var normalForm = [Int]()
+                for i in sets[1] {
+                    if i < 12 {
+                        normalForm.append(i)
+                    } else {
+                        normalForm.append(i-12)
+                    }
+                }
+                return normalForm
+            }
+        }
+        print("THIS SHOULD NEVER BE CALLED!!!!")
+        var normalForm = [Int]()
+        for i in sets[0] {
+            if i < 12 {
+                normalForm.append(i)
+            } else {
+                normalForm.append(i-12)
+            }
+        }
+        
+        return normalForm
+//        return primeForm
+    }
+    
     func findTieBreaker(ties: [[Int]: [Int]], originalSet: [Int]) -> [Int] {
         var shortestDistance = [[Int]]()
         var localDistance = 13
@@ -262,6 +335,7 @@ Interval class vector: \(intervalVector!)
         var workingSet = sortedSet
         var localSet: [Int] = sortedSet
         var tiedSets: [[Int]]?
+        tiedSets = nil
         var distance = abs(sortedSet.first! - sortedSet.last!)
         for _ in 0..<workingSet.count - 1 {
             workingSet = rotateSingleLeft(workingSet)
@@ -277,9 +351,15 @@ Interval class vector: \(intervalVector!)
                 distance = localDistance
                 localSet = workingSet
             } else if localDistance == distance {
-                tiedSets = [[Int]]()
+                if tiedSets == nil {
+                    tiedSets = [[Int]]()
                     tiedSets!.append(localSet)
                     tiedSets!.append(workingSet)
+                } else {
+//                tiedSets = [[Int]]()
+                    tiedSets!.append(localSet)
+                    tiedSets!.append(workingSet)
+                }
             }
         }
         if tiedSets != nil {
@@ -321,7 +401,7 @@ Interval class vector: \(intervalVector!)
         let normalizedInvertedForm = normalize(normalForm: normalInvertedForm)
         let sets = [normalizedForm, normalizedInvertedForm]
         let distances = findDistances(tiedSets: sets)
-        let primeForm = findTieBreaker(ties: distances, originalSet: normalizedForm)
+        let primeForm = findNewTieBreaker(ties: distances)//, originalSet: normalizedForm)
         return primeForm
     }
 }

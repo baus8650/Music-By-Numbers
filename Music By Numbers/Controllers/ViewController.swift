@@ -18,6 +18,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var primeForm: [Int]?
     
     var userRow = Row(row: [[]])
+    var loneRow = [Int]()
     
     var matrixRow = [[String]]()
     var selectedCells = [Int]()
@@ -31,6 +32,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let margin: CGFloat = 1
     
+    @IBOutlet var loneRowCollectionView: UICollectionView!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var rowTextField: UITextField!
     
@@ -38,10 +41,29 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         setViewModel = SetViewModel(set: selectedCells)
         
         normalForm = setViewModel?.findNormalForm(pcSet: selectedCells)
-        primeForm = setViewModel?.findNormalForm(pcSet: (setViewModel?.findPrimeForm(normalForm: selectedCells))!)
+        primeForm = setViewModel?.findPrimeForm(normalForm: normalForm!)
+        let destVC = tabBarController?.viewControllers![2] as! UINavigationController
+        let setVC = destVC.topViewController as! SetViewController
+        
+        setVC.normalForm = self.normalForm!
+        setVC.primeForm = self.primeForm!
+        setVC.workingSet = self.normalForm!
+        tabBarController?.selectedIndex = 2
 
     }
     
+    @IBAction func locatSets(_ sender: UIButton) {
+        let ac = UIAlertController(title: "Enter set", message: "Please enter a set you would like to locate in the row.", preferredStyle: .alert)
+        ac.addTextField()
+        
+        let submitAction = UIAlertAction(title: "Search", style: .default) { [unowned ac] _ in
+                let answer = ac.textFields![0]
+                // do something interesting with "answer" here
+            }
+        ac.addAction(submitAction)
+        present(ac, animated: true)
+        return
+    }
     @objc func handleTap() {
         rowTextField.resignFirstResponder() // dismiss keyoard
     }
@@ -50,9 +72,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-//        collectionView.layer.borderWidth = 1
+//       collectionView.layer.borderWidth = 1
 //        rowTextField.text! = "02468t13579e"
-        generateMatrix(rowString: "02468t13579e")
+        generateMatrix(rowString: "t50e96137824")
         rowTextField.delegate = self
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -61,8 +83,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        selectedCells = [Int]()
-        collectionView.reloadData()
+//        selectedCells = [Int]()
+//        collectionView.reloadData()
     }
     
     @IBAction func generatePressed(_ sender: UIButton) {
@@ -100,7 +122,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     normalizedRow.append(Int(i)!)
                 }
             }
-            
+            loneRow = normalizedRow
+            print("LONE ROW \(loneRow)")
             normalizedRow = normalizedRow.map { mod($0-normalizedRow[0],12) }
             for i in normalizedRow {
                 invertedRow.append((abs((i-12)%12)))
@@ -162,16 +185,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return userRow.row[0].count
+        
         
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
         return userRow.row[0].count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlankCell", for: indexPath) as! BlankCollectionViewCell
             cell.backgroundColor = UIColor(named: "default")
@@ -224,13 +251,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         if !selectedCells.contains(Int(cell.cellLabel.text!)!) {
             cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
             selectedCells.append(Int(cell.cellLabel.text!)!)
-            var selectedSet = Set(selectedCells)
+            let selectedSet = Set(selectedCells)
             selectedCells = Array(selectedSet)
             print(selectedCells)
+        } else {
+            selectedCells = selectedCells.filter { return $0 != Int(cell.cellLabel.text!)! }
+            cell.backgroundColor = UIColor(named: "default")
         }
         if selectedCells.count >= 2 {
             setInfoButton.isEnabled = true
@@ -249,13 +281,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         return CGSize(width: size, height: size)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MatrixToSet" {
             if let setVC = segue.destination as? SetViewController {
-                setVC.normalForm = self.normalForm
-                setVC.primeForm = self.primeForm
+                setVC.normalForm = self.normalForm!
+                setVC.primeForm = self.primeForm!
                 setVC.workingSet = self.normalForm!
             }
         }
