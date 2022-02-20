@@ -116,9 +116,9 @@ class SetViewModel {
     }
     
     func populateText(workingSet: [Int]) {
-        print("WORKING SET")
+        
         if workingSet.count < 2 {
-            print("We GOT HERE")
+            
             self.setDescription.value = """
 Normal form:
 Prime form:

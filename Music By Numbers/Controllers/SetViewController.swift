@@ -6,8 +6,11 @@
 //
 
 import UIKit
-
+import CoreData
+//
 class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    var savedSet: NSManagedObject!
     
     var axis = ""
     var axisPoints = [[0,6]]
@@ -48,6 +51,75 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         self.update(set: self.workingSet, axisPoints: axes)
         
         
+    }
+    
+//    @IBAction func quickPrint(_ sender: Any) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+//
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
+//
+//        do {
+//            let testSet = try managedContext.fetch(fetchRequest)
+//            print("TEST SET: ",testSet.map { $0.value(forKey: "userSet") as? [Int] })
+//        } catch let error as NSError{
+//            print("Could not fetch. \(error), \(error.userInfo)")
+//        }
+//    }
+    
+    @IBAction func saveButton(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Set Details", message: "Please enter any additional information for this set.", preferredStyle: .alert)
+        ac.addTextField(configurationHandler: { (textField) -> Void in
+            textField.placeholder = "Enter name of piece (if applicable)."
+        })
+        
+        ac.addTextField(configurationHandler: { (textField) -> Void in
+            textField.placeholder = "Enter any additional notes for this set."
+        })
+        
+        present(ac, animated: true)
+        
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        
+//        let entity = NSEntityDescription.entity(forEntityName: "SavedSet", in: managedContext)!
+//        
+//        savedSet = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            let entity = NSEntityDescription.entity(forEntityName: "SavedSet", in: managedContext)!
+            
+            self.savedSet = NSManagedObject(entity: entity, insertInto: managedContext)
+            
+            let piece = ac.textFields![0] as UITextField
+            self.savedSet.setValue(piece.text!, forKey: "piece")
+            let notes = ac.textFields![1] as UITextField
+            self.savedSet.setValue(notes.text!, forKey: "notes")
+            self.savedSet.setValue(Date(), forKey: "dateCreated")
+            self.savedSet.setValue(self.workingSet, forKey: "userSet")
+            self.savedSet.setValue(UUID(), forKey: "id")
+            do {
+                try managedContext.save()
+              } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+              }
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+            print("Cancelled Save")
+        }))
     }
     
     // MARK: - Parameters
@@ -255,6 +327,7 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     override func viewWillAppear(_ animated: Bool) {
         update(set: self.workingSet, axisPoints: [[]])
+        showAxisSwitch.isOn = false
     }
     
     // MARK: - Helper Functions
@@ -294,18 +367,18 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         for i in set {
             if firstHalf.contains(i) {
                 let index = firstHalf.firstIndex(of: i)!
-                print("first index",index)
+                
                 flippedSet.append(secondHalf[index])
             } else if secondHalf.contains(i) {
                 let index = secondHalf.firstIndex(of: i)!
-                print("second index",index)
+                
                 flippedSet.append(firstHalf[index])
             } else {
                 flippedSet.append(i)
             }
         }
-        print("Flipped set \(flippedSet)")
-        print("First half \(firstHalf), second half \(secondHalf)")
+        
+        
         
         update(set: flippedSet, axisPoints: axis)
         

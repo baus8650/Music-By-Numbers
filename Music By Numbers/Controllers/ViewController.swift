@@ -6,13 +6,18 @@
 //
 
 import UIKit
+import CoreData
 
 let reuseIdentifier = "CellIdentifer";
+
+
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var prLabels = [String]()
     var iriLabels = [String]()
+    
+    var savedRow: NSManagedObject!
     
     var normalForm: [Int]?
     var primeForm: [Int]?
@@ -23,6 +28,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var matrixRow = [[String]]()
     var selectedCells = [Int]()
     var setViewModel: SetViewModel?
+    var rowPiece = ""
+    var rowDate: Date?
+    var rowNotes = ""
     
     func mod(_ a: Int, _ n: Int) -> Int {
         precondition(n > 0, "modulus must be positive")
@@ -37,6 +45,57 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var rowTextField: UITextField!
     
+    @IBAction func saveRow(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Row Details", message: "Please enter any additional information for this row.", preferredStyle: .alert)
+        ac.addTextField(configurationHandler: { (textField) -> Void in
+            textField.placeholder = "Enter name of piece (if applicable)."
+        })
+        
+        ac.addTextField(configurationHandler: { (textField) -> Void in
+            textField.placeholder = "Enter any additional notes for this row."
+        })
+        
+        
+        
+        present(ac, animated: true)
+        
+        
+        
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            let entity = NSEntityDescription.entity(forEntityName: "SavedRow", in: managedContext)!
+            
+            self.savedRow = NSManagedObject(entity: entity, insertInto: managedContext)
+            
+            let piece = ac.textFields![0] as UITextField
+//            self.rowPiece = piece.text!
+            self.savedRow.setValue(piece.text!, forKey: "piece")
+            let notes = ac.textFields![1] as UITextField
+//            self.rowNotes = notes.text!
+            self.savedRow.setValue(notes.text!, forKey: "notes")
+            self.savedRow.setValue(Date(), forKey: "dateCreated")
+            self.savedRow.setValue(self.loneRow, forKey: "userRow")
+            self.savedRow.setValue(UUID(), forKey: "id")
+            
+            do {
+                try managedContext.save()
+              } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+              }
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+            print("Cancelled Save")
+        }))
+        
+    }
+    
     @IBAction func generateSet(_ sender: Any) {
         setViewModel = SetViewModel(set: selectedCells)
         
@@ -49,7 +108,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         setVC.primeForm = self.primeForm!
         setVC.workingSet = self.normalForm!
         tabBarController?.selectedIndex = 2
-
+        
     }
     
     @IBAction func locatSets(_ sender: UIButton) {
@@ -57,9 +116,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         ac.addTextField()
         
         let submitAction = UIAlertAction(title: "Search", style: .default) { [unowned ac] _ in
-                let answer = ac.textFields![0]
-                // do something interesting with "answer" here
-            }
+            let answer = ac.textFields![0]
+            // do something interesting with "answer" here
+        }
         ac.addAction(submitAction)
         present(ac, animated: true)
         return
@@ -72,19 +131,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-//       collectionView.layer.borderWidth = 1
-//        rowTextField.text! = "02468t13579e"
+        //       collectionView.layer.borderWidth = 1
+        //        rowTextField.text! = "02468t13579e"
         generateMatrix(rowString: "t50e96137824")
         rowTextField.delegate = self
         
         if let flowLayout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-              flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            }
+            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        selectedCells = [Int]()
-//        collectionView.reloadData()
+        //        selectedCells = [Int]()
+        //        collectionView.reloadData()
     }
     
     @IBAction func generatePressed(_ sender: UIButton) {
@@ -100,19 +159,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let rowArray = rowString.map(String.init)
         let rowSet = Set(rowArray)
         if rowSet.count < rowArray.count {
-//        if rowArray.count < 12 || rowSet.count < 12 {
+            //        if rowArray.count < 12 || rowSet.count < 12 {
             let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
             return
-        } else {
-//        } else if rowArray.count > 12 {
-//            let ac = UIAlertController(title: "Length error", message: "The row should be 12 pitch classes long with no repeated pitch classes.", preferredStyle: .alert)
-//            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(ac, animated: true)
-//            return
-//        } else {
-            
+        } else {            
             for i in rowArray {
                 if i == "t" || i == "a" {
                     normalizedRow.append(10)
@@ -123,18 +175,55 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 }
             }
             loneRow = normalizedRow
+            
             print("LONE ROW \(loneRow)")
-            normalizedRow = normalizedRow.map { mod($0-normalizedRow[0],12) }
-            for i in normalizedRow {
-                invertedRow.append((abs((i-12)%12)))
+            if normalizedRow.count == 12 {
+                //                print("GOT A COUNT OF 12")
+                normalizedRow = normalizedRow.map { mod($0-normalizedRow[0],12) }
+                
+                print(normalizedRow)
+                for i in normalizedRow {
+                    invertedRow.append((abs((i-12)%12)))
+                }
+                print(invertedRow)
+                for i in 0...(invertedRow.count-1){
+                    let index = invertedRow[i]
+//                    print("INDEX",index)
+                    
+                    let newRow = normalizedRow.map { mod(($0+index),12) }
+//                    print("TESTING",newRow, normalizedRow)
+                    let stringRow = newRow.map(String.init)
+//                    print("STRING ROW \(stringRow)")
+                    matrixRow.append(stringRow)
+                }
+            } else {
+                invertedRow.append(normalizedRow[0])
+                var intRow = [Int]()
+                for i in 1..<normalizedRow.count {
+                    let index = normalizedRow[i] - normalizedRow[i-1]
+                    intRow.append(index)
+                    invertedRow.append(mod(invertedRow[i-1]-index,12))
+                }
+                let testRow = normalizedRow.map(String.init)
+                matrixRow.append(testRow)
+                for i in 0..<invertedRow.count{
+                    if i == 0 {
+                        let testRow = normalizedRow.map(String.init)
+                    } else {
+                        var newRow = [Int]()
+                        for dist in intRow {
+                            if newRow == [] {
+                                newRow.append(invertedRow[i])
+                                newRow.append(mod(invertedRow[i]+dist,12))
+                            } else {
+                                newRow.append(mod(newRow.last!+dist,12))
+                            }
+                        }
+                        let stringRow = newRow.map(String.init)
+                        matrixRow.append(stringRow)
+                    }
+                }
             }
-            for i in 0...(invertedRow.count-1){
-                let index = invertedRow[i]
-                let newRow = normalizedRow.map { mod(($0+index),12) }
-                let stringRow = newRow.map(String.init)
-                matrixRow.append(stringRow)
-            }
-
             let vertLabels = setPLabels(matrix: matrixRow)
             let horLabels = setILabels(matrix: matrixRow)
             for i in 0..<matrixRow.count {
@@ -144,7 +233,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             matrixRow.insert(horLabels, at: 0)
             matrixRow.insert(horLabels, at: matrixRow.count)
         
+//            print("MATRIX ROW \(matrixRow)")
             userRow.row = matrixRow
+//            print("USER ROW \(userRow.row)")
             
             collectionView.reloadData()
             rowTextField.text = ""
@@ -216,7 +307,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.backgroundColor = UIColor(named: "default")
             return cell
         }
-
+        
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ICollectionViewCell", for: indexPath) as! ICollectionViewCell
             cell.labelLabel.attributedText = setBaseline(for: "I\(userRow.row[indexPath.section][indexPath.row])", location: 1, length: iriLabels[indexPath.row].count)
@@ -231,7 +322,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             if indexPath.row == 0 {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PCollectionViewCell", for: indexPath) as! PCollectionViewCell
                 cell.labelLabel.attributedText = setBaseline(for: "P\(userRow.row[indexPath.section][indexPath.row])", location: 1, length: prLabels[indexPath.section - 1].count)
-
+                
                 cell.backgroundColor = UIColor(named: "default")
                 return cell
             } else if indexPath.row == userRow.row[0].count - 1 {
@@ -272,13 +363,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     // MARK: - FLOW LAYOUT METHOD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         let noOfCellsInRow = userRow.row[0].count   //number of column you want
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         let totalSpace = flowLayout.sectionInset.left
         + flowLayout.sectionInset.right
         + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
-
+        
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         return CGSize(width: size, height: size)
         

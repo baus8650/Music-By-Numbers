@@ -24,10 +24,14 @@
 		22B94F752739F447002F66A0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F742739F447002F66A0 /* CollectionViewCell.swift */; };
 		22B94F7A273B71D9002F66A0 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B94F79273B71D9002F66A0 /* Row.swift */; };
 		22C6948F27A621B900F0F1DE /* SavedItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C6948E27A621B900F0F1DE /* SavedItemsTableViewController.swift */; };
+		22D55C4627A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4427A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld */; };
+		22D55C4827A8B619004E3BFF /* RowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */; };
+		22D55C4A27A8B622004E3BFF /* SetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */; };
 		22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C49A279D39E7008FFE82 /* SetViewModel.swift */; };
 		22E5C49E279D3A31008FFE82 /* SetClasses.json in Resources */ = {isa = PBXBuildFile; fileRef = 22E5C49D279D3A31008FFE82 /* SetClasses.json */; };
 		22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C49F279E1F89008FFE82 /* Set.swift */; };
 		22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E5C4A4279E29C0008FFE82 /* SetViewController.swift */; };
+		22ED475627BDD24900E6FA0B /* CoreRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED475527BDD24900E6FA0B /* CoreRow.swift */; };
 		22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,10 +55,14 @@
 		22B94F742739F447002F66A0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		22B94F79273B71D9002F66A0 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
 		22C6948E27A621B900F0F1DE /* SavedItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsTableViewController.swift; sourceTree = "<group>"; };
+		22D55C4527A8B0A2004E3BFF /* MusicByNumbers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MusicByNumbers.xcdatamodel; sourceTree = "<group>"; };
+		22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowTableViewCell.swift; sourceTree = "<group>"; };
+		22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCell.swift; sourceTree = "<group>"; };
 		22E5C49A279D39E7008FFE82 /* SetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModel.swift; sourceTree = "<group>"; };
 		22E5C49D279D3A31008FFE82 /* SetClasses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SetClasses.json; sourceTree = "<group>"; };
 		22E5C49F279E1F89008FFE82 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		22E5C4A4279E29C0008FFE82 /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
+		22ED475527BDD24900E6FA0B /* CoreRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRow.swift; sourceTree = "<group>"; };
 		22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCCircle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +116,7 @@
 				22B94F692739E212002F66A0 /* Assets.xcassets */,
 				22B94F6B2739E212002F66A0 /* LaunchScreen.storyboard */,
 				22B94F6E2739E212002F66A0 /* Info.plist */,
+				22D55C4427A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld */,
 			);
 			path = "Music By Numbers";
 			sourceTree = "<group>";
@@ -117,6 +126,7 @@
 			children = (
 				22B94F79273B71D9002F66A0 /* Row.swift */,
 				22E5C49F279E1F89008FFE82 /* Set.swift */,
+				22ED475527BDD24900E6FA0B /* CoreRow.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -142,6 +152,8 @@
 				22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */,
 				22B29D1F279A7EC9006776F7 /* RICollectionViewCell.swift */,
 				22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */,
+				22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */,
+				22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,7 +251,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D55C4A27A8B622004E3BFF /* SetTableViewCell.swift in Sources */,
 				22B94F652739E211002F66A0 /* ViewController.swift in Sources */,
+				22D55C4627A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld in Sources */,
+				22ED475627BDD24900E6FA0B /* CoreRow.swift in Sources */,
 				22B94F612739E211002F66A0 /* AppDelegate.swift in Sources */,
 				22768EFE27A25CFD007A984F /* Binder.swift in Sources */,
 				22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */,
@@ -254,6 +269,7 @@
 				22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */,
 				22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */,
 				22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */,
+				22D55C4827A8B619004E3BFF /* RowTableViewCell.swift in Sources */,
 				22768EFC27A25B35007A984F /* NetworkManager.swift in Sources */,
 				22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */,
 				22B29D22279A7EEA006776F7 /* BlankCollectionViewCell.swift in Sources */,
@@ -476,6 +492,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		22D55C4427A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				22D55C4527A8B0A2004E3BFF /* MusicByNumbers.xcdatamodel */,
+			);
+			currentVersion = 22D55C4527A8B0A2004E3BFF /* MusicByNumbers.xcdatamodel */;
+			path = MusicByNumbers.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 22B94F552739E211002F66A0 /* Project object */;
 }
