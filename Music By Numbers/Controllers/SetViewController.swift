@@ -84,11 +84,11 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
 //            return
 //        }
-//        
+//
 //        let managedContext = appDelegate.persistentContainer.viewContext
-//        
+//
 //        let entity = NSEntityDescription.entity(forEntityName: "SavedSet", in: managedContext)!
-//        
+//
 //        savedSet = NSManagedObject(entity: entity, insertInto: managedContext)
         
         ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in

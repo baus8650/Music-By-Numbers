@@ -16,7 +16,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     
     func clicked(row: Int, section: Int) {
         if section == 0 {
-            var fetchedDate = savedRows[row].value(forKey: "dateCreated")! as! Date
+            let fetchedDate = savedRows[row].value(forKey: "dateCreated")! as! Date
             let alert = UIAlertController(title: "Row Details", message: "Piece: \(savedRows[row].value(forKey: "piece")!)\n \n Notes: \(savedRows[row].value(forKey: "notes")!)\n \n Date added: \(fetchedDate.formatted(.dateTime.month(.wide).day().year(.extended())))", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(action)
@@ -35,9 +35,6 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
     var setViewModel: SetViewModel!
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +90,6 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     func makeText(setList: [Int]) -> String {
         var normDisplay = "["
         for i in setList {
-            
             if i == 10 {
                 normDisplay += "t"
             } else if i == 11 {
@@ -174,13 +170,13 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
             }
         } else {
             let setCell = tableView.dequeueReusableCell(withIdentifier: "SetCell", for: indexPath) as! SetTableViewCell
+            #warning("This could be refactored into a guard statement rather than an if else statement")
             if savedSets[indexPath.row].value(forKey: "userSet") == nil {
                 return setCell
             } else {
                 setCell.pcCircleView?.setShape = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
                 let newLabel = makeText(setList: savedSets[indexPath.row].value(forKey: "userSet") as! [Int])
                 let date = savedSets[indexPath.row].value(forKey: "dateCreated") as! Date
-                print("HERE'S THE DATE: \(date.formatted(.dateTime.month(.wide).day().year(.extended())))")
                 setCell.setLabel.text = newLabel
                 setCell.cellIndexRow = indexPath.row
                 setCell.cellIndexSection = 1
@@ -196,19 +192,16 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let destVC = tabBarController?.viewControllers![1] as! UINavigationController
-            let rowVC = destVC.topViewController as! ViewController
+            let rowVC = destVC.topViewController as! MatrixViewController
             
             let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
-//            rowVC.userRow = Row(row: row)
-            print("WHAT IS HAPPENING: \(savedRows[indexPath.row].value(forKey: "notes"))")
             if rowVC.isViewLoaded {
-                rowVC.generateMatrix(rowString: row)
+//                rowVC.generateMatrix(rowString: row)
                 tabBarController?.selectedIndex = 1
             } else{
                 let _ = rowVC.view
-                rowVC.generateMatrix(rowString: row)
+//                rowVC.generateMatrix(rowString: row)
                 tabBarController?.selectedIndex = 1
-//                print("View is not LOADED YET")
             }
         } else {
             let destVC = tabBarController?.viewControllers![2] as! UINavigationController
