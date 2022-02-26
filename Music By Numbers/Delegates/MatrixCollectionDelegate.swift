@@ -11,8 +11,10 @@ import UIKit
 class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
 //    var collectionView: UICollectionView?
-    var selectedCells = [Int]()
+    var selectedCells: Binder<[Int]> = Binder([])
     var matrixData: Row
+    
+    let margin: CGFloat = 1
     
     init(row: Row) {
         self.matrixData = row
@@ -25,33 +27,32 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         
         
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-        if !selectedCells.contains(Int(cell.cellLabel.text!)!) {
+        if !selectedCells.value.contains(Int(cell.cellLabel.text!)!) {
             cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
-            selectedCells.append(Int(cell.cellLabel.text!)!)
-            let selectedSet = Set(selectedCells)
-            selectedCells = Array(selectedSet)
+            selectedCells.value.append(Int(cell.cellLabel.text!)!)
+            let selectedSet = Set(selectedCells.value)
+            selectedCells.value = Array(selectedSet)
             print(selectedCells)
         } else {
-            selectedCells = selectedCells.filter { return $0 != Int(cell.cellLabel.text!)! }
+            selectedCells.value = selectedCells.value.filter { return $0 != Int(cell.cellLabel.text!)! }
             cell.backgroundColor = UIColor(named: "default")
         }
-        #warning("set info button needs to be disabled if too small")
-//        if selectedCells.count >= 2 {
-//            setInfoButton.isEnabled = true
-//        } else {
-//            setInfoButton.isEnabled = false
-//        }
+
     }
     // MARK: - FLOW LAYOUT METHOD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let noOfCellsInRow = matrixData.row[0].count   //number of column you want
+        let noOfCellsInRow = matrixData.row[0].count
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let totalSpace = flowLayout.sectionInset.left
-        + flowLayout.sectionInset.right
-        + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+        
+        let leftInset = flowLayout.sectionInset.left
+        let rightInset = flowLayout.sectionInset.right
+        let minimumSpacing = flowLayout.minimumInteritemSpacing
+        
+        let totalSpace = leftInset + rightInset + (minimumSpacing * CGFloat(noOfCellsInRow - 1))
         
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+        
         return CGSize(width: size, height: size)
         
     }

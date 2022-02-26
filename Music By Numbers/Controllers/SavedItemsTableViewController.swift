@@ -196,11 +196,11 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
             
             let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
             if rowVC.isViewLoaded {
-//                rowVC.generateMatrix(rowString: row)
+                rowVC.generateMatrix(rowString: row)
                 tabBarController?.selectedIndex = 1
             } else{
                 let _ = rowVC.view
-//                rowVC.generateMatrix(rowString: row)
+                rowVC.generateMatrix(rowString: row)
                 tabBarController?.selectedIndex = 1
             }
         } else {
