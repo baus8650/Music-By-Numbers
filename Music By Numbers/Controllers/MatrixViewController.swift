@@ -29,7 +29,17 @@ class MatrixViewController: UIViewController {
     @IBOutlet var setInfoButton: UIButton!
     
     @IBAction func generatePressed(_ sender: UIButton) {
-        generateMatrix(rowString: rowTextField.text!)
+        
+        let rowString = rowTextField.text!
+        let rowArray = rowString.map(String.init)
+        let rowSet = Set(rowArray)
+        if rowSet.count < rowArray.count {
+            let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            generateMatrix(rowString: rowTextField.text!)
+        }
     }
     
     @IBAction func clearSelectionPressed(_ sender: UIButton) {

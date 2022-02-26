@@ -10,25 +10,20 @@ import UIKit
 
 class MatrixViewModel {
     
+    var setViewModel: SetViewModel?
+    var matrixDataSource: MatrixDataSource?
+    
     var prLabels: Binder<[String]> = Binder([])
     var iriLabels: Binder<[String]> = Binder([])
-    
     var rowString: Binder<String> = Binder("")
     var userRow: Binder<Row> = Binder(Row(row: [[]]))
     var loneRow: Binder<[Int]> = Binder([])
-    
     var matrixRow: Binder<[[String]]> = Binder([[]])
-    
-    var setViewModel: SetViewModel?
-    
     var rowPiece: Binder<String> = Binder("")
     var rowDate: Binder<Date?> = Binder(nil)
     var rowNotes: Binder<String> = Binder("")
-    
     var normalForm: Binder<[Int]> = Binder([])
     var primeForm: Binder<[Int]> = Binder([])
-    
-    var matrixDataSource: MatrixDataSource?
     
     init(row: String) {
         self.rowString.value = row
@@ -41,15 +36,13 @@ class MatrixViewModel {
         self.matrixDataSource = MatrixDataSource(row: matrixData, prLabels: prLabels.value, iriLabels: iriLabels.value)
     }
     
-    
     func mod(_ a: Int, _ n: Int) -> Int {
         precondition(n > 0, "modulus must be positive")
         let r = a % n
         return r >= 0 ? r : r + n
     }
     
-    
-    
+    #warning("This is generally pretty gross; can this be broken up in multiple functions?")
     func generateMatrix(rowString: String) -> Row {
         userRow.value.row = [[]]
         matrixRow.value = [[String]]()
@@ -59,11 +52,7 @@ class MatrixViewModel {
         let rowArray = rowString.map(String.init)
         let rowSet = Set(rowArray)
         if rowSet.count < rowArray.count {
-#warning("Figure out how to present an alert from a view model")
-            //            let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
-            //            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            //            present(ac, animated: true)
-//            return
+            return Row(row: [[]])
         } else {
             for i in rowArray {
                 if i == "t" || i == "a" {
@@ -75,25 +64,15 @@ class MatrixViewModel {
                 }
             }
             loneRow.value = normalizedRow
-            
-            print("LONE ROW \(loneRow.value)")
             if normalizedRow.count == 12 {
-                //                print("GOT A COUNT OF 12")
                 normalizedRow = normalizedRow.map { mod($0-normalizedRow[0],12) }
-                
-                print(normalizedRow)
                 for i in normalizedRow {
                     invertedRow.append((abs((i-12)%12)))
                 }
-                print(invertedRow)
                 for i in 0...(invertedRow.count-1){
                     let index = invertedRow[i]
-                    //                    print("INDEX",index)
-                    
                     let newRow = normalizedRow.map { mod(($0+index),12) }
-                    //                    print("TESTING",newRow, normalizedRow)
                     let stringRow = newRow.map(String.init)
-                    //                    print("STRING ROW \(stringRow)")
                     matrixRow.value.append(stringRow)
                 }
             } else {
@@ -108,7 +87,8 @@ class MatrixViewModel {
                 matrixRow.value.append(testRow)
                 for i in 0..<invertedRow.count{
                     if i == 0 {
-                        let testRow = normalizedRow.map(String.init)
+                        #warning("Why is this even here?")
+                        let _ = normalizedRow.map(String.init)
                     } else {
                         var newRow = [Int]()
                         for dist in intRow {
@@ -132,16 +112,7 @@ class MatrixViewModel {
             }
             matrixRow.value.insert(horLabels, at: 0)
             matrixRow.value.insert(horLabels, at: matrixRow.value.count)
-            
-            //            print("MATRIX ROW \(matrixRow)")
             userRow.value.row = matrixRow.value
-            //            print("USER ROW \(userRow.row)")
-            
-            #warning("Update collection view")
-//            collectionView.reloadData()
-//            rowTextField.text = ""
-            #warning("Update text and resign first responder")
-//            rowTextField.resignFirstResponder()
         }
         
         return userRow.value
@@ -165,8 +136,6 @@ class MatrixViewModel {
         iriLabels.value.append("")
         return iriLabels.value
     }
-    
-    
     
 }
 
