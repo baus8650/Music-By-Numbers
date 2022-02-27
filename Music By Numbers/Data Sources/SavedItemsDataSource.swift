@@ -79,6 +79,51 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        if indexPath.section == 0 {
+            if editingStyle == .delete {
+
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+                let managedContext = appDelegate.persistentContainer.viewContext
+
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
+                fetchRequest.predicate = NSPredicate(format: "id == %@", savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
+                do {
+                    let object = try managedContext.fetch(fetchRequest)
+                    managedContext.delete(object[0])
+                    try managedContext.save()
+                    savedRows.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                } catch let error as NSError{
+                    print("Could not fetch. \(error), \(error.userInfo)")
+                }
+
+            }
+        } else {
+            if editingStyle == .delete {
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+                let managedContext = appDelegate.persistentContainer.viewContext
+
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
+                fetchRequest.predicate = NSPredicate(format: "id == %@", savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
+                do {
+                    let object = try managedContext.fetch(fetchRequest)
+                    managedContext.delete(object[0])
+                    try managedContext.save()
+                    savedSets.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                } catch let error as NSError{
+                    print("Could not fetch. \(error), \(error.userInfo)")
+                }
+
+            }
+        }
+
+    }
+    
     func makeText(setList: [Int]) -> String {
         var normDisplay = "["
         for i in setList {

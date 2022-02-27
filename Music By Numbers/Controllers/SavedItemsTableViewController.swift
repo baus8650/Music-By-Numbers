@@ -27,8 +27,8 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         
         savedItemsViewModel = SavedItemsViewModel()
         
-        savedItemsDelegate = SavedItemsTableDelegate(viewController: self, rows: self.savedRows, sets: self.savedSets)
         savedItemsDataSource = SavedItemsDataSource(viewController: self, rows: self.savedRows, sets: self.savedSets)
+        savedItemsDelegate = SavedItemsTableDelegate(viewController: self, dataSource: savedItemsDataSource, rows: self.savedRows, sets: self.savedSets)
         
         tableView.delegate = savedItemsDelegate
         tableView.dataSource = savedItemsDataSource

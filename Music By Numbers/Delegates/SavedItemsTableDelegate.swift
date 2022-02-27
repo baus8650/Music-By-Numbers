@@ -14,13 +14,16 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
     var setViewModel: SetViewModel!
+    var savedItemsDataSource: SavedItemsDataSource!
     var parentViewController: UITableViewController!
     
-    init(viewController: UITableViewController, rows: [NSManagedObject], sets: [NSManagedObject]) {
+    
+    init(viewController: UITableViewController, dataSource: SavedItemsDataSource, rows: [NSManagedObject], sets: [NSManagedObject]) {
         self.savedRows = rows
         self.savedSets = sets
         self.setViewModel = SetViewModel(set: [])
         self.parentViewController = viewController
+        self.savedItemsDataSource = dataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -59,47 +62,58 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            if editingStyle == .delete {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue)  in
+            if indexPath.section == 0 {
+                
                 
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 
                 let managedContext = appDelegate.persistentContainer.viewContext
                 
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
+                fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
                 do {
                     let object = try managedContext.fetch(fetchRequest)
                     managedContext.delete(object[0])
                     try managedContext.save()
-                    savedRows.remove(at: indexPath.row)
+                    self.savedRows.remove(at: indexPath.row)
+                    self.savedItemsDataSource.savedRows = self.savedRows
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 } catch let error as NSError{
                     print("Could not fetch. \(error), \(error.userInfo)")
                 }
-                
-            }
-        } else {
-            if editingStyle == .delete {
+            } else {
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 
                 let managedContext = appDelegate.persistentContainer.viewContext
                 
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
+                fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
                 do {
                     let object = try managedContext.fetch(fetchRequest)
                     managedContext.delete(object[0])
                     try managedContext.save()
-                    savedSets.remove(at: indexPath.row)
+                    self.savedSets.remove(at: indexPath.row)
+                    self.savedItemsDataSource.savedSets = self.savedSets
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 } catch let error as NSError{
                     print("Could not fetch. \(error), \(error.userInfo)")
                 }
                 
+                
             }
         }
+        
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, boolValue) in
+            print("I want to edit this")
+        }
+        
+        edit.backgroundColor = UIColor.blue
+        
+        let swipeActions = UISwipeActionsConfiguration(actions: [delete, edit])
+        
+        return swipeActions
     }
     
     func revertRow(row: [Int]) -> String {
