@@ -13,20 +13,15 @@ class MatrixViewModel {
     var setViewModel: SetViewModel?
     var matrixDataSource: MatrixDataSource?
     
+    var userRow: Binder<Row> = Binder(Row(row: [[]]))
     var prLabels: Binder<[String]> = Binder([])
     var iriLabels: Binder<[String]> = Binder([])
-    var rowString: Binder<String> = Binder("")
-    var userRow: Binder<Row> = Binder(Row(row: [[]]))
     var loneRow: Binder<[Int]> = Binder([])
-    var matrixRow: Binder<[[String]]> = Binder([[]])
-    var rowPiece: Binder<String> = Binder("")
-    var rowDate: Binder<Date?> = Binder(nil)
-    var rowNotes: Binder<String> = Binder("")
-    var normalForm: Binder<[Int]> = Binder([])
-    var primeForm: Binder<[Int]> = Binder([])
+    var rowString: String = ""
+    var matrixRow = [[String]]()
     
     init(row: String) {
-        self.rowString.value = row
+        self.rowString = row
         self.userRow.value = generateMatrix(rowString: row)
         if userRow.value.row == [[]] {
             return
@@ -45,7 +40,7 @@ class MatrixViewModel {
     #warning("This is generally pretty gross; can this be broken up in multiple functions?")
     func generateMatrix(rowString: String) -> Row {
         userRow.value.row = [[]]
-        matrixRow.value = [[String]]()
+        matrixRow = [[String]]()
         var normalizedRow: [Int] = []
         var invertedRow: [Int] = []
         
@@ -73,7 +68,7 @@ class MatrixViewModel {
                     let index = invertedRow[i]
                     let newRow = normalizedRow.map { mod(($0+index),12) }
                     let stringRow = newRow.map(String.init)
-                    matrixRow.value.append(stringRow)
+                    matrixRow.append(stringRow)
                 }
             } else {
                 invertedRow.append(normalizedRow[0])
@@ -84,7 +79,7 @@ class MatrixViewModel {
                     invertedRow.append(mod(invertedRow[i-1]-index,12))
                 }
                 let testRow = normalizedRow.map(String.init)
-                matrixRow.value.append(testRow)
+                matrixRow.append(testRow)
                 for i in 0..<invertedRow.count{
                     if i == 0 {
                         #warning("Why is this even here?")
@@ -100,19 +95,19 @@ class MatrixViewModel {
                             }
                         }
                         let stringRow = newRow.map(String.init)
-                        matrixRow.value.append(stringRow)
+                        matrixRow.append(stringRow)
                     }
                 }
             }
-            let vertLabels = setPLabels(matrix: matrixRow.value)
-            let horLabels = setILabels(matrix: matrixRow.value)
-            for i in 0..<matrixRow.value.count {
-                matrixRow.value[i].insert(vertLabels[i], at: 0)
-                matrixRow.value[i].insert(vertLabels[i], at: matrixRow.value[i].count)
+            let vertLabels = setPLabels(matrix: matrixRow)
+            let horLabels = setILabels(matrix: matrixRow)
+            for i in 0..<matrixRow.count {
+                matrixRow[i].insert(vertLabels[i], at: 0)
+                matrixRow[i].insert(vertLabels[i], at: matrixRow[i].count)
             }
-            matrixRow.value.insert(horLabels, at: 0)
-            matrixRow.value.insert(horLabels, at: matrixRow.value.count)
-            userRow.value.row = matrixRow.value
+            matrixRow.insert(horLabels, at: 0)
+            matrixRow.insert(horLabels, at: matrixRow.count)
+            userRow.value.row = matrixRow
         }
         
         return userRow.value

@@ -26,6 +26,9 @@
 		22C6948F27A621B900F0F1DE /* SavedItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C6948E27A621B900F0F1DE /* SavedItemsTableViewController.swift */; };
 		22C82CB127C94D8B0044435E /* MatrixDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CB027C94D8B0044435E /* MatrixDataSource.swift */; };
 		22C82CB427C98B150044435E /* MatrixCollectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CB327C98B150044435E /* MatrixCollectionDelegate.swift */; };
+		22C82CB627CB0D000044435E /* SavedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CB527CB0D000044435E /* SavedItemsViewModel.swift */; };
+		22C82CB827CB0D390044435E /* SavedItemsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CB727CB0D390044435E /* SavedItemsDataSource.swift */; };
+		22C82CBC27CB0EBE0044435E /* SavedItemsTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CBB27CB0EBE0044435E /* SavedItemsTableDelegate.swift */; };
 		22D55C4627A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4427A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld */; };
 		22D55C4827A8B619004E3BFF /* RowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */; };
 		22D55C4A27A8B622004E3BFF /* SetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */; };
@@ -58,6 +61,9 @@
 		22C6948E27A621B900F0F1DE /* SavedItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsTableViewController.swift; sourceTree = "<group>"; };
 		22C82CB027C94D8B0044435E /* MatrixDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixDataSource.swift; sourceTree = "<group>"; };
 		22C82CB327C98B150044435E /* MatrixCollectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixCollectionDelegate.swift; sourceTree = "<group>"; };
+		22C82CB527CB0D000044435E /* SavedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsViewModel.swift; sourceTree = "<group>"; };
+		22C82CB727CB0D390044435E /* SavedItemsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsDataSource.swift; sourceTree = "<group>"; };
+		22C82CBB27CB0EBE0044435E /* SavedItemsTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsTableDelegate.swift; sourceTree = "<group>"; };
 		22D55C4527A8B0A2004E3BFF /* MusicByNumbers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MusicByNumbers.xcdatamodel; sourceTree = "<group>"; };
 		22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowTableViewCell.swift; sourceTree = "<group>"; };
 		22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCell.swift; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				22C82CB027C94D8B0044435E /* MatrixDataSource.swift */,
+				22C82CB727CB0D390044435E /* SavedItemsDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -173,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				22C82CB327C98B150044435E /* MatrixCollectionDelegate.swift */,
+				22C82CBB27CB0EBE0044435E /* SavedItemsTableDelegate.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 			children = (
 				22E5C49A279D39E7008FFE82 /* SetViewModel.swift */,
 				22768EFF27A26E6C007A984F /* MatrixViewModel.swift */,
+				22C82CB527CB0D000044435E /* SavedItemsViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -275,6 +284,8 @@
 				22C82CB427C98B150044435E /* MatrixCollectionDelegate.swift in Sources */,
 				22D55C4627A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld in Sources */,
 				22B94F612739E211002F66A0 /* AppDelegate.swift in Sources */,
+				22C82CB627CB0D000044435E /* SavedItemsViewModel.swift in Sources */,
+				22C82CBC27CB0EBE0044435E /* SavedItemsTableDelegate.swift in Sources */,
 				22768EFE27A25CFD007A984F /* Binder.swift in Sources */,
 				22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */,
 				22768F0027A26E6C007A984F /* MatrixViewModel.swift in Sources */,
@@ -284,6 +295,7 @@
 				22B29D1E279A7E91006776F7 /* ICollectionViewCell.swift in Sources */,
 				22C6948F27A621B900F0F1DE /* SavedItemsTableViewController.swift in Sources */,
 				22B94F7A273B71D9002F66A0 /* Row.swift in Sources */,
+				22C82CB827CB0D390044435E /* SavedItemsDataSource.swift in Sources */,
 				22B94F752739F447002F66A0 /* CollectionViewCell.swift in Sources */,
 				22B29D1A279A7E77006776F7 /* PCollectionViewCell.swift in Sources */,
 				22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */,
