@@ -47,6 +47,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("PEEK A BOO")
         savedItemsViewModel.updateData()
         updateData()
         tableView.reloadData()

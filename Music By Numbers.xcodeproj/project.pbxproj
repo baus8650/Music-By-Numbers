@@ -29,6 +29,11 @@
 		22C82CB627CB0D000044435E /* SavedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CB527CB0D000044435E /* SavedItemsViewModel.swift */; };
 		22C82CB827CB0D390044435E /* SavedItemsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CB727CB0D390044435E /* SavedItemsDataSource.swift */; };
 		22C82CBC27CB0EBE0044435E /* SavedItemsTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CBB27CB0EBE0044435E /* SavedItemsTableDelegate.swift */; };
+		22C82CBE27CC2AE20044435E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CBD27CC2AE20044435E /* DetailViewController.swift */; };
+		22C82CC027CC2E870044435E /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CBF27CC2E870044435E /* DetailViewModel.swift */; };
+		22C82CC327CD36B30044435E /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CC127CD36B30044435E /* DetailView.swift */; };
+		22C82CC427CD36B30044435E /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C82CC227CD36B30044435E /* DetailView.xib */; };
+		22C82CC627CEAA420044435E /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82CC527CEAA420044435E /* PresentationController.swift */; };
 		22D55C4627A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4427A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld */; };
 		22D55C4827A8B619004E3BFF /* RowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */; };
 		22D55C4A27A8B622004E3BFF /* SetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */; };
@@ -64,6 +69,11 @@
 		22C82CB527CB0D000044435E /* SavedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsViewModel.swift; sourceTree = "<group>"; };
 		22C82CB727CB0D390044435E /* SavedItemsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsDataSource.swift; sourceTree = "<group>"; };
 		22C82CBB27CB0EBE0044435E /* SavedItemsTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItemsTableDelegate.swift; sourceTree = "<group>"; };
+		22C82CBD27CC2AE20044435E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		22C82CBF27CC2E870044435E /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		22C82CC127CD36B30044435E /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		22C82CC227CD36B30044435E /* DetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
+		22C82CC527CEAA420044435E /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		22D55C4527A8B0A2004E3BFF /* MusicByNumbers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MusicByNumbers.xcdatamodel; sourceTree = "<group>"; };
 		22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowTableViewCell.swift; sourceTree = "<group>"; };
 		22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTableViewCell.swift; sourceTree = "<group>"; };
@@ -146,6 +156,9 @@
 				22B94F642739E211002F66A0 /* MatrixViewController.swift */,
 				22E5C4A4279E29C0008FFE82 /* SetViewController.swift */,
 				22C6948E27A621B900F0F1DE /* SavedItemsTableViewController.swift */,
+				22C82CBD27CC2AE20044435E /* DetailViewController.swift */,
+				22C82CC127CD36B30044435E /* DetailView.swift */,
+				22C82CC527CEAA420044435E /* PresentationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -163,6 +176,7 @@
 				22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */,
 				22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */,
 				22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */,
+				22C82CC227CD36B30044435E /* DetailView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +205,7 @@
 				22E5C49A279D39E7008FFE82 /* SetViewModel.swift */,
 				22768EFF27A26E6C007A984F /* MatrixViewModel.swift */,
 				22C82CB527CB0D000044435E /* SavedItemsViewModel.swift */,
+				22C82CBF27CC2E870044435E /* DetailViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -269,6 +284,7 @@
 				22E5C49E279D3A31008FFE82 /* SetClasses.json in Resources */,
 				22B94F6A2739E212002F66A0 /* Assets.xcassets in Resources */,
 				22B94F682739E211002F66A0 /* Main.storyboard in Resources */,
+				22C82CC427CD36B30044435E /* DetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,11 +304,13 @@
 				22C82CBC27CB0EBE0044435E /* SavedItemsTableDelegate.swift in Sources */,
 				22768EFE27A25CFD007A984F /* Binder.swift in Sources */,
 				22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */,
+				22C82CBE27CC2AE20044435E /* DetailViewController.swift in Sources */,
 				22768F0027A26E6C007A984F /* MatrixViewModel.swift in Sources */,
 				22C82CB127C94D8B0044435E /* MatrixDataSource.swift in Sources */,
 				22B94F632739E211002F66A0 /* SceneDelegate.swift in Sources */,
 				22B29D1C279A7E8C006776F7 /* RCollectionViewCell.swift in Sources */,
 				22B29D1E279A7E91006776F7 /* ICollectionViewCell.swift in Sources */,
+				22C82CC327CD36B30044435E /* DetailView.swift in Sources */,
 				22C6948F27A621B900F0F1DE /* SavedItemsTableViewController.swift in Sources */,
 				22B94F7A273B71D9002F66A0 /* Row.swift in Sources */,
 				22C82CB827CB0D390044435E /* SavedItemsDataSource.swift in Sources */,
@@ -301,10 +319,12 @@
 				22B29D20279A7EC9006776F7 /* RICollectionViewCell.swift in Sources */,
 				22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */,
 				22E5C4A5279E29C0008FFE82 /* SetViewController.swift in Sources */,
+				22C82CC027CC2E870044435E /* DetailViewModel.swift in Sources */,
 				22D55C4827A8B619004E3BFF /* RowTableViewCell.swift in Sources */,
 				22768EFC27A25B35007A984F /* NetworkManager.swift in Sources */,
 				22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */,
 				22B29D22279A7EEA006776F7 /* BlankCollectionViewCell.swift in Sources */,
+				22C82CC627CEAA420044435E /* PresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

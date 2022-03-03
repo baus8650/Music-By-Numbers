@@ -53,73 +53,18 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
     }
     
-//    @IBAction func quickPrint(_ sender: Any) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-//
-//        do {
-//            let testSet = try managedContext.fetch(fetchRequest)
-//            print("TEST SET: ",testSet.map { $0.value(forKey: "userSet") as? [Int] })
-//        } catch let error as NSError{
-//            print("Could not fetch. \(error), \(error.userInfo)")
-//        }
-//    }
-    
     @IBAction func saveButton(_ sender: Any) {
         
-        let ac = UIAlertController(title: "Set Details", message: "Please enter any additional information for this set.", preferredStyle: .alert)
-        ac.addTextField(configurationHandler: { (textField) -> Void in
-            textField.placeholder = "Enter name of piece (if applicable)."
-        })
+        let detailVC = DetailViewController()
+        detailVC.mainTitleText = "Save"
+        detailVC.contentLabelText = "Set:"
+        detailVC.contentFieldText = makeText(setList: self.workingSet)
+        detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
+        detailVC.pieceLabelText = "Piece Information:"
+        detailVC.notesLabelText = "Additional Notes:"
+        detailVC.notesFieldText = ""
         
-        ac.addTextField(configurationHandler: { (textField) -> Void in
-            textField.placeholder = "Enter any additional notes for this set."
-        })
-        
-        present(ac, animated: true)
-        
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//
-//        let entity = NSEntityDescription.entity(forEntityName: "SavedSet", in: managedContext)!
-//
-//        savedSet = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in
-            
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-            }
-            
-            let managedContext = appDelegate.persistentContainer.viewContext
-            
-            let entity = NSEntityDescription.entity(forEntityName: "SavedSet", in: managedContext)!
-            
-            self.savedSet = NSManagedObject(entity: entity, insertInto: managedContext)
-            
-            let piece = ac.textFields![0] as UITextField
-            self.savedSet.setValue(piece.text!, forKey: "piece")
-            let notes = ac.textFields![1] as UITextField
-            self.savedSet.setValue(notes.text!, forKey: "notes")
-            self.savedSet.setValue(Date(), forKey: "dateCreated")
-            self.savedSet.setValue(self.workingSet, forKey: "userSet")
-            self.savedSet.setValue(UUID(), forKey: "id")
-            do {
-                try managedContext.save()
-              } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-              }
-        }))
-        
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
-            print("Cancelled Save")
-        }))
+        self.present(detailVC, animated: true, completion: nil)
     }
     
     // MARK: - Parameters
@@ -399,6 +344,21 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         precondition(n > 0, "modulus must be positive")
         let r = a % n
         return r >= 0 ? r : r + n
+    }
+
+    func makeText(setList: [Int]) -> String {
+        var normDisplay = "["
+        for i in setList {
+            if i == 10 {
+                normDisplay += "t"
+            } else if i == 11 {
+                normDisplay += "e"
+            } else if i != 10 || i != 11 {
+                normDisplay += "\(i)"
+            }
+        }
+        normDisplay += "]"
+        return normDisplay
     }
     
 }

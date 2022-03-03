@@ -9,13 +9,20 @@ import Foundation
 import UIKit
 import CoreData
 
-class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
+class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol {
+    
+    
     
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
     var setViewModel: SetViewModel!
     var savedItemsDataSource: SavedItemsDataSource!
     var parentViewController: UITableViewController!
+    var saveItemDelegate: SavedItemsProtocol?
+    
+    var content: String?
+    var piece: String?
+    var notes: String?
     
     
     init(viewController: UITableViewController, dataSource: SavedItemsDataSource, rows: [NSManagedObject], sets: [NSManagedObject]) {
@@ -64,13 +71,12 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue)  in
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
             if indexPath.section == 0 {
-                
-                
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
                 fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
                 do {
@@ -84,10 +90,6 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
                     print("Could not fetch. \(error), \(error.userInfo)")
                 }
             } else {
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
                 fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
                 do {
@@ -100,13 +102,68 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
                 } catch let error as NSError{
                     print("Could not fetch. \(error), \(error.userInfo)")
                 }
-                
-                
             }
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, boolValue) in
             print("I want to edit this")
+            
+            let detailVC = DetailViewController()
+            #warning("An Int of 10 will cause errors.")
+            if indexPath.section == 0 {
+            
+                var localContent: String?
+                var localPiece: String?
+                var localNotes: String?
+                
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
+                fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
+                
+                localContent = self.makeRowText(row: self.savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
+                
+                localPiece = self.savedRows[indexPath.row].value(forKey: "piece") as? String
+                localNotes = self.savedRows[indexPath.row].value(forKey: "notes") as? String
+                
+                let id = self.savedRows[indexPath.row].value(forKey: "id") as? UUID
+                
+                detailVC.editID = id
+                detailVC.mainTitleText = "Edit"
+                detailVC.contentLabelText = "Row:"
+                detailVC.contentFieldText = localContent
+                detailVC.pieceLabelText = "Piece Information:"
+                detailVC.pieceFieldText = localPiece
+                detailVC.notesLabelText = "Additional Notes:"
+                detailVC.notesFieldText = localNotes
+                detailVC.updateDatails()
+                self.parentViewController.present(detailVC, animated: true, completion: nil)
+            
+            } else {
+                var localContent: String?
+                var localPiece: String?
+                var localNotes: String?
+                
+                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
+                fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
+                
+                localContent = self.makeText(setList: self.savedSets[indexPath.row].value(forKey: "userSet") as! [Int])
+                
+                localPiece = self.savedSets[indexPath.row].value(forKey: "piece") as? String
+                localNotes = self.savedSets[indexPath.row].value(forKey: "notes") as? String
+                
+                let id = self.savedSets[indexPath.row].value(forKey: "id") as? UUID
+                
+                detailVC.editID = id
+                detailVC.mainTitleText = "Edit"
+                detailVC.contentLabelText = "Set:"
+                detailVC.contentFieldText = localContent
+                detailVC.pieceLabelText = "Piece Information:"
+                detailVC.pieceFieldText = localPiece
+                detailVC.notesLabelText = "Additional Notes:"
+                detailVC.notesFieldText = localNotes
+                detailVC.updateDatails()
+                self.parentViewController.present(detailVC, animated: true, completion: nil)
+            }
+
         }
         
         edit.backgroundColor = UIColor.blue
@@ -114,6 +171,12 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         let swipeActions = UISwipeActionsConfiguration(actions: [delete, edit])
         
         return swipeActions
+    }
+    
+    func saveUpdatedEntry(content: String, piece: String, notes: String) {
+        self.content = content
+        self.piece = piece
+        self.notes = notes
     }
     
     func revertRow(row: [Int]) -> String {
@@ -126,6 +189,33 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
                 rowString += "e"
             } else {
                 rowString += String(i)
+            }
+        }
+        return rowString
+    }
+    
+    func makeText(setList: [Int]) -> String {
+        var normDisplay = "["
+        for i in setList {
+            if i == 10 {
+                normDisplay += "t"
+            } else if i == 11 {
+                normDisplay += "e"
+            } else if i != 10 || i != 11 {
+                normDisplay += "\(i)"
+            }
+        }
+        normDisplay += "]"
+        return normDisplay
+    }
+    
+    func makeRowText(row: [Int]) -> String {
+        var rowString = "["
+        for i in 0..<row.count {
+            if i == row.count - 1 {
+                rowString += "\(String(row[i]))]"
+            } else {
+                rowString += "\(String(row[i])), "
             }
         }
         return rowString

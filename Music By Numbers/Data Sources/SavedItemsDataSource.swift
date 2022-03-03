@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import CoreData
 
+
+
 class SavedItemsDataSource: NSObject, UITableViewDataSource {
     
     let sections = ["Rows","Sets"]
@@ -16,6 +18,7 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
     var savedRows = [NSManagedObject]()
     var parentViewController: UITableViewController!
     var setViewModel: SetViewModel!
+    
     
     init(viewController: UITableViewController, rows: [NSManagedObject], sets: [NSManagedObject]) {
         self.parentViewController = viewController
@@ -64,8 +67,10 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
             if savedSets[indexPath.row].value(forKey: "userSet") == nil {
                 return setCell
             } else {
-                setCell.pcCircleView?.setShape = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
-                let newLabel = makeText(setList: savedSets[indexPath.row].value(forKey: "userSet") as! [Int])
+                let fetchedSet = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
+                let normalForm = setViewModel.findNormalForm(pcSet: fetchedSet)
+                setCell.pcCircleView?.setShape = normalForm
+                let newLabel = makeText(setList: normalForm)
                 let date = savedSets[indexPath.row].value(forKey: "dateCreated") as! Date
                 setCell.setLabel.text = newLabel
                 setCell.cellIndexRow = indexPath.row
@@ -77,51 +82,6 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
                 return setCell
             }
         }
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-
-        if indexPath.section == 0 {
-            if editingStyle == .delete {
-
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
-                let managedContext = appDelegate.persistentContainer.viewContext
-
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
-                do {
-                    let object = try managedContext.fetch(fetchRequest)
-                    managedContext.delete(object[0])
-                    try managedContext.save()
-                    savedRows.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                } catch let error as NSError{
-                    print("Could not fetch. \(error), \(error.userInfo)")
-                }
-
-            }
-        } else {
-            if editingStyle == .delete {
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
-                let managedContext = appDelegate.persistentContainer.viewContext
-
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
-                do {
-                    let object = try managedContext.fetch(fetchRequest)
-                    managedContext.delete(object[0])
-                    try managedContext.save()
-                    savedSets.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                } catch let error as NSError{
-                    print("Could not fetch. \(error), \(error.userInfo)")
-                }
-
-            }
-        }
-
     }
     
     func makeText(setList: [Int]) -> String {

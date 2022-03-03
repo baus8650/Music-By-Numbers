@@ -51,46 +51,16 @@ class MatrixViewController: UIViewController {
     
     @IBAction func saveRow(_ sender: Any) {
         
-        let ac = UIAlertController(title: "Row Details", message: "Please enter any additional information for this row.", preferredStyle: .alert)
-        ac.addTextField(configurationHandler: { (textField) -> Void in
-            textField.placeholder = "Enter name of piece (if applicable)."
-        })
-
-        ac.addTextField(configurationHandler: { (textField) -> Void in
-            textField.placeholder = "Enter any additional notes for this row."
-        })
-
-        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in
-
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-            }
-
-            let managedContext = appDelegate.persistentContainer.viewContext
-
-            let entity = NSEntityDescription.entity(forEntityName: "SavedRow", in: managedContext)!
-
-            self.savedRow = NSManagedObject(entity: entity, insertInto: managedContext)
-
-            let piece = ac.textFields![0] as UITextField
-            self.savedRow.setValue(piece.text!, forKey: "piece")
-            let notes = ac.textFields![1] as UITextField
-            self.savedRow.setValue(notes.text!, forKey: "notes")
-            self.savedRow.setValue(Date(), forKey: "dateCreated")
-            self.savedRow.setValue(self.loneRow, forKey: "userRow")
-            self.savedRow.setValue(UUID(), forKey: "id")
-
-            do {
-                try managedContext.save()
-              } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-              }
-        }))
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
-            print("Cancelled Save")
-        }))
+        let detailVC = DetailViewController()
+        detailVC.mainTitleText = "Save"
+        detailVC.contentLabelText = "Row:"
+        detailVC.contentFieldText = makeRowText(row: self.loneRow)
+        detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
+        detailVC.pieceLabelText = "Piece Information:"
+        detailVC.notesLabelText = "Additional Notes:"
+        detailVC.notesFieldText = ""
         
-        present(ac, animated: true)
+        self.present(detailVC, animated: true, completion: nil)
         
     }
     
@@ -167,6 +137,18 @@ class MatrixViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    func makeRowText(row: [Int]) -> String {
+        var rowString = "["
+        for i in 0..<row.count {
+            if i == row.count - 1 {
+                rowString += "\(String(row[i]))]"
+            } else {
+                rowString += "\(String(row[i])), "
+            }
+        }
+        return rowString
+    }
+    
     
 }
 
@@ -178,3 +160,8 @@ extension MatrixViewController: UITextFieldDelegate {
     }
 }
 
+extension MatrixViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
