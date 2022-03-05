@@ -59,17 +59,10 @@ class CoreDataActions {
         if type == "Row" {
             let savedRow: NSManagedObject!
             savedRow = NSManagedObject(entity: self.rowEntity!, insertInto: managedContext)
-            
             savedRow.setValue(piece, forKey: "piece")
             savedRow.setValue(notes, forKey: "notes")
             savedRow.setValue(Date(), forKey: "dateCreated")
-            let localRow = content.map(String.init)
-            var intRow = [Int]()
-            for i in localRow {
-                if i.isInt {
-                    intRow.append(Int(i)!)
-                }
-            }
+            let intRow = filterRow(row: content)
             savedRow.setValue(intRow, forKey: "userRow")
             savedRow.setValue(UUID(), forKey: "id")
             
@@ -90,6 +83,10 @@ class CoreDataActions {
             for i in localSet {
                 if i.isInt {
                     intSet.append(Int(i)!)
+                } else if i.lowercased() == "t" || i.lowercased() == "a" {
+                    intSet.append(10)
+                } else if i.lowercased() == "e" || i.lowercased() == "b" {
+                    intSet.append(11)
                 }
             }
             savedSet.setValue(intSet, forKey: "userSet")
@@ -151,13 +148,7 @@ class CoreDataActions {
             editRow.setValue(notesField, forKey: "notes")
             #warning("This looks like it will update the date when editing information")
             editRow.setValue(Date(), forKey: "dateCreated")
-            let localRow = contentField.map(String.init)
-            var intRow = [Int]()
-            for i in localRow {
-                if i.isInt {
-                    intRow.append(Int(i)!)
-                }
-            }
+            let intRow = filterRow(row: contentField)
             editRow.setValue(intRow, forKey: "userRow")
             editRow.setValue(editID, forKey: "id")
             
@@ -192,6 +183,10 @@ class CoreDataActions {
             for i in localSet {
                 if i.isInt {
                     intSet.append(Int(i)!)
+                } else if i.lowercased() == "t" || i.lowercased() == "a" {
+                    intSet.append(10)
+                } else if i.lowercased() == "e" || i.lowercased() == "b" {
+                    intSet.append(11)
                 }
             }
             editSet.setValue(intSet, forKey: "userSet")
@@ -246,6 +241,24 @@ class CoreDataActions {
             }
         }
         return rowString
+    }
+    
+    func filterRow(row: String) -> [Int] {
+        var intRow = [Int]()
+        let removeFirst = row.replacingOccurrences(of: "[", with: "")
+        let removeLast = removeFirst.replacingOccurrences(of: "]", with: "")
+        let removeWhiteSpace = removeLast.replacingOccurrences(of: " ", with: "")
+        let stringArray = removeWhiteSpace.split(separator: ",")
+        for i in stringArray {
+            if i.lowercased() == "t" || i.lowercased() == "a" {
+                intRow.append(10)
+            } else if i.lowercased() == "e" || i.lowercased() == "b" {
+                intRow.append(11)
+            } else {
+                intRow.append(Int(i)!)
+            }
+        }
+        return intRow
     }
     
 }

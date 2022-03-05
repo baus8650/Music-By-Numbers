@@ -65,7 +65,6 @@ class DetailViewController: UIViewController {
         updateDatails()
         coreDataActions = CoreDataActions()
         indexPath = [0, 0]
-        print("SENT OVER ID",editID)
     }
     
     func updateDatails() {
@@ -76,7 +75,6 @@ class DetailViewController: UIViewController {
         pieceField?.text = pieceFieldText
         notesLabel?.text = notesLabelText
         notesField?.text = notesFieldText
-        print("SENT OVER ID",editID)
     }
     
     /*

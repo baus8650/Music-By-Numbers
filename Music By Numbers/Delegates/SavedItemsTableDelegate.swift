@@ -40,10 +40,12 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
             let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
             if rowVC.isViewLoaded {
                 rowVC.generateMatrix(rowString: row)
+                rowVC.rowTextField.text = row
                 parentViewController.tabBarController?.selectedIndex = 1
             } else{
                 let _ = rowVC.view
                 rowVC.generateMatrix(rowString: row)
+                rowVC.rowTextField.text = row
                 parentViewController.tabBarController?.selectedIndex = 1
             }
         } else {
@@ -93,7 +95,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, boolValue) in
             
             let detailVC = DetailViewController()
-            #warning("double digit Int will cause errors.")
+
             if indexPath.section == 0 {
             
                 var localContent: String?
