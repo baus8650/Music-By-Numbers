@@ -10,20 +10,18 @@ import UIKit
 import CoreData
 
 class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol {
-    
-    
-    
+
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
     var setViewModel: SetViewModel!
     var savedItemsDataSource: SavedItemsDataSource!
     var parentViewController: UITableViewController!
     var saveItemDelegate: SavedItemsProtocol?
+    var coreDataActions: CoreDataActions!
     
     var content: String?
     var piece: String?
     var notes: String?
-    
     
     init(viewController: UITableViewController, dataSource: SavedItemsDataSource, rows: [NSManagedObject], sets: [NSManagedObject]) {
         self.savedRows = rows
@@ -31,6 +29,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
         self.setViewModel = SetViewModel(set: [])
         self.parentViewController = viewController
         self.savedItemsDataSource = dataSource
+        self.coreDataActions = CoreDataActions()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -71,45 +70,30 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue)  in
-            
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            
-            let managedContext = appDelegate.persistentContainer.viewContext
-            
+
             if indexPath.section == 0 {
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
-                do {
-                    let object = try managedContext.fetch(fetchRequest)
-                    managedContext.delete(object[0])
-                    try managedContext.save()
-                    self.savedRows.remove(at: indexPath.row)
-                    self.savedItemsDataSource.savedRows = self.savedRows
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                } catch let error as NSError{
-                    print("Could not fetch. \(error), \(error.userInfo)")
+                self.coreDataActions.savedRows.value = self.savedRows
+                self.coreDataActions.delete(type: "Row", indexPath: indexPath)
+                self.coreDataActions.savedRows.bind { savedRows in
+                    self.savedRows = savedRows
                 }
+                self.savedItemsDataSource.savedRows = self.savedRows
+                tableView.deleteRows(at: [indexPath], with: .fade)
             } else {
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
-                do {
-                    let object = try managedContext.fetch(fetchRequest)
-                    managedContext.delete(object[0])
-                    try managedContext.save()
-                    self.savedSets.remove(at: indexPath.row)
-                    self.savedItemsDataSource.savedSets = self.savedSets
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                } catch let error as NSError{
-                    print("Could not fetch. \(error), \(error.userInfo)")
+                self.coreDataActions.savedSets.value = self.savedSets
+                self.coreDataActions.delete(type: "Set", indexPath: indexPath)
+                self.coreDataActions.savedSets.bind { savedSets in
+                    self.savedSets = savedSets
                 }
+                self.savedItemsDataSource.savedSets = self.savedSets
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, boolValue) in
-            print("I want to edit this")
             
             let detailVC = DetailViewController()
-            #warning("An Int of 10 will cause errors.")
+            #warning("double digit Int will cause errors.")
             if indexPath.section == 0 {
             
                 var localContent: String?
@@ -125,6 +109,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
                 localNotes = self.savedRows[indexPath.row].value(forKey: "notes") as? String
                 
                 let id = self.savedRows[indexPath.row].value(forKey: "id") as? UUID
+                print("INDEX PATH \(indexPath)")
                 
                 detailVC.editID = id
                 detailVC.mainTitleText = "Edit"

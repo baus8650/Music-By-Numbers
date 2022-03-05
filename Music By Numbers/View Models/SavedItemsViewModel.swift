@@ -13,33 +13,24 @@ class SavedItemsViewModel {
     
     var savedSets: Binder<[NSManagedObject]> = Binder([NSManagedObject]())
     var savedRows: Binder<[NSManagedObject]> = Binder([NSManagedObject]())
+    var coreDataActions: CoreDataActions?
+    
+    init() {
+        self.coreDataActions = CoreDataActions()
+    }
     
     func fetchSets() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-        
-        do {
-            savedSets.value = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError{
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+        coreDataActions?.fetch(type: "Set")
+        coreDataActions?.savedSets.bind(listener: { savedSets in
+            self.savedSets.value = savedSets
+        })
     }
     
     func fetchRows() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-        
-        do {
-            savedRows.value = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError{
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+        coreDataActions?.fetch(type: "Row")
+        coreDataActions?.savedRows.bind(listener: { savedRows in
+            self.savedRows.value = savedRows
+        })
     }
     
     func updateData() {

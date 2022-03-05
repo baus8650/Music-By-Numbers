@@ -24,156 +24,24 @@ class DetailViewController: UIViewController {
     @IBOutlet var contentField: UITextField!
     @IBOutlet var mainTitle: UILabel!
     
+    var coreDataActions: CoreDataActions!
+    var indexPath: IndexPath!
+    
     @IBAction func savedButtonPressed(_ sender: Any) {
         
         if self.mainTitleText == "Save" {
             if self.contentLabelText == "Row:" {
-                
-                let savedRow: NSManagedObject!
-                
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                let entity = NSEntityDescription.entity(forEntityName: "SavedRow", in: managedContext)!
-                
-                savedRow = NSManagedObject(entity: entity, insertInto: managedContext)
-                
-                savedRow.setValue(pieceField?.text, forKey: "piece")
-                savedRow.setValue(notesField?.text, forKey: "notes")
-                savedRow.setValue(Date(), forKey: "dateCreated")
-                let localRow = contentField.text!.map(String.init)
-                var intRow = [Int]()
-                for i in localRow {
-                    if i.isInt {
-                        intRow.append(Int(i)!)
-                    }
-                }
-                print("USER ROW: \(intRow)")
-                savedRow.setValue(intRow, forKey: "userRow")
-                savedRow.setValue(UUID(), forKey: "id")
-                
-                do {
-                    try managedContext.save()
-                } catch let error as NSError {
-                    print("could not save. \(error), \(error.userInfo)")
-                }
+                coreDataActions.save(type: "Row", content: contentField?.text ?? "", piece: pieceField?.text ?? "", notes: notesField?.text ?? "")
             } else if contentLabelText == "Set:" {
-                let savedSet: NSManagedObject!
-                
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                let entity = NSEntityDescription.entity(forEntityName: "SavedSet", in: managedContext)!
-                
-                savedSet = NSManagedObject(entity: entity, insertInto: managedContext)
-                
-                savedSet.setValue(pieceField?.text, forKey: "piece")
-                savedSet.setValue(notesField?.text, forKey: "notes")
-                savedSet.setValue(Date(), forKey: "dateCreated")
-                let localSet = contentField.text!.map(String.init)
-                var intSet = [Int]()
-                for i in localSet {
-                    if i.isInt {
-                        intSet.append(Int(i)!)
-                    }
-                }
-                savedSet.setValue(intSet, forKey: "userSet")
-                savedSet.setValue(UUID(), forKey: "id")
-                
-                do {
-                    try managedContext.save()
-                } catch let error as NSError {
-                    print("could not save. \(error), \(error.userInfo)")
-                }
+                coreDataActions.save(type: "Set", content: contentField?.text ?? "", piece: pieceField?.text ?? "", notes: notesField?.text ?? "")
             }
         } else if self.mainTitleText == "Edit" {
-            print("IN THE EDIT BLOCK")
             if contentLabelText == "Row:" {
-                
-                let editRow: NSManagedObject!
-                
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", editID! as CVarArg)
-                
-                let results = try? managedContext.fetch(fetchRequest)
-                
-                if results?.count == 0 {
-                    return
-                } else {
-                    editRow = results?.first
-                }
-                
-                editRow.setValue(pieceField?.text, forKey: "piece")
-                editRow.setValue(notesField?.text, forKey: "notes")
-                editRow.setValue(Date(), forKey: "dateCreated")
-                let localRow = contentField.text!.map(String.init)
-                var intRow = [Int]()
-                for i in localRow {
-                    if i.isInt {
-                        intRow.append(Int(i)!)
-                    }
-                }
-                print("USER ROW: \(intRow)")
-                editRow.setValue(intRow, forKey: "userRow")
-                editRow.setValue(editID, forKey: "id")
-                
-                do {
-                    try managedContext.save()
-                } catch let error as NSError {
-                    print("could not save. \(error), \(error.userInfo)")
-                }
-                
+                coreDataActions.update(type: "Row", editID: self.editID!, pieceField: pieceField?.text ?? "", notesField: notesField?.text ?? "", contentField: contentField?.text ?? "")
             } else if contentLabelText == "Set:" {
-                let editSet: NSManagedObject!
-                
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                    return
-                }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", editID! as CVarArg)
-                
-                let results = try? managedContext.fetch(fetchRequest)
-                
-                if results?.count == 0 {
-                    print("Didn't find a result")
-                    return
-                } else {
-                    editSet = results?.first
-                }
-                
-                editSet.setValue(pieceField?.text, forKey: "piece")
-                editSet.setValue(notesField?.text, forKey: "notes")
-                editSet.setValue(Date(), forKey: "dateCreated")
-                let localSet = contentField.text!.map(String.init)
-                var intSet = [Int]()
-                for i in localSet {
-                    if i.isInt {
-                        intSet.append(Int(i)!)
-                    }
-                }
-//                print("USER ROW: \(intRow)")
-                editSet.setValue(intSet, forKey: "userSet")
-                editSet.setValue(editID, forKey: "id")
-                
-                do {
-                    try managedContext.save()
-                } catch let error as NSError {
-                    print("could not save. \(error), \(error.userInfo)")
-                }
+                coreDataActions.update(type: "Set", editID: self.editID!, pieceField: pieceField?.text ?? "", notesField: notesField?.text ?? "", contentField: contentField?.text ?? "")
             }
         }
-
         dismiss(animated: true, completion: nil)
     }
     
@@ -195,6 +63,8 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         notesField.layer.borderWidth = 1
         updateDatails()
+        coreDataActions = CoreDataActions()
+        indexPath = [0, 0]
         print("SENT OVER ID",editID)
     }
     

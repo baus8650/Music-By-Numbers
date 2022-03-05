@@ -29,7 +29,6 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         
         savedItemsDataSource = SavedItemsDataSource(viewController: self, rows: self.savedRows, sets: self.savedSets)
         savedItemsDelegate = SavedItemsTableDelegate(viewController: self, dataSource: savedItemsDataSource, rows: self.savedRows, sets: self.savedSets)
-        
         tableView.delegate = savedItemsDelegate
         tableView.dataSource = savedItemsDataSource
         
@@ -47,7 +46,6 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("PEEK A BOO")
         savedItemsViewModel.updateData()
         updateData()
         tableView.reloadData()
