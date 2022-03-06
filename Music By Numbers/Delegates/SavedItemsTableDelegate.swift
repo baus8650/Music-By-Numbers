@@ -9,15 +9,19 @@ import Foundation
 import UIKit
 import CoreData
 
-class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol {
+protocol UpdateDetailsProtocol {
+    func updateDetails(id: UUID, title: String, contentLabel: String, contentField: String, pieceLabel: String, pieceField: String, NotesLabel: String, NotesField: String)
+}
+
+class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
 
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
     var setViewModel: SetViewModel!
     var savedItemsDataSource: SavedItemsDataSource!
     var parentViewController: UITableViewController!
-    var saveItemDelegate: SavedItemsProtocol?
     var coreDataActions: CoreDataActions!
+    var updateDelegate: UpdateDetailsProtocol?
     
     var content: String?
     var piece: String?
@@ -111,18 +115,10 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
                 localNotes = self.savedRows[indexPath.row].value(forKey: "notes") as? String
                 
                 let id = self.savedRows[indexPath.row].value(forKey: "id") as? UUID
-                print("INDEX PATH \(indexPath)")
                 
-                detailVC.editID = id
-                detailVC.mainTitleText = "Edit"
-                detailVC.contentLabelText = "Row:"
-                detailVC.contentFieldText = localContent
-                detailVC.pieceLabelText = "Piece Information:"
-                detailVC.pieceFieldText = localPiece
-                detailVC.notesLabelText = "Additional Notes:"
-                detailVC.notesFieldText = localNotes
-                detailVC.updateDatails()
-                self.parentViewController.present(detailVC, animated: true, completion: nil)
+                self.updateDelegate?.updateDetails(id: id!, title: "Edit", contentLabel: "Row:", contentField: localContent!, pieceLabel: "Piece Information:", pieceField: localPiece!, NotesLabel: "Additional Notes:", NotesField: localNotes!)
+                self.parentViewController.performSegue(withIdentifier: "toDetail", sender: nil)
+//                self.parentViewController.present(detailVC, animated: true, completion: nil)
             
             } else {
                 var localContent: String?
@@ -132,23 +128,19 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
                 fetchRequest.predicate = NSPredicate(format: "id == %@", self.savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
                 
-                localContent = self.makeText(setList: self.savedSets[indexPath.row].value(forKey: "userSet") as! [Int])
+                let fetchedSet = self.savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
+                
+                let normalForm = self.setViewModel.findNormalForm(pcSet: fetchedSet)
+                
+                localContent = self.makeText(setList: normalForm)
                 
                 localPiece = self.savedSets[indexPath.row].value(forKey: "piece") as? String
                 localNotes = self.savedSets[indexPath.row].value(forKey: "notes") as? String
                 
                 let id = self.savedSets[indexPath.row].value(forKey: "id") as? UUID
                 
-                detailVC.editID = id
-                detailVC.mainTitleText = "Edit"
-                detailVC.contentLabelText = "Set:"
-                detailVC.contentFieldText = localContent
-                detailVC.pieceLabelText = "Piece Information:"
-                detailVC.pieceFieldText = localPiece
-                detailVC.notesLabelText = "Additional Notes:"
-                detailVC.notesFieldText = localNotes
-                detailVC.updateDatails()
-                self.parentViewController.present(detailVC, animated: true, completion: nil)
+                self.updateDelegate?.updateDetails(id: id!, title: "Edit", contentLabel: "Set:", contentField: localContent!, pieceLabel: "Piece Information:", pieceField: localPiece!, NotesLabel: "Additional Notes:", NotesField: localNotes!)
+                self.parentViewController.performSegue(withIdentifier: "toDetail", sender: nil)
             }
 
         }
@@ -182,7 +174,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
     }
     
     func makeText(setList: [Int]) -> String {
-        var normDisplay = "["
+        var normDisplay = ""
         for i in setList {
             if i == 10 {
                 normDisplay += "t"
@@ -192,19 +184,21 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate, SavedItemsProtocol
                 normDisplay += "\(i)"
             }
         }
-        normDisplay += "]"
         return normDisplay
     }
     
     func makeRowText(row: [Int]) -> String {
-        var rowString = "["
+        var rowString = ""
         for i in 0..<row.count {
-            if i == row.count - 1 {
-                rowString += "\(String(row[i]))]"
+            if row[i] == 10 {
+                rowString += "t"
+            } else if row[i] == 11 {
+                    rowString += "e"
             } else {
-                rowString += "\(String(row[i])), "
+                rowString += String(row[i])
             }
         }
         return rowString
     }
+    
 }

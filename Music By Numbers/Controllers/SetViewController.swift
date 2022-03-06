@@ -55,16 +55,30 @@ class SetViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBAction func saveButton(_ sender: Any) {
         
-        let detailVC = DetailViewController()
-        detailVC.mainTitleText = "Save"
-        detailVC.contentLabelText = "Set:"
-        detailVC.contentFieldText = makeText(setList: self.workingSet)
-        detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
-        detailVC.pieceLabelText = "Piece Information:"
-        detailVC.notesLabelText = "Additional Notes:"
-        detailVC.notesFieldText = ""
+//        let detailVC = DetailViewController()
+//        detailVC.mainTitleText = "Save"
+//        detailVC.contentLabelText = "Set:"
+//        detailVC.contentFieldText = makeText(setList: self.workingSet)
+//        detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
+//        detailVC.pieceLabelText = "Piece Information:"
+//        detailVC.notesLabelText = "Additional Notes:"
+//        detailVC.notesFieldText = ""
         
-        self.present(detailVC, animated: true, completion: nil)
+        performSegue(withIdentifier: "setToDetail", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "setToDetail" {
+            let detailVC = segue.destination as! DetailViewController
+            detailVC.mainTitleText = "Save"
+            detailVC.contentLabelText = "Set:"
+            detailVC.contentFieldText = makeText(setList: self.workingSet)
+            detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
+            detailVC.pieceLabelText = "Piece Information:"
+            detailVC.notesLabelText = "Additional Notes:"
+            detailVC.notesFieldText = ""
+        }
+            
     }
     
     // MARK: - Parameters
@@ -386,3 +400,4 @@ extension SetViewController: UITextFieldDelegate {
         return true
     }
 }
+

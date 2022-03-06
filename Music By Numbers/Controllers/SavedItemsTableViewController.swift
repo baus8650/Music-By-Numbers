@@ -14,12 +14,31 @@ protocol ClickDelegate {
 
 class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     
+    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
+        savedItemsViewModel.updateData()
+        updateData()
+        tableView.reloadData()
+        
+    }
+
+    var editID: UUID?
+    var mainTitleText: String! = ""
+    var contentLabelText: String! = ""
+    var contentFieldText: String? = ""
+    var pieceLabelText: String! = ""
+    var pieceFieldText: String? = ""
+    var notesLabelText: String! = ""
+    var notesFieldText: String? = ""
+    
+    
     var savedItemsDelegate: SavedItemsTableDelegate!
     var savedItemsDataSource: SavedItemsDataSource!
     var savedItemsViewModel: SavedItemsViewModel!
+    var detailVC: DetailViewController!
     
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +50,10 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         savedItemsDelegate = SavedItemsTableDelegate(viewController: self, dataSource: savedItemsDataSource, rows: self.savedRows, sets: self.savedSets)
         tableView.delegate = savedItemsDelegate
         tableView.dataSource = savedItemsDataSource
+        savedItemsDelegate.updateDelegate = self
         
         updateData()
+        detailVC = DetailViewController()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
@@ -67,6 +88,20 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         tableView.reloadData()
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let detailVC = segue.destination as! DetailViewController
+        detailVC.loadViewIfNeeded()
+        detailVC.editID = editID
+        detailVC.mainTitleText = mainTitleText
+        detailVC.contentLabelText = contentLabelText
+        detailVC.contentFieldText = contentFieldText
+        detailVC.pieceLabelText = pieceLabelText
+        detailVC.pieceFieldText = pieceFieldText
+        detailVC.notesLabelText = notesLabelText
+        detailVC.notesFieldText = notesFieldText
+        detailVC.updateDatails()
+    }
 
     func clicked(row: Int, section: Int) {
         if section == 0 {
@@ -85,4 +120,19 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     }
     
 }
+
+extension SavedItemsTableViewController: UpdateDetailsProtocol {
+    func updateDetails(id: UUID, title: String, contentLabel: String, contentField: String, pieceLabel: String, pieceField: String, NotesLabel: String, NotesField: String) {
+        self.editID = id
+        self.mainTitleText = title
+        self.contentLabelText = contentLabel
+        self.contentFieldText = contentField
+        self.pieceLabelText = pieceLabel
+        self.pieceFieldText = pieceField
+        self.notesLabelText = NotesLabel
+        self.notesFieldText = NotesField
+    }
+}
+
+    
 

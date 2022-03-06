@@ -245,17 +245,13 @@ class CoreDataActions {
     
     func filterRow(row: String) -> [Int] {
         var intRow = [Int]()
-        let removeFirst = row.replacingOccurrences(of: "[", with: "")
-        let removeLast = removeFirst.replacingOccurrences(of: "]", with: "")
-        let removeWhiteSpace = removeLast.replacingOccurrences(of: " ", with: "")
-        let stringArray = removeWhiteSpace.split(separator: ",")
-        for i in stringArray {
-            if i.lowercased() == "t" || i.lowercased() == "a" {
+        for i in row {
+            if i == "t" || i == "a" {
                 intRow.append(10)
-            } else if i.lowercased() == "e" || i.lowercased() == "b" {
+            } else if i == "e" || i == "b" {
                 intRow.append(11)
             } else {
-                intRow.append(Int(i)!)
+                intRow.append(Int(String.init(i))!)
             }
         }
         return intRow

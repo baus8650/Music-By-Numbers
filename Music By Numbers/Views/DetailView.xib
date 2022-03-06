@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="Music_By_Numbers" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner">
             <connections>
                 <outlet property="contentField" destination="WnN-gU-6gw" id="KAa-UT-mqF"/>
                 <outlet property="contentLabel" destination="pHU-8H-ZJP" id="uk3-4L-XZN"/>

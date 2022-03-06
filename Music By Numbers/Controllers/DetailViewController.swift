@@ -8,13 +8,11 @@
 import UIKit
 import CoreData
 
-protocol SavedItemsProtocol {
-    func saveUpdatedEntry(content: String, piece: String, notes: String)
-}
-
 class DetailViewController: UIViewController {
     
     var editID: UUID?
+    
+    var delegate: UpdateDetailsProtocol?
     
     @IBOutlet var notesLabel: UILabel!
     @IBOutlet var notesField: UITextView!
@@ -24,15 +22,23 @@ class DetailViewController: UIViewController {
     @IBOutlet var contentField: UITextField!
     @IBOutlet var mainTitle: UILabel!
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isBeingDismissed {
+            self.performSegue(withIdentifier: "unwindSegue", sender: nil)
+        }
+    }
+    
     var coreDataActions: CoreDataActions!
     var indexPath: IndexPath!
     
     @IBAction func savedButtonPressed(_ sender: Any) {
-        
+        print("WHAT IS HAPPENING \(self.mainTitleText)")
         if self.mainTitleText == "Save" {
             if self.contentLabelText == "Row:" {
                 coreDataActions.save(type: "Row", content: contentField?.text ?? "", piece: pieceField?.text ?? "", notes: notesField?.text ?? "")
             } else if contentLabelText == "Set:" {
+                print("TRYING TO SAVE SET")
                 coreDataActions.save(type: "Set", content: contentField?.text ?? "", piece: pieceField?.text ?? "", notes: notesField?.text ?? "")
             }
         } else if self.mainTitleText == "Edit" {
@@ -42,7 +48,10 @@ class DetailViewController: UIViewController {
                 coreDataActions.update(type: "Set", editID: self.editID!, pieceField: pieceField?.text ?? "", notesField: notesField?.text ?? "", contentField: contentField?.text ?? "")
             }
         }
-        dismiss(animated: true, completion: nil)
+        
+        self.performSegue(withIdentifier: "unwindSegue", sender: nil)
+//        dismiss(animated: true, completion: nil)
+
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
@@ -55,16 +64,16 @@ class DetailViewController: UIViewController {
     var pieceFieldText: String? = ""
     var notesLabelText: String! = ""
     var notesFieldText: String? = ""
-    
-    var delegate: SavedItemsProtocol?
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        notesField.layer.borderWidth = 1
         updateDatails()
+        notesField?.layer.borderWidth = 1
         coreDataActions = CoreDataActions()
         indexPath = [0, 0]
+        
     }
     
     func updateDatails() {
@@ -94,3 +103,4 @@ extension String {
         return Int(self) != nil
     }
 }
+

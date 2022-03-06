@@ -50,18 +50,22 @@ class MatrixViewController: UIViewController {
     }
     
     @IBAction func saveRow(_ sender: Any) {
+
+        performSegue(withIdentifier: "matrixToDetail", sender: nil)
         
-        let detailVC = DetailViewController()
-        detailVC.mainTitleText = "Save"
-        detailVC.contentLabelText = "Row:"
-        detailVC.contentFieldText = makeRowText(row: self.loneRow)
-        detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
-        detailVC.pieceLabelText = "Piece Information:"
-        detailVC.notesLabelText = "Additional Notes:"
-        detailVC.notesFieldText = ""
-        
-        self.present(detailVC, animated: true, completion: nil)
-        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "matrixToDetail" {
+            let detailVC = segue.destination as! DetailViewController
+            detailVC.mainTitleText = "Save"
+            detailVC.contentLabelText = "Row:"
+            detailVC.contentFieldText = makeRowText(row: self.loneRow)
+            detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
+            detailVC.pieceLabelText = "Piece Information:"
+            detailVC.notesLabelText = "Additional Notes:"
+            detailVC.notesFieldText = ""
+        }
     }
     
     @IBAction func generateSet(_ sender: Any) {
