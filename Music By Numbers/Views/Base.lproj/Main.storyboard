@@ -3,6 +3,7 @@
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -204,7 +205,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
                             <constraint firstItem="WUn-71-Kd4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="0g8-r8-bAv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tko-Op-zMh" secondAttribute="trailing" constant="15" id="DT6-z2-khv"/>
@@ -538,7 +539,7 @@
                             </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FBv-XI-5Zb"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
                             <constraint firstItem="M4b-eD-1Mt" firstAttribute="leading" secondItem="Fhb-Hl-BHb" secondAttribute="trailing" constant="110" id="0Ck-tc-ntX"/>
                             <constraint firstItem="FBv-XI-5Zb" firstAttribute="trailing" secondItem="gud-f8-okS" secondAttribute="trailing" constant="25" id="3RA-IA-vvC"/>
@@ -662,7 +663,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="NE9-oU-wCf">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RowCell" rowHeight="70" id="egI-sz-5SW" customClass="RowTableViewCell" customModule="Music_By_Numbers" customModuleProvider="target">
                                 <rect key="frame" x="20" y="49" width="388" height="70"/>
@@ -868,7 +869,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oby-Zc-0Rn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
                             <constraint firstItem="GoZ-4L-xl8" firstAttribute="top" secondItem="CHB-HL-GdH" secondAttribute="bottom" constant="12" id="3ke-oP-FyK"/>
                             <constraint firstItem="0Q9-Eq-VLV" firstAttribute="leading" secondItem="oby-Zc-0Rn" secondAttribute="leading" constant="20" id="8GV-fa-k8K"/>
@@ -1000,6 +1001,9 @@
         <image name="number" catalog="system" width="128" height="124"/>
         <image name="rotate.left" catalog="system" width="118" height="128"/>
         <image name="rotate.right" catalog="system" width="118" height="128"/>
+        <namedColor name="BackgroundColor">
+            <color red="0.92941176470588238" green="0.92156862745098034" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
