@@ -20,7 +20,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="12" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tko-Op-zMh">
                                 <rect key="frame" x="15" y="201" width="398" height="400"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" name="BackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="dnz-rD-J1u"/>
                                 </constraints>
@@ -419,7 +419,7 @@
                                         </connections>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="BackgroundColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="6oF-LE-H18" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="56q-kP-cJl" secondAttribute="leading" id="1RG-MP-kRb"/>
@@ -992,7 +992,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KW8-he-j9h"/>
+        <segue reference="weo-7S-5Z7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
