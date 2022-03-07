@@ -142,12 +142,14 @@ class MatrixViewController: UIViewController {
     }
     
     func makeRowText(row: [Int]) -> String {
-        var rowString = "["
+        var rowString = ""
         for i in 0..<row.count {
-            if i == row.count - 1 {
-                rowString += "\(String(row[i]))]"
+            if row[i] == 10 {
+                rowString += "t"
+            } else if row[i] == 11 {
+                    rowString += "e"
             } else {
-                rowString += "\(String(row[i])), "
+                rowString += String(row[i])
             }
         }
         return rowString
