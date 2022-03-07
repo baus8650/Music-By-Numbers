@@ -14,9 +14,98 @@ protocol ClickDelegate {
 
 class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     
+    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
+        savedItemsViewModel.updateData()
+        updateData()
+        tableView.reloadData()
+        
+    }
+
+    var editID: UUID?
+    var mainTitleText: String! = ""
+    var contentLabelText: String! = ""
+    var contentFieldText: String? = ""
+    var pieceLabelText: String! = ""
+    var pieceFieldText: String? = ""
+    var notesLabelText: String! = ""
+    var notesFieldText: String? = ""
+    
+    
+    var savedItemsDelegate: SavedItemsTableDelegate!
+    var savedItemsDataSource: SavedItemsDataSource!
+    var savedItemsViewModel: SavedItemsViewModel!
+    var detailVC: DetailViewController!
+    
+    var savedSets = [NSManagedObject]()
+    var savedRows = [NSManagedObject]()
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Library"
+        
+        savedItemsViewModel = SavedItemsViewModel()
+        
+        savedItemsDataSource = SavedItemsDataSource(viewController: self, rows: self.savedRows, sets: self.savedSets)
+        savedItemsDelegate = SavedItemsTableDelegate(viewController: self, dataSource: savedItemsDataSource, rows: self.savedRows, sets: self.savedSets)
+        tableView.delegate = savedItemsDelegate
+        tableView.dataSource = savedItemsDataSource
+        savedItemsDelegate.updateDelegate = self
+        
+        updateData()
+        detailVC = DetailViewController()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
+    }
+    
+    @objc func refreshTable(sender:AnyObject) {
+        savedItemsViewModel.updateData()
+        updateData()
+        tableView.reloadData()
+        self.refreshControl!.endRefreshing()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        savedItemsViewModel.updateData()
+        updateData()
+        tableView.reloadData()
+    }
+    
+    func updateData() {
+        savedItemsViewModel.savedRows.bind { rows in
+            self.savedRows = rows
+            self.savedItemsDataSource.savedRows = rows
+            self.savedItemsDelegate.savedRows = rows
+        }
+        
+        savedItemsViewModel.savedSets.bind { sets in
+            self.savedSets = sets
+            self.savedItemsDataSource.savedSets = sets
+            self.savedItemsDelegate.savedSets = sets
+        }
+        
+        tableView.reloadData()
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let detailVC = segue.destination as! DetailViewController
+        detailVC.loadViewIfNeeded()
+        detailVC.editID = editID
+        detailVC.mainTitleText = mainTitleText
+        detailVC.contentLabelText = contentLabelText
+        detailVC.contentFieldText = contentFieldText
+        detailVC.pieceLabelText = pieceLabelText
+        detailVC.pieceFieldText = pieceFieldText
+        detailVC.notesLabelText = notesLabelText
+        detailVC.notesFieldText = notesFieldText
+        detailVC.updateDatails()
+    }
+
     func clicked(row: Int, section: Int) {
         if section == 0 {
-            var fetchedDate = savedRows[row].value(forKey: "dateCreated")! as! Date
+            let fetchedDate = savedRows[row].value(forKey: "dateCreated")! as! Date
             let alert = UIAlertController(title: "Row Details", message: "Piece: \(savedRows[row].value(forKey: "piece")!)\n \n Notes: \(savedRows[row].value(forKey: "notes")!)\n \n Date added: \(fetchedDate.formatted(.dateTime.month(.wide).day().year(.extended())))", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(action)
@@ -30,296 +119,20 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         }
     }
     
-
-    let sections = ["Rows","Sets"]
-    var savedSets = [NSManagedObject]()
-    var savedRows = [NSManagedObject]()
-    var setViewModel: SetViewModel!
-    
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Library"
-        setViewModel = SetViewModel(set: [])
-        fetchSets()
-        fetchRows()
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
-    }
-    
-    @objc func refreshTable(sender:AnyObject) {
-        fetchSets()
-        fetchRows()
-        tableView.reloadData()
-        self.refreshControl!.endRefreshing()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        fetchSets()
-        fetchRows()
-        tableView.reloadData()
-    }
-
-    func fetchSets() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-        
-        do {
-            savedSets = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError{
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func fetchRows() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-        
-        do {
-            savedRows = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError{
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func makeText(setList: [Int]) -> String {
-        var normDisplay = "["
-        for i in setList {
-            
-            if i == 10 {
-                normDisplay += "t"
-            } else if i == 11 {
-                normDisplay += "e"
-            } else if i != 10 || i != 11 {
-                normDisplay += "\(i)"
-            }
-        }
-        normDisplay += "]"
-        return normDisplay
-    }
-    
-    func makeRowText(row: [Int]) -> String {
-        var rowString = "["
-        for i in 0..<row.count {
-            if i == row.count - 1 {
-                rowString += "\(String(row[i]))]"
-            } else {
-                rowString += "\(String(row[i])), "
-            }
-        }
-        return rowString
-    }
-    
-    func revertRow(row: [Int]) -> String {
-        var rowString = ""
-        
-        for i in row {
-            if i == 10 {
-                rowString += "t"
-            } else if i == 11 {
-                rowString += "e"
-            } else {
-                rowString += String(i)
-            }
-        }
-        return rowString
-    }
-    
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return sections.count
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return savedRows.count
-        } else {
-            return savedSets.count
-        }
-        // #warning Incomplete implementation, return the number of rows
-        
-    }
-
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-        let rowCell = tableView.dequeueReusableCell(withIdentifier: "RowCell", for: indexPath) as! RowTableViewCell
-            // to-do Implement a way of checking if the core data stack is empty
-            if savedRows[indexPath.row].value(forKey: "userRow") == nil {
-                return rowCell
-            } else {
-                let date = savedRows[indexPath.row].value(forKey: "dateCreated") as! Date
-
-                let newLabel = makeRowText(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
-                rowCell.rowLabel.text = newLabel
-                rowCell.cellIndexRow = indexPath.row
-                rowCell.cellIndexSection = 0
-                rowCell.delegate = self
-                rowCell.rowDate.text = "\(date.formatted(.dateTime.month(.wide).day().year(.extended())))"
-                return rowCell
-            }
-        } else {
-            let setCell = tableView.dequeueReusableCell(withIdentifier: "SetCell", for: indexPath) as! SetTableViewCell
-            if savedSets[indexPath.row].value(forKey: "userSet") == nil {
-                return setCell
-            } else {
-                setCell.pcCircleView?.setShape = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
-                let newLabel = makeText(setList: savedSets[indexPath.row].value(forKey: "userSet") as! [Int])
-                let date = savedSets[indexPath.row].value(forKey: "dateCreated") as! Date
-                print("HERE'S THE DATE: \(date.formatted(.dateTime.month(.wide).day().year(.extended())))")
-                setCell.setLabel.text = newLabel
-                setCell.cellIndexRow = indexPath.row
-                setCell.cellIndexSection = 1
-                setCell.delegate = self
-                setCell.setLabel.text = newLabel
-                setCell.setDate.text = "\(date.formatted(.dateTime.month(.wide).day().year(.extended())))"
-                
-                return setCell
-            }
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            let destVC = tabBarController?.viewControllers![1] as! UINavigationController
-            let rowVC = destVC.topViewController as! ViewController
-            
-            let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
-//            rowVC.userRow = Row(row: row)
-            print("WHAT IS HAPPENING: \(savedRows[indexPath.row].value(forKey: "notes"))")
-            if rowVC.isViewLoaded {
-                rowVC.generateMatrix(rowString: row)
-                tabBarController?.selectedIndex = 1
-            } else{
-                let _ = rowVC.view
-                rowVC.generateMatrix(rowString: row)
-                tabBarController?.selectedIndex = 1
-//                print("View is not LOADED YET")
-            }
-        } else {
-            let destVC = tabBarController?.viewControllers![2] as! UINavigationController
-            let setVC = destVC.topViewController as! SetViewController
-            
-            let set = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
-            
-            if setVC.isViewLoaded {
-                setVC.normalForm = set
-                setVC.primeForm = setViewModel.findPrimeForm(normalForm: set)
-                setVC.workingSet = set
-                tabBarController?.selectedIndex = 2
-            } else{
-                let _ = setVC.view
-                setVC.normalForm = set
-                setVC.primeForm = setViewModel.findPrimeForm(normalForm: set)
-                setVC.workingSet = set
-                tabBarController?.selectedIndex = 2
-            }
-            
-            
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            if editingStyle == .delete {
-                
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedRow")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", savedRows[indexPath.row].value(forKey: "id") as! CVarArg)
-                do {
-                    let object = try managedContext.fetch(fetchRequest)
-                    managedContext.delete(object[0])
-                    try managedContext.save()
-                    savedRows.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                } catch let error as NSError{
-                    print("Could not fetch. \(error), \(error.userInfo)")
-                }
-                
-            }
-        } else {
-            if editingStyle == .delete {
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedSet")
-                fetchRequest.predicate = NSPredicate(format: "id == %@", savedSets[indexPath.row].value(forKey: "id") as! CVarArg)
-                do {
-                    let object = try managedContext.fetch(fetchRequest)
-                    managedContext.delete(object[0])
-                    try managedContext.save()
-                    savedSets.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                } catch let error as NSError{
-                    print("Could not fetch. \(error), \(error.userInfo)")
-                }
-                
-            }
-        }
-    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+extension SavedItemsTableViewController: UpdateDetailsProtocol {
+    func updateDetails(id: UUID, title: String, contentLabel: String, contentField: String, pieceLabel: String, pieceField: String, NotesLabel: String, NotesField: String) {
+        self.editID = id
+        self.mainTitleText = title
+        self.contentLabelText = contentLabel
+        self.contentFieldText = contentField
+        self.pieceLabelText = pieceLabel
+        self.pieceFieldText = pieceField
+        self.notesLabelText = NotesLabel
+        self.notesFieldText = NotesField
+    }
+}
+
+    
 
