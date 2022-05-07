@@ -50,12 +50,14 @@ class MatrixViewModel {
             return Row(row: [[]])
         } else {
             for i in rowArray {
-                if i == "t" || i == "a" {
-                    normalizedRow.append(10)
-                } else if i == "e" || i == "b" {
-                    normalizedRow.append(11)
-                } else {
-                    normalizedRow.append(Int(i)!)
+                if i != " " {
+                    if i == "t" || i == "a" {
+                        normalizedRow.append(10)
+                    } else if i == "e" || i == "b" {
+                        normalizedRow.append(11)
+                    } else {
+                        normalizedRow.append(Int(i)!)
+                    }
                 }
             }
             loneRow.value = normalizedRow

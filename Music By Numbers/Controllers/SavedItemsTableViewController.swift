@@ -20,7 +20,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         tableView.reloadData()
         
     }
-
+    
     var editID: UUID?
     var mainTitleText: String! = ""
     var contentLabelText: String! = ""
@@ -34,11 +34,12 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     var savedItemsDelegate: SavedItemsTableDelegate!
     var savedItemsDataSource: SavedItemsDataSource!
     var savedItemsViewModel: SavedItemsViewModel!
-    var detailVC: DetailViewController!
+    
+    var detailVC: DetailTableViewController!
     
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +54,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         savedItemsDelegate.updateDelegate = self
         
         updateData()
-        detailVC = DetailViewController()
+        detailVC = DetailTableViewController()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
@@ -90,7 +91,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailVC = segue.destination as! DetailViewController
+        let detailVC = segue.destination as! DetailTableViewController
         detailVC.loadViewIfNeeded()
         detailVC.editID = editID
         detailVC.mainTitleText = mainTitleText
@@ -102,7 +103,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         detailVC.notesFieldText = notesFieldText
         detailVC.updateDatails()
     }
-
+    
     func clicked(row: Int, section: Int) {
         if section == 0 {
             let fetchedDate = savedRows[row].value(forKey: "dateCreated")! as! Date
@@ -119,6 +120,8 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         }
     }
     
+    
+    
 }
 
 extension SavedItemsTableViewController: UpdateDetailsProtocol {
@@ -134,5 +137,7 @@ extension SavedItemsTableViewController: UpdateDetailsProtocol {
     }
 }
 
+extension SavedItemsTableViewController: UISearchBarDelegate {
     
+}
 

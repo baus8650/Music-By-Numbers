@@ -43,44 +43,46 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
             return savedSets.count
         }
     }
+    
+    
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
         let rowCell = tableView.dequeueReusableCell(withIdentifier: "RowCell", for: indexPath) as! RowTableViewCell
-            if savedRows[indexPath.row].value(forKey: "userRow") == nil {
-                return rowCell
-            } else {
-                let date = savedRows[indexPath.row].value(forKey: "dateCreated") as! Date
-
-                let newLabel = makeRowText(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
-                rowCell.rowLabel.text = newLabel
-                rowCell.cellIndexRow = indexPath.row
-                rowCell.cellIndexSection = 0
-                rowCell.delegate = self.parentViewController as? ClickDelegate
-                rowCell.rowDate.text = "\(date.formatted(.dateTime.month(.wide).day().year(.extended())))"
+            
+            guard let row = savedRows[indexPath.row].value(forKey: "userRow") as? [Int] else {
                 return rowCell
             }
+            
+            let date = savedRows[indexPath.row].value(forKey: "dateCreated") as! Date
+            
+            let newLabel = makeRowText(row: row)
+            rowCell.rowLabel.text = newLabel
+            rowCell.cellIndexRow = indexPath.row
+            rowCell.cellIndexSection = 0
+            rowCell.delegate = self.parentViewController as? ClickDelegate
+            rowCell.rowDate.text = "\(date.formatted(.dateTime.month(.wide).day().year(.extended())))"
+            return rowCell
         } else {
             let setCell = tableView.dequeueReusableCell(withIdentifier: "SetCell", for: indexPath) as! SetTableViewCell
-            #warning("This could be refactored into a guard statement rather than an if else statement")
-            if savedSets[indexPath.row].value(forKey: "userSet") == nil {
-                return setCell
-            } else {
-                let fetchedSet = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
-                let normalForm = setViewModel.findNormalForm(pcSet: fetchedSet)
-                setCell.pcCircleView?.setShape = normalForm
-                let newLabel = makeText(setList: normalForm)
-                let date = savedSets[indexPath.row].value(forKey: "dateCreated") as! Date
-                setCell.setLabel.text = newLabel
-                setCell.cellIndexRow = indexPath.row
-                setCell.cellIndexSection = 1
-                setCell.delegate = self.parentViewController as? ClickDelegate
-                setCell.setLabel.text = newLabel
-                setCell.setDate.text = "\(date.formatted(.dateTime.month(.wide).day().year(.extended())))"
-                
+            
+            guard let set = savedSets[indexPath.row].value(forKey: "userSet") as? [Int] else {
                 return setCell
             }
+            
+            let normalForm = setViewModel.findNormalForm(pcSet: set)
+            setCell.pcCircleView?.setShape = normalForm
+            let newLabel = makeText(setList: normalForm)
+            let date = savedSets[indexPath.row].value(forKey: "dateCreated") as! Date
+            setCell.setLabel.text = newLabel
+            setCell.cellIndexRow = indexPath.row
+            setCell.cellIndexSection = 1
+            setCell.delegate = self.parentViewController as? ClickDelegate
+            setCell.setLabel.text = newLabel
+            setCell.setDate.text = "\(date.formatted(.dateTime.month(.wide).day().year(.extended())))"
+            
+            return setCell
         }
     }
     

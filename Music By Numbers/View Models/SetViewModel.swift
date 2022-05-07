@@ -17,6 +17,10 @@ class SetViewModel {
     var workingSet: Binder<[Int]> = Binder([])
     var primeForm: Binder<[Int]> = Binder([])
     var setDescription = Binder("")
+    var normalFormLabel = Binder("")
+    var primeFormLabel = Binder("")
+    var forteLabel = Binder("")
+    var intervalLabel = Binder("")
     
     init(set: [Int]) {
         self.workingSet.value = set
@@ -27,12 +31,14 @@ class SetViewModel {
         let rowArray = set.map(String.init)
         var workingRow = [Int]()
         for i in rowArray {
-            if i == "t" || i == "a" {
-                workingRow.append(10)
-            } else if i == "e" || i == "b" {
-                workingRow.append(11)
-            } else {
-                workingRow.append(Int(i)!)
+            if i != " " {
+                if i == "t" || i == "a" {
+                    workingRow.append(10)
+                } else if i == "e" || i == "b" {
+                    workingRow.append(11)
+                } else {
+                    workingRow.append(Int(i)!)
+                }
             }
         }
         let newNormal = findNormalForm(pcSet: workingRow)
@@ -194,6 +200,10 @@ Prime form: \(primeDisplay)
 Forte number: \(forteNumber!)
 Interval class vector: \(intervalVector!)
 """
+            self.normalFormLabel.value = normDisplay
+            self.primeFormLabel.value = primeDisplay
+            self.forteLabel.value = forteNumber!
+            self.intervalLabel.value = intervalVector!
         }
     }
     

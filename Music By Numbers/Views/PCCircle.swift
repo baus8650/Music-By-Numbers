@@ -22,6 +22,8 @@ class PCCircle: UIView {
         }
     }
     
+    let defaults = UserDefaults()
+    
     override func draw(_ rect: CGRect) {
         
         if rect.width > 115 {
@@ -38,7 +40,7 @@ class PCCircle: UIView {
             path.lineWidth = 3.0
             
             let points = getCirclePoints(centerPoint: CGPoint(x: PCCircleFrame.width / 2, y: PCCircleFrame.height / 2), radius: PCCircleFrame.width / 2, n: 12)
-            
+            UIColor(named: "pointColor")?.setStroke()
             path.stroke()
             //        let set = UIBezierPath()
             drawAxis(points: points, axis: self.axisPoints)
@@ -52,6 +54,7 @@ class PCCircle: UIView {
                 
                 let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize( width: 10.0, height: 10.0)))
                 circle.lineWidth = 2
+                UIColor(named: "pointColor")?.setFill()
                 circle.fill()
             }
         } else {
@@ -68,7 +71,7 @@ class PCCircle: UIView {
             path.lineWidth = 1.0
             
             let points = getCirclePoints(centerPoint: CGPoint(x: PCCircleFrame.width / 2, y: PCCircleFrame.height / 2), radius: PCCircleFrame.width / 2, n: 12)
-            
+            UIColor(named: "pointColor")?.setStroke()
             path.stroke()
             //        let set = UIBezierPath()
             drawAxis(points: points, axis: self.axisPoints)
@@ -82,6 +85,7 @@ class PCCircle: UIView {
                 
                 let circle = UIBezierPath(ovalIn: CGRect(origin: point, size: CGSize( width: 4.0, height: 4.0)))
                 circle.lineWidth = 1
+                UIColor(named: "pointColor")?.setFill()
                 circle.fill()
         }
         }
@@ -108,7 +112,7 @@ class PCCircle: UIView {
             } else {
                 axisLine.move(to: CGPoint(x: points[axis[0][0]].x + 32, y: points[axis[0][0]].y + 32))
                 axisLine.addLine(to: CGPoint(x: points[axis[0][1]].x + 32, y: points[axis[0][1]].y + 32))
-                UIColor.red.setStroke()
+                defaults.color(forKey: "AxisLineColor")?.setStroke() ?? UIColor.red.setStroke()
                 axisLine.stroke()
             }
         } else if axis.count == 2 {
@@ -121,8 +125,7 @@ class PCCircle: UIView {
             
             axisLine.move(to: CGPoint(x: firstAvX , y: secondAvX))
             axisLine.addLine(to: CGPoint(x: firstAvY, y: secondAvY))
-            
-            UIColor.red.setStroke()
+            defaults.color(forKey: "AxisLineColor")?.setStroke() ?? UIColor.red.setStroke()
             axisLine.stroke()
             
         }
@@ -139,7 +142,8 @@ class PCCircle: UIView {
                 setShape.addLine(to: CGPoint(x: points[set[i]].x + 32, y: points[set[i]].y + 32))
             }
             setShape.addLine(to: CGPoint(x: points[set[0]].x + 32, y: points[set[0]].y + 32))
-            UIColor.blue.setStroke()
+//            UIColor.blue.setStroke()
+            defaults.color(forKey: "CircleShapeColor")?.setStroke() ?? UIColor.blue.setStroke()
             setShape.stroke()
         } else {
             setShape.move(to: CGPoint(x: points[0].x + 32, y: points[0].y + 32))
@@ -155,7 +159,7 @@ class PCCircle: UIView {
                 setShape.addLine(to: CGPoint(x: points[set[i]].x + 7.5, y: points[set[i]].y + 7.5))
             }
             setShape.addLine(to: CGPoint(x: points[set[0]].x + 7.5, y: points[set[0]].y + 7.5))
-            UIColor.blue.setStroke()
+            defaults.color(forKey: "CircleShapeColor")?.setStroke() ?? UIColor.blue.setStroke()
             setShape.stroke()
         } else {
             setShape.move(to: CGPoint(x: points[0].x, y: points[0].y))

@@ -39,7 +39,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let destVC = parentViewController.tabBarController?.viewControllers![1] as! UINavigationController
-            let rowVC = destVC.topViewController as! MatrixViewController
+            let rowVC = destVC.topViewController as! MatrixTableViewController
             
             let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
             if rowVC.isViewLoaded {
@@ -54,7 +54,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
             }
         } else {
             let destVC = parentViewController.tabBarController?.viewControllers![2] as! UINavigationController
-            let setVC = destVC.topViewController as! SetViewController
+            let setVC = destVC.topViewController as! SetTableViewController
             
             let set = savedSets[indexPath.row].value(forKey: "userSet") as! [Int]
             
@@ -72,6 +72,19 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
             }
             
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.text = header.textLabel?.text?.capitalized
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        header.textLabel?.frame = header.bounds
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -97,8 +110,6 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, boolValue) in
-            
-            let detailVC = DetailViewController()
 
             if indexPath.section == 0 {
             
@@ -202,3 +213,4 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
     }
     
 }
+

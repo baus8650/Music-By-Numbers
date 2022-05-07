@@ -13,12 +13,12 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
 //    var collectionView: UICollectionView?
     var selectedCells: Binder<[Int]> = Binder([])
     var matrixData: Row
-    
+    var defaults: UserDefaults
     let margin: CGFloat = 1
     
     init(row: Row) {
         self.matrixData = row
-        
+        defaults = UserDefaults.standard
         
 //        self.collectionView = collectionView
     }
@@ -28,7 +28,8 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         if !selectedCells.value.contains(Int(cell.cellLabel.text!)!) {
-            cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
+            cell.layer.backgroundColor = defaults.color(forKey: "MatrixCellColor")?.cgColor
+//            cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
             selectedCells.value.append(Int(cell.cellLabel.text!)!)
             let selectedSet = Set(selectedCells.value)
             selectedCells.value = Array(selectedSet)
@@ -56,5 +57,6 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         return CGSize(width: size, height: size)
         
     }
+    
     
 }
