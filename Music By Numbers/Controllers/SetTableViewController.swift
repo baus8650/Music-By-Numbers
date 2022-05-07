@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 
 class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
+    
     var savedSet: NSManagedObject!
     
     var axis = ""
@@ -20,6 +20,8 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    
+    let acceptedInputs = "0123456789teab"
     
     @IBAction func setCancelUnwindAction(unwindSegue: UIStoryboardSegue) {}
     
@@ -90,7 +92,7 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
     @IBOutlet var searchField: UITextField!
     @IBOutlet var rotateLeftButton: UIButton!
     @IBOutlet var rotateRightButton: UIButton!
-//    @IBOutlet var setTextField: UITextView!
+    //    @IBOutlet var setTextField: UITextView!
     @IBOutlet var axisPicker: UIPickerView!
     
     // MARK: - IBActions
@@ -128,19 +130,25 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     @IBAction func calculateButton(_ sender: UIButton) {
-        setViewModel?.calculate(set: searchField.text!)
         
-        setViewModel?.workingSet.bind { [weak self] workingSet in
-            self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+        let setString = searchField.text!
+        let setArray = setString.map(String.init)
+        if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
+            let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            
+        } else {
+            setViewModel?.calculate(set: searchField.text!)
+            
+            setViewModel?.workingSet.bind { [weak self] workingSet in
+                self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+            }
+            
+            self.setViewModel.searchField.bind { text in
+                self.searchField.text = text
+            }
         }
-        
-        self.setViewModel.searchField.bind { text in
-            self.searchField.text = text
-        }
-        
-        //        setViewModel.setDescription.bind { [weak self] setText in
-        //            self?.setTextField.text = setText
-        //        }
         
     }
     
@@ -288,10 +296,10 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
     }
     @IBAction func PC10Recognizer(_ sender: UITapGestureRecognizer) {
-        if searchField.text!.contains("t") {
-            searchField.text = self.searchField.text!.filter { $0 != "t" }
+        if searchField.text!.lowercased().contains("t") || searchField.text!.lowercased().contains("a") {
+            searchField.text = self.searchField.text!.filter { $0 != "t" || $0 != "a" }
         } else {
-            self.searchField.text! += "t"
+            self.searchField.text! += UserDefaults.standard.string(forKey: "Ten") ?? "t"
         }
         setViewModel.tapFunction(pc: 10, workingSet: self.workingSet)
         
@@ -300,10 +308,10 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         }
     }
     @IBAction func PC11Recognizer(_ sender: UITapGestureRecognizer) {
-        if searchField.text!.contains("e") {
-            searchField.text = self.searchField.text!.filter { $0 != "e" }
+        if searchField.text!.lowercased().contains("e") || searchField.text!.lowercased().contains("b") {
+            searchField.text = self.searchField.text!.filter { $0 != "e" || $0 != "b" }
         } else {
-            self.searchField.text! += "e"
+            self.searchField.text! += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
         }
         setViewModel.tapFunction(pc: 11, workingSet: self.workingSet)
         
@@ -324,9 +332,6 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
             self.listOfSets = sets
             self.setViewModel.listOfSets.value = sets
             self.setViewModel.populateText(workingSet: self.workingSet)
-//            self.setViewModel.setDescription.bind { text in
-//                self.setTextField.text = text
-//            }
         }
         title = "Set"
         searchField.delegate = self
@@ -348,9 +353,7 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
             self.pcCircleView.axisPoints = [[]]
         }
         self.setViewModel.populateText(workingSet: set)
-//        self.setViewModel.setDescription.bind { text in
-//            self.setTextField.text = text
-//        }
+
         self.setViewModel.normalFormLabel.bind { text in
             self.normalFormLabel.text = "\(text)"
         }
@@ -411,9 +414,9 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         var normDisplay = "["
         for i in setList {
             if i == 10 {
-                normDisplay += "t"
+                normDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
             } else if i == 11 {
-                normDisplay += "e"
+                normDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
             } else if i != 10 || i != 11 {
                 normDisplay += "\(i)"
             }
@@ -480,61 +483,6 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         }
     }
     
-    /*
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-     
-     // Configure the cell...
-     
-     return cell
-     }
-     */
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension SetTableViewController: UITextFieldDelegate {
@@ -561,7 +509,11 @@ extension SetTableViewController: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return string != " "
+        
+        let cs = NSCharacterSet(charactersIn: acceptedInputs).inverted
+        let filtered = string.components(separatedBy: cs).joined(separator: "")
+        
+        return (string == filtered)
     }
     
 }

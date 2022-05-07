@@ -291,6 +291,7 @@
                     <connections>
                         <outlet property="collectionView" destination="t8Y-8B-Ql0" id="Eid-k8-b4s"/>
                         <outlet property="rowTextField" destination="0UE-lw-J1m" id="qLa-fx-c5v"/>
+                        <outlet property="saveButton" destination="uau-Jz-NYg" id="vuf-DO-VEn"/>
                         <outlet property="setInfoButton" destination="JrG-lD-QR2" id="38k-EA-2jT"/>
                     </connections>
                 </tableViewController>
@@ -302,7 +303,7 @@
         <scene sceneID="OCV-fR-5WD">
             <objects>
                 <tableViewController id="RfI-Mb-ejB" customClass="SetTableViewController" customModule="Music_By_Numbers" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="singleLineEtched" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" id="idc-cb-KCV">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" id="idc-cb-KCV">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -372,7 +373,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="370" id="sIV-nu-jLd">
-                                        <rect key="frame" x="0.0" y="143.33333396911621" width="390" height="370"/>
+                                        <rect key="frame" x="0.0" y="143.66666603088379" width="390" height="370"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sIV-nu-jLd" id="wAd-5s-zRa">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="370"/>
@@ -596,7 +597,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="67" id="Z1B-qS-tog">
-                                        <rect key="frame" x="0.0" y="513.33333396911621" width="390" height="67"/>
+                                        <rect key="frame" x="0.0" y="513.66666603088379" width="390" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z1B-qS-tog" id="ACi-NK-1fG">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="67"/>
@@ -641,7 +642,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="143" id="IPe-Kk-Fdf">
-                                        <rect key="frame" x="0.0" y="580.33333396911621" width="390" height="143"/>
+                                        <rect key="frame" x="0.0" y="580.66666603088379" width="390" height="143"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IPe-Kk-Fdf" id="Jie-Rv-yz9">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="143"/>
@@ -693,7 +694,7 @@
                             <tableViewSection headerTitle="Set Details" id="PIt-e3-GgC">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="Yg0-G5-QrY">
-                                        <rect key="frame" x="0.0" y="790.6666660308839" width="390" height="55"/>
+                                        <rect key="frame" x="0.0" y="790.99999809265137" width="390" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yg0-G5-QrY" id="FXA-gI-LaM">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="55"/>
@@ -721,7 +722,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="VMi-aX-m5b">
-                                        <rect key="frame" x="0.0" y="845.6666660308839" width="390" height="55"/>
+                                        <rect key="frame" x="0.0" y="845.99999809265137" width="390" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VMi-aX-m5b" id="OHC-tt-w53">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="55"/>
@@ -749,7 +750,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="voy-W4-dt5">
-                                        <rect key="frame" x="0.0" y="900.6666660308839" width="390" height="55"/>
+                                        <rect key="frame" x="0.0" y="900.99999809265137" width="390" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="voy-W4-dt5" id="9Tz-0I-14A">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="55"/>
@@ -777,7 +778,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="bNd-c6-UKR">
-                                        <rect key="frame" x="0.0" y="955.6666660308839" width="390" height="55"/>
+                                        <rect key="frame" x="0.0" y="955.99999809265137" width="390" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bNd-c6-UKR" id="JdN-3a-IiF">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="55"/>
@@ -907,14 +908,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="BackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="QHh-dr-8hI">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search by PC..." id="XEf-6Z-jiU">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="51"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RowCell" rowHeight="70" id="egI-sz-5SW" customClass="RowTableViewCell" customModule="Music_By_Numbers" customModuleProvider="target">
-                                <rect key="frame" x="20" y="93" width="350" height="70"/>
+                                <rect key="frame" x="20" y="100" width="350" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="egI-sz-5SW" id="JUL-45-A9Q">
                                     <rect key="frame" x="0.0" y="0.0" width="350" height="70"/>
@@ -964,7 +965,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SetCell" rowHeight="110" id="GWK-Wl-75j" customClass="SetTableViewCell" customModule="Music_By_Numbers" customModuleProvider="target">
-                                <rect key="frame" x="20" y="163" width="350" height="110"/>
+                                <rect key="frame" x="20" y="170" width="350" height="110"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GWK-Wl-75j" id="iLd-Zw-sg5">
                                     <rect key="frame" x="0.0" y="0.0" width="350" height="110"/>
@@ -1023,6 +1024,29 @@
                                     <outlet property="setLabel" destination="hRs-fQ-q38" id="rRH-kE-YHs"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EmptyCell" rowHeight="63" id="nR4-WT-xEe" customClass="EmptyTableViewCell" customModule="Music_By_Numbers" customModuleProvider="target">
+                                <rect key="frame" x="20" y="280" width="350" height="63"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nR4-WT-xEe" id="OWN-76-zb0">
+                                    <rect key="frame" x="0.0" y="0.0" width="350" height="63"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1y-tn-FEf">
+                                            <rect key="frame" x="154" y="21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="f1y-tn-FEf" firstAttribute="centerX" secondItem="OWN-76-zb0" secondAttribute="centerX" id="2Eg-aY-3dK"/>
+                                        <constraint firstItem="f1y-tn-FEf" firstAttribute="centerY" secondItem="OWN-76-zb0" secondAttribute="centerY" id="rCD-hK-7xi"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="emptyCellLabel" destination="f1y-tn-FEf" id="rSJ-on-WkC"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="R3A-Y8-m0y" id="CI9-dK-iDA"/>
@@ -1030,17 +1054,92 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Cr2-Ir-bv1">
-                        <barButtonItem key="rightBarButtonItem" title="Filter" image="line.3.horizontal.decrease" catalog="system" id="RJA-bX-7gq"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="line.3.horizontal.decrease" catalog="system" id="cA3-VK-hWO">
+                            <connections>
+                                <segue destination="F5Y-kj-vZE" kind="popoverPresentation" identifier="SortSelection" popoverAnchorBarButtonItem="cA3-VK-hWO" id="lXy-UN-ceM">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="weU-EF-bdt" kind="popoverPresentation" identifier="toDetail" popoverAnchorBarButtonItem="RJA-bX-7gq" id="OBh-vV-qj1">
+                        <outlet property="searchBar" destination="XEf-6Z-jiU" id="w60-sq-Bdl"/>
+                        <segue destination="weU-EF-bdt" kind="popoverPresentation" identifier="toDetail" popoverAnchorView="XEf-6Z-jiU" id="OBh-vV-qj1">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fGB-nM-7WL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2663.5514018691588" y="851.40388768898492"/>
+            <point key="canvasLocation" x="2663.0769230769229" y="850.9478672985781"/>
+        </scene>
+        <!--Sort Table View Controller-->
+        <scene sceneID="69D-77-dbg">
+            <objects>
+                <tableViewController id="F5Y-kj-vZE" customClass="SortTableViewController" customModule="Music_By_Numbers" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Fyd-tc-irA">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="37G-cy-BFm">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ZVw-UO-b2J">
+                                        <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZVw-UO-b2J" id="45i-cp-XvP">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tyF-Rq-nGP">
+                                                    <rect key="frame" x="116" y="6.3333333333333321" width="158" height="30.999999999999996"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Sort Date Ascending"/>
+                                                    <connections>
+                                                        <action selector="ascendingPressed:" destination="F5Y-kj-vZE" eventType="touchUpInside" id="heo-TL-Ohi"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tyF-Rq-nGP" firstAttribute="centerY" secondItem="45i-cp-XvP" secondAttribute="centerY" id="Ycq-cV-UNo"/>
+                                                <constraint firstItem="tyF-Rq-nGP" firstAttribute="centerX" secondItem="45i-cp-XvP" secondAttribute="centerX" id="YeA-Qx-ZvZ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="S6z-BJ-cNt">
+                                        <rect key="frame" x="0.0" y="88.333333969116211" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="S6z-BJ-cNt" id="gNi-oA-6jW">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssl-cX-SDH">
+                                                    <rect key="frame" x="112" y="6.3333333333333321" width="166" height="30.999999999999996"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Sort Date Descending"/>
+                                                    <connections>
+                                                        <action selector="descendingPressed:" destination="F5Y-kj-vZE" eventType="touchUpInside" id="FXS-Ca-LcG"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ssl-cX-SDH" firstAttribute="centerY" secondItem="gNi-oA-6jW" secondAttribute="centerY" id="Qnf-xo-0ff"/>
+                                                <constraint firstItem="Ssl-cX-SDH" firstAttribute="centerX" secondItem="gNi-oA-6jW" secondAttribute="centerX" id="mYc-is-tym"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="F5Y-kj-vZE" id="S8p-Sf-E0k"/>
+                            <outlet property="delegate" destination="F5Y-kj-vZE" id="QP8-ff-76w"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kBx-G2-3Rz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3591" y="851"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="zMu-Sb-kVS">
@@ -1147,6 +1246,9 @@
                                                         <segment title="Use t/e for 10/11"/>
                                                         <segment title="Use a/b for 10/11"/>
                                                     </segments>
+                                                    <connections>
+                                                        <action selector="pitchClassVariableChanged:" destination="bFY-kV-0aB" eventType="valueChanged" id="7LZ-ta-X3b"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
@@ -1330,6 +1432,9 @@
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Clear Saved Rows"/>
+                                                    <connections>
+                                                        <action selector="clearRows:" destination="bFY-kV-0aB" eventType="touchUpInside" id="kXD-Vm-DAC"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1350,6 +1455,9 @@
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Clear Saved Sets"/>
+                                                    <connections>
+                                                        <action selector="clearSets:" destination="bFY-kV-0aB" eventType="touchUpInside" id="8Di-mF-vAt"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1370,6 +1478,9 @@
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Clear All Saved Data"/>
+                                                    <connections>
+                                                        <action selector="clearAll:" destination="bFY-kV-0aB" eventType="touchUpInside" id="npA-Bi-gHD"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1390,6 +1501,7 @@
                     <connections>
                         <outlet property="axisColorSwatch" destination="dSm-Aq-V5F" id="oog-Ce-Tcx"/>
                         <outlet property="matrixColorSwatch" destination="k1U-LY-yLL" id="DVu-id-9HY"/>
+                        <outlet property="pitchClassVariable" destination="pAv-CH-A3P" id="NxE-18-oVl"/>
                         <outlet property="shapeColorSwatch" destination="mZ2-7d-e0u" id="iby-dr-HB7"/>
                     </connections>
                 </tableViewController>
@@ -1630,7 +1742,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Cfg-Gs-V6f"/>
+        <segue reference="OBh-vV-qj1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="gear" catalog="system" width="128" height="119"/>

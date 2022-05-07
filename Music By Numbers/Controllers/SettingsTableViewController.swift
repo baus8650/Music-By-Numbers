@@ -12,6 +12,20 @@ class SettingsTableViewController: UITableViewController {
     var colorTarget: Int?
     var picker: UIColorPickerViewController?
     var defaults: UserDefaults?
+    var coreDataActions: CoreDataActions?
+    @IBOutlet var pitchClassVariable: UISegmentedControl!
+    @IBAction func pitchClassVariableChanged(_ sender: Any) {
+        switch pitchClassVariable.selectedSegmentIndex {
+        case 0:
+            defaults?.set("t", forKey: "Ten")
+            defaults?.set("e", forKey: "Eleven")
+        case 1:
+            defaults?.set("a", forKey: "Ten")
+            defaults?.set("b", forKey: "Eleven")
+        default:
+            break
+        }
+    }
     
     @IBOutlet var matrixColorSwatch: UIView! {
         didSet{
@@ -48,28 +62,50 @@ class SettingsTableViewController: UITableViewController {
     
     @IBAction func resetColors(_ sender: Any) {
         defaults?.set(.blue, forKey: "MatrixCellColor")
-        print("matrix cell")
         
         defaults?.set(.blue, forKey: "CircleShapeColor")
-        print("circle shape")
         
         defaults?.set(.red, forKey: "AxisLineColor")
-        print("axis color")
         
         matrixColorSwatch.backgroundColor = defaults?.color(forKey: "MatrixCellColor") ?? .blue
-        shapeColorSwatch.backgroundColor = defaults?.color(forKey: "CircleShapeColor") ?? .red
+        shapeColorSwatch.backgroundColor = defaults?.color(forKey: "CircleShapeColor") ?? .blue
         axisColorSwatch.backgroundColor = defaults?.color(forKey: "AxisLineColor") ?? .red
     }
     
+    @IBAction func clearRows(_ sender: Any) {
+        let ac = UIAlertController(title: "Clear Request", message: "Are you sure you want to clear all saved rows? This action cannot be undone.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { (action) -> Void in
+            self.coreDataActions?.deleteAllRows()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
+    @IBAction func clearSets(_ sender: Any) {
+        let ac = UIAlertController(title: "Clear Request", message: "Are you sure you want to clear all saved sets? This action cannot be undone.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { (action) -> Void in
+            self.coreDataActions?.deleteAllSets()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
+    @IBAction func clearAll(_ sender: Any) {
+        let ac = UIAlertController(title: "Clear Request", message: "Are you sure you want to clear all saved rows and sets? This action cannot be undone.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { (action) -> Void in
+            self.coreDataActions?.deleteAllEntries()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         picker = UIColorPickerViewController()
         picker?.delegate = self
         defaults = UserDefaults.standard
         matrixColorSwatch.backgroundColor = defaults?.color(forKey: "MatrixCellColor") ?? .blue
-        shapeColorSwatch.backgroundColor = defaults?.color(forKey: "CircleShapeColor") ?? .red
+        shapeColorSwatch.backgroundColor = defaults?.color(forKey: "CircleShapeColor") ?? .blue
         axisColorSwatch.backgroundColor = defaults?.color(forKey: "AxisLineColor") ?? .red
         title = "Settings"
+        coreDataActions = CoreDataActions()
     }
     
     // MARK: - Table view data source
@@ -142,3 +178,5 @@ extension UserDefaults {
     }
     
 }
+
+

@@ -15,11 +15,13 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
     var matrixData: Row
     var defaults: UserDefaults
     let margin: CGFloat = 1
+    var selectedIndexes = [IndexPath]()
     
     init(row: Row) {
         self.matrixData = row
         defaults = UserDefaults.standard
-        
+        self.selectedCells.value = []
+//        self.selectedIndexes = []
 //        self.collectionView = collectionView
     }
     
@@ -27,17 +29,30 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         
         
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+//        var selectedIndexes: [IndexPath] = []
         if !selectedCells.value.contains(Int(cell.cellLabel.text!)!) {
             cell.layer.backgroundColor = defaults.color(forKey: "MatrixCellColor")?.cgColor
 //            cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
             selectedCells.value.append(Int(cell.cellLabel.text!)!)
             let selectedSet = Set(selectedCells.value)
             selectedCells.value = Array(selectedSet)
-            print(selectedCells)
+            selectedIndexes.append(indexPath)
         } else {
-            selectedCells.value = selectedCells.value.filter { return $0 != Int(cell.cellLabel.text!)! }
+//            selectedCells.value = selectedCells.value.filter { return $0 != Int(cell.cellLabel.text!)! }
+            
+            for i in selectedIndexes {
+                if i == indexPath {
+                    let index = selectedIndexes.firstIndex(of: i)
+                    selectedIndexes.remove(at: index!)
+                    selectedCells.value = selectedCells.value.filter { return $0 != Int(cell.cellLabel.text!)! }
+                }
+            }
             cell.backgroundColor = UIColor(named: "default")
         }
+        
+        
+        
+        
 
     }
     // MARK: - FLOW LAYOUT METHOD

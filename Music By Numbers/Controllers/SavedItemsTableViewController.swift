@@ -21,6 +21,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         
     }
     
+    var isSearching: Bool? = false
     var editID: UUID?
     var mainTitleText: String! = ""
     var contentLabelText: String! = ""
@@ -40,6 +41,10 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
     
+    @IBAction func sortPressed(_ sender: Any) {
+        performSegue(withIdentifier: "SortSelection", sender: nil)
+    }
+    @IBOutlet var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +60,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         
         updateData()
         detailVC = DetailTableViewController()
-        
+        searchBar.delegate = self
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
     }
@@ -77,12 +82,14 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         savedItemsViewModel.savedRows.bind { rows in
             self.savedRows = rows
             self.savedItemsDataSource.savedRows = rows
+            self.savedItemsDataSource.populateTableRows(rows: rows)
             self.savedItemsDelegate.savedRows = rows
         }
         
         savedItemsViewModel.savedSets.bind { sets in
             self.savedSets = sets
             self.savedItemsDataSource.savedSets = sets
+            self.savedItemsDataSource.populateTableSets(sets: sets)
             self.savedItemsDelegate.savedSets = sets
         }
         
@@ -91,17 +98,26 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailVC = segue.destination as! DetailTableViewController
-        detailVC.loadViewIfNeeded()
-        detailVC.editID = editID
-        detailVC.mainTitleText = mainTitleText
-        detailVC.contentLabelText = contentLabelText
-        detailVC.contentFieldText = contentFieldText
-        detailVC.pieceLabelText = pieceLabelText
-        detailVC.pieceFieldText = pieceFieldText
-        detailVC.notesLabelText = notesLabelText
-        detailVC.notesFieldText = notesFieldText
-        detailVC.updateDatails()
+        if segue.identifier == "SortSelection" {
+            let sortVC = segue.destination as! SortTableViewController
+            sortVC.savedRows = self.savedRows
+            sortVC.savedSets = self.savedSets
+            sortVC.savedItemsDataSource = self.savedItemsDataSource
+            sortVC.savedItemsViewModel = self.savedItemsViewModel
+            sortVC.sortItemsDelegate = self
+        } else {
+            let detailVC = segue.destination as! DetailTableViewController
+            detailVC.loadViewIfNeeded()
+            detailVC.editID = editID
+            detailVC.mainTitleText = mainTitleText
+            detailVC.contentLabelText = contentLabelText
+            detailVC.contentFieldText = contentFieldText
+            detailVC.pieceLabelText = pieceLabelText
+            detailVC.pieceFieldText = pieceFieldText
+            detailVC.notesLabelText = notesLabelText
+            detailVC.notesFieldText = notesFieldText
+            detailVC.updateDatails()
+        }
     }
     
     func clicked(row: Int, section: Int) {
@@ -137,7 +153,28 @@ extension SavedItemsTableViewController: UpdateDetailsProtocol {
     }
 }
 
-extension SavedItemsTableViewController: UISearchBarDelegate {
+extension SavedItemsTableViewController: SortItemsDelegate {
+    func sortItems(order: String) {
+        savedItemsDataSource.sortEntires(order: order)
+        tableView.reloadData()
+    }
     
 }
 
+extension SavedItemsTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            savedItemsDataSource.isSearching = false
+            tableView.reloadData()
+        } else {
+            savedItemsDataSource.isSearching = true
+            savedItemsDataSource.filterRows(searchString: searchText.lowercased())
+            savedItemsDataSource.filterSets(searchString: searchText.lowercased())
+            tableView.reloadData()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        return text != " "
+    }
+}

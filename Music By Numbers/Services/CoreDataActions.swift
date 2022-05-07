@@ -143,11 +143,10 @@ class CoreDataActions {
             } else {
                 editRow = results?.first
             }
+
             
             editRow.setValue(pieceField, forKey: "piece")
             editRow.setValue(notesField, forKey: "notes")
-            #warning("This looks like it will update the date when editing information")
-            editRow.setValue(Date(), forKey: "dateCreated")
             let intRow = filterRow(row: contentField)
             editRow.setValue(intRow, forKey: "userRow")
             editRow.setValue(editID, forKey: "id")
@@ -176,8 +175,6 @@ class CoreDataActions {
             
             editSet.setValue(pieceField, forKey: "piece")
             editSet.setValue(notesField, forKey: "notes")
-            #warning("This looks like it will update the date when editing information")
-            editSet.setValue(Date(), forKey: "dateCreated")
             let localSet = contentField.map(String.init)
             var intSet = [Int]()
             for i in localSet {
@@ -200,15 +197,40 @@ class CoreDataActions {
         }
     }
     
+    func deleteAllRows() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedRow")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try managedContext.execute(batchDeleteRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteAllSets() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedSet")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try managedContext.execute(batchDeleteRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteAllEntries() {
+        deleteAllRows()
+        deleteAllSets()
+    }
+    
     
     func revertRow(row: [Int]) -> String {
         var rowString = ""
         
         for i in row {
             if i == 10 {
-                rowString += "t"
+                rowString += UserDefaults.standard.string(forKey: "Ten") ?? "t"
             } else if i == 11 {
-                rowString += "e"
+                rowString += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
             } else {
                 rowString += String(i)
             }
@@ -220,9 +242,9 @@ class CoreDataActions {
         var normDisplay = "["
         for i in setList {
             if i == 10 {
-                normDisplay += "t"
+                normDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
             } else if i == 11 {
-                normDisplay += "e"
+                normDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
             } else if i != 10 || i != 11 {
                 normDisplay += "\(i)"
             }

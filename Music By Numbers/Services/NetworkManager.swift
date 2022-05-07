@@ -24,8 +24,6 @@ class NetworkManager {
             DispatchQueue.main.async {
                 completion(response)
             }
-//            listOfSets = response
-            //            print(listOfSets?.pcSets[0].primeForm)
         } catch {
             debugPrint(error)
         }

@@ -44,12 +44,14 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
             let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
             if rowVC.isViewLoaded {
                 rowVC.generateMatrix(rowString: row)
-                rowVC.rowTextField.text = row
+                rowVC.collectionView.isHidden = false
+                rowVC.saveButton.isEnabled = true
                 parentViewController.tabBarController?.selectedIndex = 1
             } else{
                 let _ = rowVC.view
                 rowVC.generateMatrix(rowString: row)
-                rowVC.rowTextField.text = row
+                rowVC.collectionView.isHidden = false
+                rowVC.saveButton.isEnabled = true
                 parentViewController.tabBarController?.selectedIndex = 1
             }
         } else {
@@ -174,9 +176,9 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         
         for i in row {
             if i == 10 {
-                rowString += "t"
+                rowString += UserDefaults.standard.string(forKey: "Ten") ?? "t"
             } else if i == 11 {
-                rowString += "e"
+                rowString += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
             } else {
                 rowString += String(i)
             }
@@ -188,9 +190,9 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         var normDisplay = ""
         for i in setList {
             if i == 10 {
-                normDisplay += "t"
+                normDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
             } else if i == 11 {
-                normDisplay += "e"
+                normDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
             } else if i != 10 || i != 11 {
                 normDisplay += "\(i)"
             }
@@ -202,9 +204,9 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         var rowString = ""
         for i in 0..<row.count {
             if row[i] == 10 {
-                rowString += "t"
+                rowString += UserDefaults.standard.string(forKey: "Ten") ?? "t"
             } else if row[i] == 11 {
-                    rowString += "e"
+                    rowString += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
             } else {
                 rowString += String(row[i])
             }

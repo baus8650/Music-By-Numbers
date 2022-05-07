@@ -138,9 +138,9 @@ Interval class vector:
             var primeDisplay = "("
             for i in primeForm {
                 if i == 10 {
-                    primeDisplay += "t"
+                    primeDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
                 } else if i == 11 {
-                    primeDisplay += "e"
+                    primeDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
                 } else if i != 10 || i != 11 {
                     primeDisplay += "\(i)"
                 }
@@ -151,9 +151,9 @@ Interval class vector:
             for i in normalForm {
                 
                 if i == 10 {
-                    normDisplay += "t"
+                    normDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
                 } else if i == 11 {
-                    normDisplay += "e"
+                    normDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
                 } else if i != 10 || i != 11 {
                     normDisplay += "\(i)"
                 }
@@ -172,9 +172,9 @@ Interval class vector:
             var primeDisplay = "("
             for i in primeForm! {
                 if i == 10 {
-                    primeDisplay += "t"
+                    primeDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
                 } else if i == 11 {
-                    primeDisplay += "e"
+                    primeDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
                 } else if i != 10 || i != 11 {
                     primeDisplay += "\(i)"
                 }
@@ -186,9 +186,9 @@ Interval class vector:
             for i in normalForm {
                 
                 if i == 10 {
-                    normDisplay += "t"
+                    normDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
                 } else if i == 11 {
-                    normDisplay += "e"
+                    normDisplay += UserDefaults.standard.string(forKey: "Eleven") ?? "e"
                 } else if i != 10 || i != 11 {
                     normDisplay += "\(i)"
                 }

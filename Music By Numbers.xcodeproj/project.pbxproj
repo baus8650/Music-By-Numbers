@@ -12,7 +12,10 @@
 		220B8F392825FF6900A72BA2 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220B8F382825FF6900A72BA2 /* DetailTableViewController.swift */; };
 		22151016282615340045C28A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22151015282615340045C28A /* Settings.swift */; };
 		22151018282623900045C28A /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22151017282623900045C28A /* SettingsTableViewController.swift */; };
-		2215101A282623AA0045C28A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22151019282623AA0045C28A /* Constants.swift */; };
+		221C452B2826D00B00C3ED8B /* SortTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C452A2826D00B00C3ED8B /* SortTableViewController.swift */; };
+		221C452D2826DC8000C3ED8B /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C452C2826DC8000C3ED8B /* TableRow.swift */; };
+		221C452F2826DE6900C3ED8B /* TableSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C452E2826DE6900C3ED8B /* TableSet.swift */; };
+		221C45312827245500C3ED8B /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C45302827245500C3ED8B /* EmptyTableViewCell.swift */; };
 		22768EFC27A25B35007A984F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22768EFB27A25B35007A984F /* NetworkManager.swift */; };
 		22768EFE27A25CFD007A984F /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22768EFD27A25CFD007A984F /* Binder.swift */; };
 		22768F0027A26E6C007A984F /* MatrixViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22768EFF27A26E6C007A984F /* MatrixViewModel.swift */; };
@@ -52,7 +55,10 @@
 		220B8F382825FF6900A72BA2 /* DetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
 		22151015282615340045C28A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		22151017282623900045C28A /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
-		22151019282623AA0045C28A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		221C452A2826D00B00C3ED8B /* SortTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTableViewController.swift; sourceTree = "<group>"; };
+		221C452C2826DC8000C3ED8B /* TableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
+		221C452E2826DE6900C3ED8B /* TableSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSet.swift; sourceTree = "<group>"; };
+		221C45302827245500C3ED8B /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		22768EFB27A25B35007A984F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		22768EFD27A25CFD007A984F /* Binder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binder.swift; sourceTree = "<group>"; };
 		22768EFF27A26E6C007A984F /* MatrixViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixViewModel.swift; sourceTree = "<group>"; };
@@ -103,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				22151015282615340045C28A /* Settings.swift */,
-				22151019282623AA0045C28A /* Constants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -161,6 +166,8 @@
 			children = (
 				22B94F79273B71D9002F66A0 /* Row.swift */,
 				22E5C49F279E1F89008FFE82 /* Set.swift */,
+				221C452C2826DC8000C3ED8B /* TableRow.swift */,
+				221C452E2826DE6900C3ED8B /* TableSet.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -174,6 +181,7 @@
 				220B8F362825BF4000A72BA2 /* MatrixTableViewController.swift */,
 				220B8F382825FF6900A72BA2 /* DetailTableViewController.swift */,
 				22151017282623900045C28A /* SettingsTableViewController.swift */,
+				221C452A2826D00B00C3ED8B /* SortTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -191,6 +199,7 @@
 				22F4D58B27A0867A00ED1AF4 /* PCCircle.swift */,
 				22D55C4727A8B619004E3BFF /* RowTableViewCell.swift */,
 				22D55C4927A8B622004E3BFF /* SetTableViewCell.swift */,
+				221C45302827245500C3ED8B /* EmptyTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -310,11 +319,14 @@
 			files = (
 				22D55C4A27A8B622004E3BFF /* SetTableViewCell.swift in Sources */,
 				22C82CB427C98B150044435E /* MatrixCollectionDelegate.swift in Sources */,
+				221C452D2826DC8000C3ED8B /* TableRow.swift in Sources */,
 				22D55C4627A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld in Sources */,
 				22B94F612739E211002F66A0 /* AppDelegate.swift in Sources */,
 				22C82CB627CB0D000044435E /* SavedItemsViewModel.swift in Sources */,
 				22C82CBC27CB0EBE0044435E /* SavedItemsTableDelegate.swift in Sources */,
 				22768EFE27A25CFD007A984F /* Binder.swift in Sources */,
+				221C452B2826D00B00C3ED8B /* SortTableViewController.swift in Sources */,
+				221C452F2826DE6900C3ED8B /* TableSet.swift in Sources */,
 				22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */,
 				22768F0027A26E6C007A984F /* MatrixViewModel.swift in Sources */,
 				22C82CB127C94D8B0044435E /* MatrixDataSource.swift in Sources */,
@@ -331,10 +343,10 @@
 				22E5C49B279D39E7008FFE82 /* SetViewModel.swift in Sources */,
 				22151016282615340045C28A /* Settings.swift in Sources */,
 				220B8F372825BF4000A72BA2 /* MatrixTableViewController.swift in Sources */,
-				2215101A282623AA0045C28A /* Constants.swift in Sources */,
 				22D25A4527D27C3800098869 /* CoreDataActions.swift in Sources */,
 				22C82CC027CC2E870044435E /* DetailViewModel.swift in Sources */,
 				22D55C4827A8B619004E3BFF /* RowTableViewCell.swift in Sources */,
+				221C45312827245500C3ED8B /* EmptyTableViewCell.swift in Sources */,
 				22768EFC27A25B35007A984F /* NetworkManager.swift in Sources */,
 				22F4D58C27A0867A00ED1AF4 /* PCCircle.swift in Sources */,
 				22151018282623900045C28A /* SettingsTableViewController.swift in Sources */,

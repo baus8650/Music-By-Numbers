@@ -37,7 +37,7 @@ class MatrixViewModel {
         return r >= 0 ? r : r + n
     }
     
-    #warning("This is generally pretty gross; can this be broken up in multiple functions?")
+//    #warning("This is generally pretty gross; can this be broken up in multiple functions?")
     func generateMatrix(rowString: String) -> Row {
         userRow.value.row = [[]]
         matrixRow = [[String]]()
@@ -51,9 +51,9 @@ class MatrixViewModel {
         } else {
             for i in rowArray {
                 if i != " " {
-                    if i == "t" || i == "a" {
+                    if i.lowercased() == "t" || i.lowercased() == "a" {
                         normalizedRow.append(10)
-                    } else if i == "e" || i == "b" {
+                    } else if i.lowercased() == "e" || i.lowercased() == "b" {
                         normalizedRow.append(11)
                     } else {
                         normalizedRow.append(Int(i)!)
@@ -84,7 +84,7 @@ class MatrixViewModel {
                 matrixRow.append(testRow)
                 for i in 0..<invertedRow.count{
                     if i == 0 {
-                        #warning("Why is this even here?")
+//                        #warning("Why is this even here?")
                         let _ = normalizedRow.map(String.init)
                     } else {
                         var newRow = [Int]()
