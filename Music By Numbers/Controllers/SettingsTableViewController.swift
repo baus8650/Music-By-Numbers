@@ -9,11 +9,35 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
     
+    // MARK: - Properties
+    
     var colorTarget: Int?
     var picker: UIColorPickerViewController?
     var defaults: UserDefaults?
     var coreDataActions: CoreDataActions?
+    
+    // MARK: - IBOutlets
+    
     @IBOutlet var pitchClassVariable: UISegmentedControl!
+    @IBOutlet var matrixColorSwatch: UIView! {
+        didSet{
+            matrixColorSwatch.layer.borderWidth = 1
+        }
+    }
+
+    @IBOutlet var shapeColorSwatch: UIView! {
+        didSet{
+            shapeColorSwatch.layer.borderWidth = 1
+        }
+    }
+    
+    @IBOutlet var axisColorSwatch: UIView! {
+        didSet{
+            axisColorSwatch.layer.borderWidth = 1
+        }
+    }
+
+
     @IBAction func pitchClassVariableChanged(_ sender: Any) {
         switch pitchClassVariable.selectedSegmentIndex {
         case 0:
@@ -27,23 +51,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    @IBOutlet var matrixColorSwatch: UIView! {
-        didSet{
-            matrixColorSwatch.layer.borderWidth = 1
-        }
-    }
-    
-    @IBOutlet var shapeColorSwatch: UIView! {
-        didSet{
-            shapeColorSwatch.layer.borderWidth = 1
-        }
-    }
-    
-    @IBOutlet var axisColorSwatch: UIView! {
-        didSet{
-            axisColorSwatch.layer.borderWidth = 1
-        }
-    }
+    // MARK: - IBActions
     
     @IBAction func matrixCellColorSelect(_ sender: Any) {
         colorTarget = 0
@@ -62,11 +70,8 @@ class SettingsTableViewController: UITableViewController {
     
     @IBAction func resetColors(_ sender: Any) {
         defaults?.set(.blue, forKey: "MatrixCellColor")
-        
         defaults?.set(.blue, forKey: "CircleShapeColor")
-        
         defaults?.set(.red, forKey: "AxisLineColor")
-        
         matrixColorSwatch.backgroundColor = defaults?.color(forKey: "MatrixCellColor") ?? .blue
         shapeColorSwatch.backgroundColor = defaults?.color(forKey: "CircleShapeColor") ?? .blue
         axisColorSwatch.backgroundColor = defaults?.color(forKey: "AxisLineColor") ?? .red
@@ -80,6 +85,7 @@ class SettingsTableViewController: UITableViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }
+    
     @IBAction func clearSets(_ sender: Any) {
         let ac = UIAlertController(title: "Clear Request", message: "Are you sure you want to clear all saved sets? This action cannot be undone.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { (action) -> Void in
@@ -88,6 +94,7 @@ class SettingsTableViewController: UITableViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }
+    
     @IBAction func clearAll(_ sender: Any) {
         let ac = UIAlertController(title: "Clear Request", message: "Are you sure you want to clear all saved rows and sets? This action cannot be undone.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .destructive, handler: { (action) -> Void in
@@ -96,6 +103,9 @@ class SettingsTableViewController: UITableViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }
+    
+    // MARK: - Lifecycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         picker = UIColorPickerViewController()
@@ -108,7 +118,7 @@ class SettingsTableViewController: UITableViewController {
         coreDataActions = CoreDataActions()
     }
     
-    // MARK: - Table view data source
+    // MARK: - Tableview Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3

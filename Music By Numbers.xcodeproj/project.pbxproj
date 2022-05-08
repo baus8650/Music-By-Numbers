@@ -104,6 +104,7 @@
 		221510142826152A0045C28A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				22768EFD27A25CFD007A984F /* Binder.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -112,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				22768EFB27A25B35007A984F /* NetworkManager.swift */,
-				22768EFD27A25CFD007A984F /* Binder.swift */,
 				22D25A4427D27C3800098869 /* CoreDataActions.swift */,
 			);
 			path = Services;

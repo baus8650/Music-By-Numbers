@@ -61,7 +61,6 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
     
     func updateRows(rows: [NSManagedObject]) {
         self.savedRows = rows
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -73,12 +72,10 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("ACCESSIG NUMBER OF ROWS")
         if section == 0 {
             if isSearching == true {
                 return searchTableRow.count
             } else {
-                print("HERE'S TABLE ROW COUNT \(tableRow.count)")
                 if tableRow.count == 0 {
                     return 1
                 } else {
@@ -133,7 +130,7 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
         if indexPath.section == 0 {
             if tableRow.count == 0 {
                 let emptyCell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyTableViewCell
-                emptyCell.emptyCellLabel.text = "You have no saved rows yet."
+                emptyCell.emptyCellLabel.text = "You currently have no saved rows."
                 return emptyCell
             } else {
             let rowCell = tableView.dequeueReusableCell(withIdentifier: "RowCell", for: indexPath) as! RowTableViewCell
@@ -152,7 +149,7 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
         } else {
             if tableSet.count == 0 {
                 let emptyCell = tableView.dequeueReusableCell(withIdentifier: "EmptyCell", for: indexPath) as! EmptyTableViewCell
-                emptyCell.emptyCellLabel.text = "You have no saved sets yet."
+                emptyCell.emptyCellLabel.text = "You currently have no saved sets."
                 return emptyCell
             } else {
                 let setCell = tableView.dequeueReusableCell(withIdentifier: "SetCell", for: indexPath) as! SetTableViewCell

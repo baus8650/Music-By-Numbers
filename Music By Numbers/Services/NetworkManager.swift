@@ -11,7 +11,6 @@ class NetworkManager {
     
     var listOfSets: ListSets?
     
-    
     func parseJSON(completion: @escaping (ListSets) -> Void) {
         guard let path = Bundle.main.path(forResource: "SetClasses", ofType: "json") else { return }
         

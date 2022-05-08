@@ -8,60 +8,12 @@
 import UIKit
 import CoreData
 
-class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class SetTableViewController: UITableViewController {
+    
+    // MARK: - Properties
     
     var savedSet: NSManagedObject!
     
-    var axis = ""
-    var axisPoints = [[0,6]]
-    
-    let axisOptions = ["0 - 6","0/1 - 6/7","1 - 7","1/2 - 7/8","2 - 8","2/3 - 8/9","3 - 9","3/4 - 9/10","4 - 10","4/5 - 10/11","5 - 11","5/6 - 11/0"]
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    let acceptedInputs = "0123456789teab"
-    
-    @IBAction func setCancelUnwindAction(unwindSegue: UIStoryboardSegue) {}
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return axisOptions.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return axisOptions[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        axis = axisOptions[row]
-        var axes = [[Int]]()
-        let separateAxis = axis.components(separatedBy: " - ")
-        if separateAxis[0].contains("/") {
-            for i in separateAxis {
-                let local = i.components(separatedBy: "/")
-                let localInt = local.map { Int($0)! }
-                axes.append(localInt)
-            }
-        } else {
-            var local = [Int]()
-            for i in separateAxis {
-                local.append(Int(i)!)
-            }
-            axes.append(local)
-        }
-        self.axisPoints = axes
-        
-        self.update(set: self.workingSet, axisPoints: axes)
-        
-        
-    }
-    
-    @IBAction func saveButton(_ sender: Any) {
-        performSegue(withIdentifier: "setToDetail", sender: nil)
-    }
-    
-    // MARK: - Parameters
     
     var networkManager: NetworkManager!
     var setViewModel: SetViewModel!
@@ -75,10 +27,15 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
     
     var normalForm: [Int]?
     var primeForm: [Int]?
-    
     var workingSet = [Int]()
     
     var listOfSets: ListSets?
+    
+    var axis = ""
+    var axisPoints = [[0,6]]
+    let axisOptions = ["0 - 6","0/1 - 6/7","1 - 7","1/2 - 7/8","2 - 8","2/3 - 8/9","3 - 9","3/4 - 9/10","4 - 10","4/5 - 10/11","5 - 11","5/6 - 11/0"]
+    
+    let acceptedInputs = "0123456789teab"
     
     // MARK: - IBOutlets
     
@@ -92,7 +49,6 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
     @IBOutlet var searchField: UITextField!
     @IBOutlet var rotateLeftButton: UIButton!
     @IBOutlet var rotateRightButton: UIButton!
-    //    @IBOutlet var setTextField: UITextView!
     @IBOutlet var axisPicker: UIPickerView!
     
     // MARK: - IBActions
@@ -101,6 +57,10 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
         update(set: self.workingSet, axisPoints: self.axisPoints)
         
+    }
+
+    @IBAction func saveButton(_ sender: Any) {
+        performSegue(withIdentifier: "setToDetail", sender: nil)
     }
     
     @IBAction func flipAcrossAxis(_ sender: Any) {
@@ -172,6 +132,8 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
             self.update(set: workingSet, axisPoints: self.axisPoints)
         }
     }
+
+    @IBAction func setCancelUnwindAction(unwindSegue: UIStoryboardSegue) {}
     
     // MARK: - Gesture Recognizers
     
@@ -441,7 +403,7 @@ class SetTableViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
     }
     
-    // MARK: - Table view data source
+    // MARK: - Table view methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -516,4 +478,40 @@ extension SetTableViewController: UITextFieldDelegate {
         return (string == filtered)
     }
     
+}
+
+extension SetTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return axisOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return axisOptions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        axis = axisOptions[row]
+        var axes = [[Int]]()
+        let separateAxis = axis.components(separatedBy: " - ")
+        if separateAxis[0].contains("/") {
+            for i in separateAxis {
+                let local = i.components(separatedBy: "/")
+                let localInt = local.map { Int($0)! }
+                axes.append(localInt)
+            }
+        } else {
+            var local = [Int]()
+            for i in separateAxis {
+                local.append(Int(i)!)
+            }
+            axes.append(local)
+        }
+        self.axisPoints = axes
+        
+        self.update(set: self.workingSet, axisPoints: axes)
+    }
 }

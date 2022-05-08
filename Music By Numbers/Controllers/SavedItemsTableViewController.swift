@@ -12,14 +12,15 @@ protocol ClickDelegate {
     func clicked(row: Int, section: Int)
 }
 
-class SavedItemsTableViewController: UITableViewController, ClickDelegate {
+class SavedItemsTableViewController: UITableViewController {
     
-    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
-        savedItemsViewModel.updateData()
-        updateData()
-        tableView.reloadData()
-        
-    }
+    // MARK: - Properties
+    
+    var savedItemsDelegate: SavedItemsTableDelegate!
+    var savedItemsDataSource: SavedItemsDataSource!
+    var savedItemsViewModel: SavedItemsViewModel!
+    
+    var detailVC: DetailTableViewController!
     
     var isSearching: Bool? = false
     var editID: UUID?
@@ -30,40 +31,55 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     var pieceFieldText: String? = ""
     var notesLabelText: String! = ""
     var notesFieldText: String? = ""
-    
-    
-    var savedItemsDelegate: SavedItemsTableDelegate!
-    var savedItemsDataSource: SavedItemsDataSource!
-    var savedItemsViewModel: SavedItemsViewModel!
-    
-    var detailVC: DetailTableViewController!
-    
     var savedSets = [NSManagedObject]()
     var savedRows = [NSManagedObject]()
+    
+    // MARK: - IBOutlets
+
+    @IBOutlet var searchBar: UISearchBar!
+    
+    // MARK: - IBActions
+    
+    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
+        savedItemsViewModel.updateData()
+        updateData()
+        tableView.reloadData()
+        
+    }
     
     @IBAction func sortPressed(_ sender: Any) {
         performSegue(withIdentifier: "SortSelection", sender: nil)
     }
-    @IBOutlet var searchBar: UISearchBar!
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Library"
         
         savedItemsViewModel = SavedItemsViewModel()
+        detailVC = DetailTableViewController()
+        searchBar.delegate = self
         
         savedItemsDataSource = SavedItemsDataSource(viewController: self, rows: self.savedRows, sets: self.savedSets)
         savedItemsDelegate = SavedItemsTableDelegate(viewController: self, dataSource: savedItemsDataSource, rows: self.savedRows, sets: self.savedSets)
         tableView.delegate = savedItemsDelegate
         tableView.dataSource = savedItemsDataSource
+        
         savedItemsDelegate.updateDelegate = self
         
         updateData()
-        detailVC = DetailTableViewController()
-        searchBar.delegate = self
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        savedItemsViewModel.updateData()
+        //        updateData()
+        tableView.reloadData()
+    }
+    
+    // MARK: - Helper Functions
     
     @objc func refreshTable(sender:AnyObject) {
         savedItemsViewModel.updateData()
@@ -72,14 +88,8 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         self.refreshControl!.endRefreshing()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        savedItemsViewModel.updateData()
-//        updateData()
-        tableView.reloadData()
-    }
     
     func updateData() {
-        
         savedItemsViewModel.savedRows.bind { rows in
             self.savedRows = rows
             self.savedItemsDataSource.savedRows = rows
@@ -93,18 +103,12 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
             self.savedItemsDataSource.populateTableSets(sets: sets)
             self.savedItemsDelegate.savedSets = sets
         }
-        print("We updated")
         tableView.reloadData()
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SortSelection" {
             let sortVC = segue.destination as! SortTableViewController
-            sortVC.savedRows = self.savedRows
-            sortVC.savedSets = self.savedSets
-            sortVC.savedItemsDataSource = self.savedItemsDataSource
-            sortVC.savedItemsViewModel = self.savedItemsViewModel
             sortVC.sortItemsDelegate = self
         } else {
             let detailVC = segue.destination as! DetailTableViewController
@@ -121,6 +125,9 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
         }
     }
     
+}
+
+extension SavedItemsTableViewController: ClickDelegate {
     func clicked(row: Int, section: Int) {
         if section == 0 {
             let fetchedDate = savedRows[row].value(forKey: "dateCreated")! as! Date
@@ -136,9 +143,6 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
             self.present(alert, animated: true)
         }
     }
-    
-    
-    
 }
 
 extension SavedItemsTableViewController: UpdateDetailsProtocol {

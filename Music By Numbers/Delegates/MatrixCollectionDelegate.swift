@@ -10,7 +10,6 @@ import UIKit
 
 class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-//    var collectionView: UICollectionView?
     var selectedCells: Binder<[Int]> = Binder([])
     var matrixData: Row
     var defaults: UserDefaults
@@ -21,25 +20,18 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         self.matrixData = row
         defaults = UserDefaults.standard
         self.selectedCells.value = []
-//        self.selectedIndexes = []
-//        self.collectionView = collectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-//        var selectedIndexes: [IndexPath] = []
         if !selectedCells.value.contains(Int(cell.cellLabel.text!)!) {
             cell.layer.backgroundColor = defaults.color(forKey: "MatrixCellColor")?.cgColor
-//            cell.layer.backgroundColor = CGColor(red: 0.3, green: 0.276, blue: 0.6, alpha: 1)
             selectedCells.value.append(Int(cell.cellLabel.text!)!)
             let selectedSet = Set(selectedCells.value)
             selectedCells.value = Array(selectedSet)
             selectedIndexes.append(indexPath)
         } else {
-//            selectedCells.value = selectedCells.value.filter { return $0 != Int(cell.cellLabel.text!)! }
-            
             for i in selectedIndexes {
                 if i == indexPath {
                     let index = selectedIndexes.firstIndex(of: i)
@@ -49,13 +41,11 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
             }
             cell.backgroundColor = UIColor(named: "default")
         }
-        
-        
-        
-        
 
     }
+    
     // MARK: - FLOW LAYOUT METHOD
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let noOfCellsInRow = matrixData.row[0].count
@@ -72,6 +62,5 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         return CGSize(width: size, height: size)
         
     }
-    
     
 }

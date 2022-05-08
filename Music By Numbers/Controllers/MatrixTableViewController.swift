@@ -10,6 +10,8 @@ import CoreData
 
 class MatrixTableViewController: UITableViewController {
 
+    // MARK: - Properties
+    
     var savedRow: NSManagedObject!
     var matrixViewModel: MatrixViewModel?
     var setViewModel: SetViewModel?
@@ -26,10 +28,14 @@ class MatrixTableViewController: UITableViewController {
     
     let acceptedInputs = "0123456789teab"
     
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var rowTextField: UITextField!
     @IBOutlet var setInfoButton: UIButton!
     @IBOutlet var saveButton: UIBarButtonItem!
+    
+    // MARK: - IBActions
     
     @IBAction func generatePressed(_ sender: UIButton) {
         
@@ -68,20 +74,7 @@ class MatrixTableViewController: UITableViewController {
         performSegue(withIdentifier: "matrixToDetail", sender: nil)
         
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "matrixToDetail" {
-            let detailVC = segue.destination as! DetailTableViewController
-            detailVC.mainTitleText = "Save"
-            detailVC.contentLabelText = "Row:"
-            detailVC.contentFieldText = makeRowText(row: self.loneRow)
-            detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
-            detailVC.pieceLabelText = "Piece Information:"
-            detailVC.notesLabelText = "Additional Notes:"
-            detailVC.notesFieldText = ""
-        }
-    }
-    
+
     @IBAction func generateSet(_ sender: Any) {
         setViewModel = SetViewModel(set: selectedCells)
         
@@ -96,6 +89,23 @@ class MatrixTableViewController: UITableViewController {
         tabBarController?.selectedIndex = 2
         
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "matrixToDetail" {
+            let detailVC = segue.destination as! DetailTableViewController
+            detailVC.mainTitleText = "Save"
+            detailVC.contentLabelText = "Row:"
+            detailVC.contentFieldText = makeRowText(row: self.loneRow)
+            detailVC.pieceField?.placeholder = "Enter name of piece (if applicable)..."
+            detailVC.pieceLabelText = "Piece Information:"
+            detailVC.notesLabelText = "Additional Notes:"
+            detailVC.notesFieldText = ""
+        }
+    }
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,6 +123,8 @@ class MatrixTableViewController: UITableViewController {
         updateMatrix()
         title = "Matrix"
     }
+    
+    // MARK: - Helper Functions
     
     func updateMatrix() {
         matrixViewModel?.userRow.bind(listener: { [weak self] row in
@@ -170,7 +182,7 @@ class MatrixTableViewController: UITableViewController {
         return rowString
     }
 
-    // MARK: - Table view data source
+    // MARK: - Tableview Methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -199,8 +211,3 @@ extension MatrixTableViewController: UITextFieldDelegate {
     }
 }
 
-//extension MatrixTableViewController: UIViewControllerTransitioningDelegate {
-//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-//        PresentationController(presentedViewController: presented, presenting: presenting)
-//    }
-//}

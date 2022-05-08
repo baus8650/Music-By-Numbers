@@ -12,17 +12,13 @@ class MatrixDataSource: NSObject, UICollectionViewDataSource {
     
     var matrixViewModel: MatrixViewModel?
     var matrixData: Row
-//    var collectionView: UICollectionView?
     var prLabels = [String]()
     var iriLabels = [String]()
     
     init(row: Row, prLabels: [String], iriLabels: [String]) {
         self.matrixData = row
-        
         self.prLabels = prLabels
         self.iriLabels = iriLabels
-//        self.collectionView = collectionView
-//        matrixViewModel = MatrixViewModel(row: row)
     }
     
     func setBaseline(for string: String, location: Int, length: Int) -> NSMutableAttributedString {
