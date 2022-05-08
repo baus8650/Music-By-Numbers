@@ -74,11 +74,12 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         savedItemsViewModel.updateData()
-        updateData()
+//        updateData()
         tableView.reloadData()
     }
     
     func updateData() {
+        
         savedItemsViewModel.savedRows.bind { rows in
             self.savedRows = rows
             self.savedItemsDataSource.savedRows = rows
@@ -92,7 +93,7 @@ class SavedItemsTableViewController: UITableViewController, ClickDelegate {
             self.savedItemsDataSource.populateTableSets(sets: sets)
             self.savedItemsDelegate.savedSets = sets
         }
-        
+        print("We updated")
         tableView.reloadData()
         
     }

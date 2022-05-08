@@ -199,8 +199,8 @@ extension MatrixTableViewController: UITextFieldDelegate {
     }
 }
 
-extension MatrixTableViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting)
-    }
-}
+//extension MatrixTableViewController: UIViewControllerTransitioningDelegate {
+//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+//        PresentationController(presentedViewController: presented, presenting: presenting)
+//    }
+//}

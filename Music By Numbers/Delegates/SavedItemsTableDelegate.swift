@@ -22,6 +22,7 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
     var parentViewController: UITableViewController!
     var coreDataActions: CoreDataActions!
     var updateDelegate: UpdateDetailsProtocol?
+    var tableRow = [TableRow]()
     
     var content: String?
     var piece: String?
@@ -93,21 +94,35 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue)  in
 
             if indexPath.section == 0 {
+                print("DELETING A ROW")
                 self.coreDataActions.savedRows.value = self.savedRows
                 self.coreDataActions.delete(type: "Row", indexPath: indexPath)
+                
                 self.coreDataActions.savedRows.bind { savedRows in
                     self.savedRows = savedRows
+                    self.savedItemsDataSource.populateTableRows(rows: self.savedRows)
+                    
                 }
+                
                 self.savedItemsDataSource.savedRows = self.savedRows
-                tableView.deleteRows(at: [indexPath], with: .fade)
+                if self.savedRows.count == 0 {
+                    tableView.reloadData()
+                } else {
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
             } else {
                 self.coreDataActions.savedSets.value = self.savedSets
                 self.coreDataActions.delete(type: "Set", indexPath: indexPath)
                 self.coreDataActions.savedSets.bind { savedSets in
                     self.savedSets = savedSets
+                    self.savedItemsDataSource.populateTableSets(sets: self.savedSets)
                 }
                 self.savedItemsDataSource.savedSets = self.savedSets
-                tableView.deleteRows(at: [indexPath], with: .fade)
+                if self.savedSets.count == 0 {
+                    tableView.reloadData()
+                } else {
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
             }
         }
         

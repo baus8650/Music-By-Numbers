@@ -27,13 +27,10 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
         setViewModel = SetViewModel(set: [])
         self.savedRows = rows
         self.savedSets = sets
-        super.init()
-//        self.populateTableRows(rows: self.savedRows)
-//        self.populateTableSets(sets: sets)
-        
     }
     
     func populateTableRows(rows: [NSManagedObject]) {
+        print("HERE'S THE TABLEROW \(tableRow)")
         tableRow = []
         for i in rows {
             guard let row = i.value(forKey: "userRow") as? [Int] else {
@@ -44,6 +41,7 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
             let newLabel = makeRowText(row: row)
             tableRow.append(TableRow(row: newLabel, date: date))
         }
+        
     }
     
     func populateTableSets(sets: [NSManagedObject]) {
@@ -54,7 +52,6 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
             }
             
             let normalForm = setViewModel.findNormalForm(pcSet: set)
-//            setCell.pcCircleView?.setShape = normalForm
             let newLabel = makeText(setList: normalForm)
             let date = i.value(forKey: "dateCreated") as! Date
             
@@ -62,6 +59,10 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
         }
     }
     
+    func updateRows(rows: [NSManagedObject]) {
+        self.savedRows = rows
+        
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -72,10 +73,12 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("ACCESSIG NUMBER OF ROWS")
         if section == 0 {
             if isSearching == true {
                 return searchTableRow.count
             } else {
+                print("HERE'S TABLE ROW COUNT \(tableRow.count)")
                 if tableRow.count == 0 {
                     return 1
                 } else {
