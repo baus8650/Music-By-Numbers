@@ -11,7 +11,6 @@
 		220B8F372825BF4000A72BA2 /* MatrixTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220B8F362825BF4000A72BA2 /* MatrixTableViewController.swift */; };
 		220B8F392825FF6900A72BA2 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220B8F382825FF6900A72BA2 /* DetailTableViewController.swift */; };
 		22151018282623900045C28A /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22151017282623900045C28A /* SettingsTableViewController.swift */; };
-		221C452B2826D00B00C3ED8B /* SortTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C452A2826D00B00C3ED8B /* SortTableViewController.swift */; };
 		221C452D2826DC8000C3ED8B /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C452C2826DC8000C3ED8B /* TableRow.swift */; };
 		221C452F2826DE6900C3ED8B /* TableSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C452E2826DE6900C3ED8B /* TableSet.swift */; };
 		221C45312827245500C3ED8B /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221C45302827245500C3ED8B /* EmptyTableViewCell.swift */; };
@@ -52,7 +51,6 @@
 		220B8F362825BF4000A72BA2 /* MatrixTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTableViewController.swift; sourceTree = "<group>"; };
 		220B8F382825FF6900A72BA2 /* DetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
 		22151017282623900045C28A /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
-		221C452A2826D00B00C3ED8B /* SortTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTableViewController.swift; sourceTree = "<group>"; };
 		221C452C2826DC8000C3ED8B /* TableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		221C452E2826DE6900C3ED8B /* TableSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSet.swift; sourceTree = "<group>"; };
 		221C45302827245500C3ED8B /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 				220B8F362825BF4000A72BA2 /* MatrixTableViewController.swift */,
 				220B8F382825FF6900A72BA2 /* DetailTableViewController.swift */,
 				22151017282623900045C28A /* SettingsTableViewController.swift */,
-				221C452A2826D00B00C3ED8B /* SortTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -319,7 +316,6 @@
 				22C82CB627CB0D000044435E /* SavedItemsViewModel.swift in Sources */,
 				22C82CBC27CB0EBE0044435E /* SavedItemsTableDelegate.swift in Sources */,
 				22768EFE27A25CFD007A984F /* Binder.swift in Sources */,
-				221C452B2826D00B00C3ED8B /* SortTableViewController.swift in Sources */,
 				221C452F2826DE6900C3ED8B /* TableSet.swift in Sources */,
 				22E5C4A0279E1F89008FFE82 /* Set.swift in Sources */,
 				22768F0027A26E6C007A984F /* MatrixViewModel.swift in Sources */,
@@ -492,7 +488,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 89JNN3239D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Music By Numbers/Info.plist";
@@ -505,7 +501,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.timbausch.Music-By-Numbers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -520,7 +516,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 89JNN3239D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Music By Numbers/Info.plist";
@@ -533,7 +529,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.timbausch.Music-By-Numbers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

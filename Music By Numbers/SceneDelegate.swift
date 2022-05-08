@@ -13,6 +13,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        if UserDefaults.standard.color(forKey: "MatrixCellColor") == nil {
+            UserDefaults.standard.set(.blue, forKey: "MatrixCellColor")
+        }
+        if UserDefaults.standard.color(forKey: "CircleShapeColor") == nil {
+            UserDefaults.standard.set(.blue, forKey: "CircleShapeColor")
+        }
+        if UserDefaults.standard.color(forKey: "AxisLineColor") == nil {
+            UserDefaults.standard.set(.red, forKey: "AxisLineColor")
+        }
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

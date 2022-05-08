@@ -37,24 +37,34 @@ class MatrixTableViewController: UITableViewController {
     
     // MARK: - IBActions
     
+    
+    @IBAction func toLibrary(_ sender: Any) {
+        tabBarController?.selectedIndex = 0
+    }
+    
     @IBAction func generatePressed(_ sender: UIButton) {
-        
-        let rowString = rowTextField.text!
-        let rowArray = rowString.map(String.init)
-        let rowSet = Set(rowArray)
-        if rowSet.count < rowArray.count {
-            let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
+        if rowTextField.text! == "" {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least one value to process.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
-        } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
-            let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        
         } else {
-            generateMatrix(rowString: rowTextField.text!)
-            collectionView.isHidden = false
-            saveButton.isEnabled = true
+            let rowString = rowTextField.text!
+            let rowArray = rowString.map(String.init)
+            let rowSet = Set(rowArray)
+            if rowSet.count < rowArray.count {
+                let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+            } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
+                let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+            
+            } else {
+                generateMatrix(rowString: rowTextField.text!)
+                collectionView.isHidden = false
+                saveButton.isEnabled = true
+            }
         }
     }
     
@@ -198,10 +208,15 @@ class MatrixTableViewController: UITableViewController {
 
 extension MatrixTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        generateMatrix(rowString: rowTextField.text!)
-        rowTextField.resignFirstResponder() // dismiss keyboard
-        collectionView.isHidden = false
-        return true
+        if rowTextField.text! == "" {
+            return false
+        } else {
+            generateMatrix(rowString: rowTextField.text!)
+            rowTextField.resignFirstResponder() // dismiss keyboard
+            collectionView.isHidden = false
+            saveButton.isEnabled = true
+            return true
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

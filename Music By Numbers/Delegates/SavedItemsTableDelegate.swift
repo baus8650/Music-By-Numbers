@@ -39,23 +39,35 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            let destVC = parentViewController.tabBarController?.viewControllers![1] as! UINavigationController
-            let rowVC = destVC.topViewController as! MatrixTableViewController
-            
-            let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
-            if rowVC.isViewLoaded {
-                rowVC.generateMatrix(rowString: row)
-                rowVC.collectionView.isHidden = false
-                rowVC.saveButton.isEnabled = true
-                parentViewController.tabBarController?.selectedIndex = 1
-            } else{
-                let _ = rowVC.view
-                rowVC.generateMatrix(rowString: row)
-                rowVC.collectionView.isHidden = false
-                rowVC.saveButton.isEnabled = true
-                parentViewController.tabBarController?.selectedIndex = 1
-            }
+                if savedRows.count != 0 {
+                    let destVC = parentViewController.tabBarController?.viewControllers![1] as! UINavigationController
+                    let rowVC = destVC.topViewController as! MatrixTableViewController
+                    
+                    let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
+                    if rowVC.isViewLoaded {
+                        rowVC.generateMatrix(rowString: row)
+                        rowVC.collectionView.isHidden = false
+                        rowVC.saveButton.isEnabled = true
+                        parentViewController.tabBarController?.selectedIndex = 1
+                    } else{
+                        let _ = rowVC.view
+                        rowVC.generateMatrix(rowString: row)
+                        rowVC.collectionView.isHidden = false
+                        rowVC.saveButton.isEnabled = true
+                        parentViewController.tabBarController?.selectedIndex = 1
+                    }
+                } else {
+                    let destVC = parentViewController.tabBarController?.viewControllers![1] as! UINavigationController
+                    let rowVC = destVC.topViewController as! MatrixTableViewController
+                    if rowVC.isViewLoaded {
+                        parentViewController.tabBarController?.selectedIndex = 1
+                    } else{
+                        let _ = rowVC.view
+                        parentViewController.tabBarController?.selectedIndex = 1
+                    }
+                }
         } else {
+            if savedSets.count != 0 {
             let destVC = parentViewController.tabBarController?.viewControllers![2] as! UINavigationController
             let setVC = destVC.topViewController as! SetTableViewController
             
@@ -72,6 +84,16 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
                 setVC.primeForm = setViewModel.findPrimeForm(normalForm: set)
                 setVC.workingSet = set
                 parentViewController.tabBarController?.selectedIndex = 2
+            }
+            } else {
+                let destVC = parentViewController.tabBarController?.viewControllers![2] as! UINavigationController
+                let setVC = destVC.topViewController as! SetTableViewController
+                if setVC.isViewLoaded {
+                    parentViewController.tabBarController?.selectedIndex = 2
+                } else{
+                    let _ = setVC.view
+                    parentViewController.tabBarController?.selectedIndex = 2
+                }
             }
             
         }
@@ -94,7 +116,6 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue)  in
 
             if indexPath.section == 0 {
-                print("DELETING A ROW")
                 self.coreDataActions.savedRows.value = self.savedRows
                 self.coreDataActions.delete(type: "Row", indexPath: indexPath)
                 

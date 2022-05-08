@@ -38,6 +38,14 @@ class SettingsTableViewController: UITableViewController {
     }
 
 
+    
+    // MARK: - IBActions
+    
+    
+    @IBAction func toLibrary(_ sender: Any) {
+        tabBarController?.selectedIndex = 0
+    }
+    
     @IBAction func pitchClassVariableChanged(_ sender: Any) {
         switch pitchClassVariable.selectedSegmentIndex {
         case 0:
@@ -50,9 +58,7 @@ class SettingsTableViewController: UITableViewController {
             break
         }
     }
-    
-    // MARK: - IBActions
-    
+
     @IBAction func matrixCellColorSelect(_ sender: Any) {
         colorTarget = 0
         self.present(picker!, animated: true, completion: nil)

@@ -31,8 +31,17 @@ class SavedItemsTableViewController: UITableViewController {
     var pieceFieldText: String? = ""
     var notesLabelText: String! = ""
     var notesFieldText: String? = ""
-    var savedSets = [NSManagedObject]()
-    var savedRows = [NSManagedObject]()
+    
+    var savedSets: [NSManagedObject]! {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var savedRows: [NSManagedObject]! {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     // MARK: - IBOutlets
 
@@ -48,7 +57,19 @@ class SavedItemsTableViewController: UITableViewController {
     }
     
     @IBAction func sortPressed(_ sender: Any) {
-        performSegue(withIdentifier: "SortSelection", sender: nil)
+        
+        let ac = UIAlertController(title: "Sort", message: "How should the table be sorted?", preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Date Ascending", style: .default, handler: { (action) -> Void in
+            self.savedItemsDataSource.sortEntires(order: "ascending")
+            self.tableView.reloadData()
+        }))
+        ac.addAction((UIAlertAction(title: "Date Descending", style: .default, handler: { (action) -> Void in
+            self.savedItemsDataSource.sortEntires(order: "descending")
+            self.tableView.reloadData()
+        })))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+
     }
     
     // MARK: - Lifecycle Methods
@@ -56,7 +77,8 @@ class SavedItemsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Library"
-        
+        savedRows = []
+        savedSets = []
         savedItemsViewModel = SavedItemsViewModel()
         detailVC = DetailTableViewController()
         searchBar.delegate = self
@@ -107,10 +129,6 @@ class SavedItemsTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SortSelection" {
-            let sortVC = segue.destination as! SortTableViewController
-            sortVC.sortItemsDelegate = self
-        } else {
             let detailVC = segue.destination as! DetailTableViewController
             detailVC.loadViewIfNeeded()
             detailVC.editID = editID
@@ -122,7 +140,7 @@ class SavedItemsTableViewController: UITableViewController {
             detailVC.notesLabelText = notesLabelText
             detailVC.notesFieldText = notesFieldText
             detailVC.updateDatails()
-        }
+            detailVC.delegate = self
     }
     
 }
@@ -158,14 +176,6 @@ extension SavedItemsTableViewController: UpdateDetailsProtocol {
     }
 }
 
-extension SavedItemsTableViewController: SortItemsDelegate {
-    func sortItems(order: String) {
-        savedItemsDataSource.sortEntires(order: order)
-        tableView.reloadData()
-    }
-    
-}
-
 extension SavedItemsTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
@@ -181,5 +191,15 @@ extension SavedItemsTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return text != " "
+    }
+}
+
+extension SavedItemsTableViewController: UpdateTableDelegate {
+    func updateTable() {
+        savedItemsViewModel.updateData()
+        updateData()
+        tableView.reloadData()
+        
+//        tabBarController?.selectedIndex = 0
     }
 }

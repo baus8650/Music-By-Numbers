@@ -282,7 +282,7 @@ Interval class vector: \(intervalVector!)
                 return normalForm
             }
         }
-        print("THIS SHOULD NEVER BE CALLED!!!!")
+//        print("THIS SHOULD NEVER BE CALLED!!!!")
         var normalForm = [Int]()
         for i in sets[0] {
             if i < 12 {

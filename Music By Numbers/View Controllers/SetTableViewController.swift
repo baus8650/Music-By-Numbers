@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 
+
 class SetTableViewController: UITableViewController {
     
     // MARK: - Properties
@@ -22,12 +23,24 @@ class SetTableViewController: UITableViewController {
     var primeLabel: String?
     var forteLabel: String?
     var intervalLabel: String?
+    var setDescription: String?
     
     var setIndex: Int?
     
     var normalForm: [Int]?
     var primeForm: [Int]?
-    var workingSet = [Int]()
+    @IBOutlet var setDetailsButton: UIButton!
+    var workingSet: [Int]! {
+        didSet {
+            if workingSet.count < 2 {
+                self.saveButton.isEnabled = false
+                self.setDetailsButton?.isEnabled = false
+            } else {
+                self.saveButton.isEnabled = true
+                self.setDetailsButton?.isEnabled = true
+            }
+        }
+    }
     
     var listOfSets: ListSets?
     
@@ -39,6 +52,11 @@ class SetTableViewController: UITableViewController {
     
     // MARK: - IBOutlets
     
+    @IBOutlet var saveButton: UIBarButtonItem! {
+        didSet {
+            saveButton.isEnabled = false
+        }
+    }
     @IBOutlet var normalFormLabel: UILabel!
     @IBOutlet var primeFormLabel: UILabel!
     @IBOutlet var forteNumberLabel: UILabel!
@@ -53,6 +71,9 @@ class SetTableViewController: UITableViewController {
     
     // MARK: - IBActions
     
+    @IBAction func toLibrary(_ sender: Any) {
+        tabBarController?.selectedIndex = 0
+    }
     @IBAction func showAxis(_ sender: UISwitch) {
         
         update(set: self.workingSet, axisPoints: self.axisPoints)
@@ -64,72 +85,114 @@ class SetTableViewController: UITableViewController {
     }
     
     @IBAction func flipAcrossAxis(_ sender: Any) {
-        
-        flipOverAxis(set: self.workingSet, axis: self.axisPoints)
+        if self.workingSet.count >= 2 {
+            flipOverAxis(set: self.workingSet, axis: self.axisPoints)
+        }
     }
     
     @IBAction func complimentButton(_ sender: UIButton) {
+        if workingSet.count == 12 {
+            self.setViewModel.clear()
+            setViewModel.workingSet.bind { workingSet in
+                self.update(set: workingSet, axisPoints: self.axisPoints)
+            }
+        } else {
         setViewModel.compliment(set: self.workingSet)
         
         setViewModel.workingSet.bind { workingSet in
             self.update(set: workingSet, axisPoints: self.axisPoints)
         }
+        }
     }
     
     @IBAction func clearButton(_ sender: UIButton) {
-        showAxisSwitch.isOn = false
-        self.setViewModel.clear()
-        self.setViewModel.workingSet.bind { pcSet in
-            self.workingSet = pcSet
-            self.update(set: pcSet, axisPoints: self.axisPoints)
-        }
-        
-        self.setViewModel.searchField.bind { text in
-            self.searchField.text = text
-        }
-    }
-    
-    @IBAction func calculateButton(_ sender: UIButton) {
-        
-        let setString = searchField.text!
-        let setArray = setString.map(String.init)
-        if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
-            let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-            
-        } else {
-            setViewModel?.calculate(set: searchField.text!)
-            
-            setViewModel?.workingSet.bind { [weak self] workingSet in
-                self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+        if workingSet.count >= 2 {
+            showAxisSwitch.isOn = false
+            self.setViewModel.clear()
+            self.setViewModel.workingSet.bind { pcSet in
+                self.workingSet = pcSet
+                self.update(set: pcSet, axisPoints: self.axisPoints)
             }
             
             self.setViewModel.searchField.bind { text in
                 self.searchField.text = text
             }
         }
-        
+    }
+    
+    @IBAction func viewDetailsButton(_ sender: Any) {
+        let ac = UIAlertController(title: "Set Details", message: self.setDescription, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in
+            self.performSegue(withIdentifier: "setToDetail", sender: nil)
+        }))
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
+    @IBAction func calculateButton(_ sender: UIButton) {
+        if searchField.text! == "" {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let setString = searchField.text!
+            let setArray = setString.map(String.init)
+            if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
+                let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+                
+            } else {
+                setViewModel?.calculate(set: searchField.text!)
+                
+                setViewModel?.workingSet.bind { [weak self] workingSet in
+                    self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+                }
+                
+                self.setViewModel.searchField.bind { text in
+                    self.searchField.text = text
+                }
+                self.setDetailsButton.isEnabled = true
+            }
+        }
     }
     
     @IBAction func inversionButton(_ sender: UIButton) {
-        setViewModel.invert(workingSet: self.workingSet)
-        
-        setViewModel?.workingSet.bind { [weak self] workingSet in
-            self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+        if self.workingSet.count < 2 {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            setViewModel.invert(workingSet: self.workingSet)
+            
+            setViewModel?.workingSet.bind { [weak self] workingSet in
+                self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+            }
         }
     }
     @IBAction func rotateLeft(_ sender: UIButton) {
-        setViewModel.rotateLeft(set: self.workingSet)
-        setViewModel.workingSet.bind { workingSet in
-            self.update(set: workingSet, axisPoints: self.axisPoints)
+        if self.workingSet.count < 2 {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            setViewModel.rotateLeft(set: self.workingSet)
+            setViewModel.workingSet.bind { workingSet in
+                self.update(set: workingSet, axisPoints: self.axisPoints)
+            }
         }
     }
     
     @IBAction func rotateRight(_ sender: UIButton) {
-        setViewModel.rotateRight(set: self.workingSet)
-        setViewModel.workingSet.bind { workingSet in
-            self.update(set: workingSet, axisPoints: self.axisPoints)
+        if self.workingSet.count < 2 {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            setViewModel.rotateRight(set: self.workingSet)
+            setViewModel.workingSet.bind { workingSet in
+                self.update(set: workingSet, axisPoints: self.axisPoints)
+            }
         }
     }
 
@@ -138,6 +201,9 @@ class SetTableViewController: UITableViewController {
     // MARK: - Gesture Recognizers
     
     @IBAction func PC0Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("0") {
             searchField.text = self.searchField.text!.filter { $0 != "0" }
         } else {
@@ -150,6 +216,9 @@ class SetTableViewController: UITableViewController {
     }
     
     @IBAction func PC1Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("1") {
             searchField.text = self.searchField.text!.filter { $0 != "1" }
         } else {
@@ -162,6 +231,9 @@ class SetTableViewController: UITableViewController {
         }
     }
     @IBAction func PC2Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("2") {
             searchField.text = self.searchField.text!.filter { $0 != "2" }
         } else {
@@ -174,6 +246,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC3Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("3") {
             searchField.text = self.searchField.text!.filter { $0 != "3" }
         } else {
@@ -186,6 +261,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC4Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("4") {
             searchField.text = self.searchField.text!.filter { $0 != "4" }
         } else {
@@ -198,10 +276,13 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC5Recognizer(_ sender: UITapGestureRecognizer) {
-        if searchField.text!.contains("4") {
-            searchField.text = self.searchField.text!.filter { $0 != "4" }
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
+        if searchField.text!.contains("5") {
+            searchField.text = self.searchField.text!.filter { $0 != "5" }
         } else {
-            self.searchField.text! += "4"
+            self.searchField.text! += "5"
         }
         setViewModel.tapFunction(pc: 5, workingSet: self.workingSet)
         setViewModel.workingSet.bind { workingSet in
@@ -210,6 +291,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC6Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("6") {
             searchField.text = self.searchField.text!.filter { $0 != "6" }
         } else {
@@ -222,6 +306,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC7Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("7") {
             searchField.text = self.searchField.text!.filter { $0 != "7" }
         } else {
@@ -234,6 +321,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC8Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("8") {
             searchField.text = self.searchField.text!.filter { $0 != "8" }
         } else {
@@ -246,6 +336,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC9Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.contains("9") {
             searchField.text = self.searchField.text!.filter { $0 != "9" }
         } else {
@@ -258,6 +351,9 @@ class SetTableViewController: UITableViewController {
         
     }
     @IBAction func PC10Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.lowercased().contains("t") || searchField.text!.lowercased().contains("a") {
             searchField.text = self.searchField.text!.filter { $0 != "t" || $0 != "a" }
         } else {
@@ -270,6 +366,9 @@ class SetTableViewController: UITableViewController {
         }
     }
     @IBAction func PC11Recognizer(_ sender: UITapGestureRecognizer) {
+        if searchField.text! == "" {
+            searchField.text! = makeText(setList: workingSet)
+        }
         if searchField.text!.lowercased().contains("e") || searchField.text!.lowercased().contains("b") {
             searchField.text = self.searchField.text!.filter { $0 != "e" || $0 != "b" }
         } else {
@@ -286,21 +385,23 @@ class SetTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViewModel = SetViewModel(set: self.workingSet)
-        pcCircleView?.setShape = self.workingSet
+        
+//        workingSet = []
+        setViewModel = SetViewModel(set: self.workingSet ?? [])
+        pcCircleView?.setShape = self.workingSet ?? []
         axisPicker.delegate = self
         networkManager = NetworkManager()
         networkManager.parseJSON { sets in
             self.listOfSets = sets
             self.setViewModel.listOfSets.value = sets
-            self.setViewModel.populateText(workingSet: self.workingSet)
+            self.setViewModel.populateText(workingSet: self.workingSet ?? [])
         }
         title = "Set"
         searchField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        update(set: self.workingSet, axisPoints: [[]])
+        update(set: self.workingSet ?? [], axisPoints: [[]])
         showAxisSwitch.isOn = false
     }
     
@@ -327,6 +428,9 @@ class SetTableViewController: UITableViewController {
         }
         self.setViewModel.intervalLabel.bind { text in
             self.intervalClassVectorLabel.text = "\(text)"
+        }
+        self.setViewModel.setDescription.bind { text in
+            self.setDescription = text
         }
     }
     
@@ -373,7 +477,8 @@ class SetTableViewController: UITableViewController {
     }
     
     func makeText(setList: [Int]) -> String {
-        var normDisplay = "["
+//        var normDisplay = "["
+        var normDisplay = ""
         for i in setList {
             if i == 10 {
                 normDisplay += UserDefaults.standard.string(forKey: "Ten") ?? "t"
@@ -383,7 +488,7 @@ class SetTableViewController: UITableViewController {
                 normDisplay += "\(i)"
             }
         }
-        normDisplay += "]"
+//        normDisplay += "]"
         return normDisplay
     }
     
@@ -450,24 +555,28 @@ class SetTableViewController: UITableViewController {
 extension SetTableViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let rowArray = searchField.text!.map(String.init)
-        var workingRow = [Int]()
-        for i in rowArray {
-            if i == "t" || i == "a" {
-                workingRow.append(10)
-            } else if i == "e" || i == "b" {
-                workingRow.append(11)
-            } else {
-                workingRow.append(Int(i)!)
+        if searchField.text! == "" {
+            return false
+        } else {
+            let rowArray = searchField.text!.map(String.init)
+            var workingRow = [Int]()
+            for i in rowArray {
+                if i == "t" || i == "a" {
+                    workingRow.append(10)
+                } else if i == "e" || i == "b" {
+                    workingRow.append(11)
+                } else {
+                    workingRow.append(Int(i)!)
+                }
             }
+            let newNormal = setViewModel.findNormalForm(pcSet: workingRow)
+            
+            self.workingSet = newNormal
+            self.pcCircleView.setShape = self.workingSet
+            searchField.text! = ""
+            searchField.resignFirstResponder()
+            return true
         }
-        let newNormal = setViewModel.findNormalForm(pcSet: workingRow)
-        
-        self.workingSet = newNormal
-        self.pcCircleView.setShape = self.workingSet
-        searchField.text! = ""
-        searchField.resignFirstResponder()
-        return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -30,7 +30,6 @@ class SavedItemsDataSource: NSObject, UITableViewDataSource {
     }
     
     func populateTableRows(rows: [NSManagedObject]) {
-        print("HERE'S THE TABLEROW \(tableRow)")
         tableRow = []
         for i in rows {
             guard let row = i.value(forKey: "userRow") as? [Int] else {

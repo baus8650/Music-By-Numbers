@@ -41,7 +41,6 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
             }
             cell.backgroundColor = UIColor(named: "default")
         }
-
     }
     
     // MARK: - FLOW LAYOUT METHOD
