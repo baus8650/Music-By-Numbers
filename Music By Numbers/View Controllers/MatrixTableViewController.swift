@@ -200,6 +200,7 @@ extension MatrixTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         generateMatrix(rowString: rowTextField.text!)
         rowTextField.resignFirstResponder() // dismiss keyboard
+        collectionView.isHidden = false
         return true
     }
     

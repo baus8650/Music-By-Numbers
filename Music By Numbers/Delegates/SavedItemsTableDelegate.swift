@@ -146,8 +146,6 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
                 
                 self.updateDelegate?.updateDetails(id: id!, title: "Edit", contentLabel: "Row:", contentField: localContent!, pieceLabel: "Piece Information:", pieceField: localPiece!, NotesLabel: "Additional Notes:", NotesField: localNotes!)
                 self.parentViewController.performSegue(withIdentifier: "toDetail", sender: nil)
-//                self.parentViewController.present(detailVC, animated: true, completion: nil)
-            
             } else {
                 var localContent: String?
                 var localPiece: String?

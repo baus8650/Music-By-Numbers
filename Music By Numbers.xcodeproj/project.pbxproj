@@ -142,7 +142,7 @@
 				221510142826152A0045C28A /* Utilities */,
 				22768EFA27A25B2C007A984F /* Services */,
 				22E5C49C279D3A0D008FFE82 /* Resources */,
-				22B94F77273B71B9002F66A0 /* Controllers */,
+				22B94F77273B71B9002F66A0 /* View Controllers */,
 				22B94F76273B71B1002F66A0 /* Models */,
 				22E5C499279D39D1008FFE82 /* View Models */,
 				22B94F78273B71C2002F66A0 /* Views */,
@@ -167,7 +167,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		22B94F77273B71B9002F66A0 /* Controllers */ = {
+		22B94F77273B71B9002F66A0 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				22C6948E27A621B900F0F1DE /* SavedItemsTableViewController.swift */,
@@ -177,7 +177,7 @@
 				22151017282623900045C28A /* SettingsTableViewController.swift */,
 				221C452A2826D00B00C3ED8B /* SortTableViewController.swift */,
 			);
-			path = Controllers;
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		22B94F78273B71C2002F66A0 /* Views */ = {
