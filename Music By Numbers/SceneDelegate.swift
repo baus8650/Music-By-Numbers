@@ -22,6 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if UserDefaults.standard.color(forKey: "AxisLineColor") == nil {
             UserDefaults.standard.set(.red, forKey: "AxisLineColor")
         }
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+
+        // TAB BAR BACKGROUND COLOR HERE. (same as above)
+        appearance.backgroundColor = UIColor(named: "tabBar")
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = UITabBar.appearance().standardAppearance
+        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

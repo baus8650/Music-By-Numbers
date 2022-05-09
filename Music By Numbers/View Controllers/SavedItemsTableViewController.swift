@@ -58,7 +58,7 @@ class SavedItemsTableViewController: UITableViewController {
     
     @IBAction func sortPressed(_ sender: Any) {
         
-        let ac = UIAlertController(title: "Sort", message: "How should the table be sorted?", preferredStyle: .actionSheet)
+        let ac = UIAlertController(title: "Sort", message: "How should the table be sorted?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Date Ascending", style: .default, handler: { (action) -> Void in
             self.savedItemsDataSource.sortEntires(order: "ascending")
             self.tableView.reloadData()
@@ -77,6 +77,7 @@ class SavedItemsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Library"
+        self.tableView.keyboardDismissMode = .onDrag
         savedRows = []
         savedSets = []
         savedItemsViewModel = SavedItemsViewModel()
@@ -93,6 +94,13 @@ class SavedItemsTableViewController: UITableViewController {
         updateData()
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(refreshTable(sender:)), for: UIControl.Event.valueChanged)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -102,6 +110,11 @@ class SavedItemsTableViewController: UITableViewController {
     }
     
     // MARK: - Helper Functions
+    
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.searchBar.endEditing(true)
+    }
     
     @objc func refreshTable(sender:AnyObject) {
         savedItemsViewModel.updateData()
@@ -192,6 +205,7 @@ extension SavedItemsTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return text != " "
     }
+    
 }
 
 extension SavedItemsTableViewController: UpdateTableDelegate {
@@ -203,3 +217,4 @@ extension SavedItemsTableViewController: UpdateTableDelegate {
 //        tabBarController?.selectedIndex = 0
     }
 }
+
