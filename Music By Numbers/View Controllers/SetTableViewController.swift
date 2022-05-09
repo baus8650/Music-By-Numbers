@@ -71,6 +71,12 @@ class SetTableViewController: UITableViewController {
     
     // MARK: - IBActions
     
+    @IBAction func helpButtonPressed(_ sender: Any) {
+        let ac = UIAlertController(title: "Help", message: "A \"PC\" (Pitch Class) is an integer that represents a musical pitch where C = 0, C#/Db = 1, and continuing chromatically until B = 11. To simplify double-digit integers, 10 is represented by a or t and 11 is represented by b or e. To ensure an accurate calculation, this \"PC\" field will only allow you to enter these accepted characters: 0-9, a, b, t, and e.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
     @IBAction func toLibrary(_ sender: Any) {
         tabBarController?.selectedIndex = 0
     }

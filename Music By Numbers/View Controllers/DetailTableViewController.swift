@@ -70,34 +70,41 @@ class DetailTableViewController: UITableViewController {
     
     @IBAction func savedButtonPressed(_ sender: Any) {
         //        dismiss(animated: true)
-        if self.contentLabelText == "Row:" {
-            let rowString = contentField.text!
-            let rowArray = rowString.map(String.init)
-            let rowSet = Set(rowArray)
-            if rowSet.count < rowArray.count {
-                let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
-            } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
-                let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
-                
-            } else {
-                saveData()
-            }
+        if contentField.text! == "" {
+            var type = self.contentLabelText
+            type = String(type!.dropLast())
+            let ac = UIAlertController(title: "Empty submission", message: "In order to \(self.mainTitleText.lowercased()) this entry, the \(type!.lowercased()) must contain at least \(self.contentLabelText == "Row:" ? "one value." : "two values.")", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
         } else {
-            let setString = contentField.text!
-            let setArray = setString.map(String.init)
-            if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
-                let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
+            if self.contentLabelText == "Row:" {
+                let rowString = contentField.text!
+                let rowArray = rowString.map(String.init)
+                let rowSet = Set(rowArray)
+                if rowSet.count < rowArray.count {
+                    let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                    present(ac, animated: true)
+                } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
+                    let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                    present(ac, animated: true)
+                    
+                } else {
+                    saveData()
+                }
             } else {
-                saveData()
+                let setString = contentField.text!
+                let setArray = setString.map(String.init)
+                if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
+                    let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                    present(ac, animated: true)
+                } else {
+                    saveData()
+                }
             }
         }
-        
         //        saveData()
     }
     
