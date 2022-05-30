@@ -7,7 +7,7 @@
 
 import UIKit
 
-@IBDesignable
+//@IBDesignable
 class PCCircle: UIView {
     
     @IBInspectable var setShape = [0,1,4] {

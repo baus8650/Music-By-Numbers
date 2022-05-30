@@ -123,6 +123,10 @@ class SetTableViewController: UITableViewController {
             self.setViewModel.searchField.bind { text in
                 self.searchField.text = text
             }
+            normalFormLabel.text = ""
+            primeFormLabel.text = ""
+            forteNumberLabel.text = ""
+            intervalClassVectorLabel.text = ""
         }
     }
     
@@ -136,31 +140,33 @@ class SetTableViewController: UITableViewController {
     }
     
     @IBAction func calculateButton(_ sender: UIButton) {
-        if searchField.text! == "" {
-            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        } else {
-            let setString = searchField.text!
-            let setArray = setString.map(String.init)
-            if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
-                let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
-                
-            } else {
-                setViewModel?.calculate(set: searchField.text!)
-                
-                setViewModel?.workingSet.bind { [weak self] workingSet in
-                    self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
-                }
-                
-                self.setViewModel.searchField.bind { text in
-                    self.searchField.text = text
-                }
-                self.setDetailsButton.isEnabled = true
-            }
-        }
+//        if searchField.text! == "" {
+//            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        } else {
+//            let setString = searchField.text!
+//            let setArray = setString.map(String.init)
+//            if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
+//                let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                present(ac, animated: true)
+//
+//            } else {
+//                print("Here is the set \(searchField.text!)")
+//                setViewModel?.calculate(set: searchField.text!)
+//
+//                setViewModel?.workingSet.bind { [weak self] workingSet in
+//                    self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+//                }
+//
+//                self.setViewModel.searchField.bind { text in
+//                    self.searchField.text = text
+//                }
+//                self.setDetailsButton.isEnabled = true
+//            }
+//        }
+        calculateSet()
     }
     
     @IBAction func inversionButton(_ sender: UIButton) {
@@ -393,6 +399,7 @@ class SetTableViewController: UITableViewController {
         super.viewDidLoad()
         
 //        workingSet = []
+        tableView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         setViewModel = SetViewModel(set: self.workingSet ?? [])
         pcCircleView?.setShape = self.workingSet ?? []
         axisPicker.delegate = self
@@ -412,6 +419,37 @@ class SetTableViewController: UITableViewController {
     }
     
     // MARK: - Helper Functions
+    
+    func calculateSet() {
+        if searchField.text! == "" {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least two values to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let setString = searchField.text!
+            let setArray = setString.map(String.init)
+            if setArray.contains("a") && setArray.contains("t") || setArray.contains("b") && setArray.contains("e") {
+                let ac = UIAlertController(title: "Variable Mix Error", message: "The set should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+                
+            } else {
+                print("Here is the set \(searchField.text!)")
+                var set = Set(searchField.text!)
+                searchField.text! = String(set)
+                setViewModel?.calculate(set: searchField.text!)
+                
+                setViewModel?.workingSet.bind { [weak self] workingSet in
+                    self?.update(set: workingSet, axisPoints: self?.axisPoints ?? [[]])
+                }
+                
+                self.setViewModel.searchField.bind { text in
+                    self.searchField.text = text
+                }
+                self.setDetailsButton.isEnabled = true
+            }
+        }
+    }
     
     func update(set: [Int], axisPoints: [[Int]]) {
         self.workingSet = set
@@ -564,23 +602,25 @@ extension SetTableViewController: UITextFieldDelegate {
         if searchField.text! == "" {
             return false
         } else {
-            let rowArray = searchField.text!.map(String.init)
-            var workingRow = [Int]()
-            for i in rowArray {
-                if i == "t" || i == "a" {
-                    workingRow.append(10)
-                } else if i == "e" || i == "b" {
-                    workingRow.append(11)
-                } else {
-                    workingRow.append(Int(i)!)
-                }
-            }
-            let newNormal = setViewModel.findNormalForm(pcSet: workingRow)
-            
-            self.workingSet = newNormal
-            self.pcCircleView.setShape = self.workingSet
-            searchField.text! = ""
-            searchField.resignFirstResponder()
+//            let rowArray = searchField.text!.map(String.init)
+//            var workingRow = [Int]()
+//            for i in rowArray {
+//                if i == "t" || i == "a" {
+//                    workingRow.append(10)
+//                } else if i == "e" || i == "b" {
+//                    workingRow.append(11)
+//                } else {
+//                    workingRow.append(Int(i)!)
+//                }
+//            }
+//            let newNormal = setViewModel.findNormalForm(pcSet: workingRow)
+//
+//            self.workingSet = newNormal
+//            self.pcCircleView.setShape = self.workingSet
+//            searchField.text! = ""
+//            searchField.resignFirstResponder()
+            textField.resignFirstResponder()
+            calculateSet()
             return true
         }
     }

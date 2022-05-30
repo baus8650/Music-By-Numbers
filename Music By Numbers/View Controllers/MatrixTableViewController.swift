@@ -17,6 +17,9 @@ class MatrixTableViewController: UITableViewController {
     var setViewModel: SetViewModel?
     var matrixDelegate: MatrixCollectionDelegate?
     var matrixData: MatrixDataSource?
+    var setDescription: String?
+    var listOfSets: ListSets?
+    var networkManager: NetworkManager?
     
     var userRow = Row(row: [[]])
     var normalForm: [Int]?
@@ -34,9 +37,48 @@ class MatrixTableViewController: UITableViewController {
     @IBOutlet weak var rowTextField: UITextField!
     @IBOutlet var setInfoButton: UIButton!
     @IBOutlet var saveButton: UIBarButtonItem!
+    @IBOutlet var quickInfoButton: UIButton!
+    @IBOutlet var clearPCButton: UIButton!
     
     // MARK: - IBActions
     
+    @IBAction func quickDetailsPressed(_ sender: Any) {
+        if self.selectedCells.count >= 2 {
+        print("Selected cells \(selectedCells)")
+//        setViewModel = SetViewModel(set: selectedCells)
+//        setViewModel?.workingSet.value = selectedCells
+        print("Here is the set view model",
+              setViewModel?.workingSet.value)
+        setViewModel?.listOfSets.value = self.listOfSets
+        setViewModel!.populateText(workingSet: selectedCells)
+        print("general value",
+              setViewModel?.setDescription.value)
+        self.setViewModel?.setDescription.bind { text in
+            self.setDescription = text
+            print("Here's the text: \(text)")
+        }
+        let ac = UIAlertController(title: "Set Information", message: self.setDescription, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        ac.addAction(UIAlertAction(title: "View", style: .default, handler: { (action) -> Void in
+            self.setViewModel = SetViewModel(set: self.selectedCells)
+            
+            self.normalForm = self.setViewModel?.findNormalForm(pcSet: self.selectedCells)
+            self.primeForm = self.setViewModel?.findPrimeForm(normalForm: self.normalForm!)
+            let destVC = self.tabBarController?.viewControllers![2] as! UINavigationController
+            let setVC = destVC.topViewController as! SetTableViewController
+            
+            setVC.normalForm = self.normalForm!
+            setVC.primeForm = self.primeForm!
+            setVC.workingSet = self.normalForm!
+            self.tabBarController?.selectedIndex = 2
+        }))
+        present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Too Small", message: "This quick information button needs a selection of at least two PCs to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
     
     @IBAction func toLibrary(_ sender: Any) {
         tabBarController?.selectedIndex = 0
@@ -48,29 +90,30 @@ class MatrixTableViewController: UITableViewController {
     }
     
     @IBAction func generatePressed(_ sender: UIButton) {
-        if rowTextField.text! == "" {
-            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least one value to process.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        } else {
-            let rowString = rowTextField.text!
-            let rowArray = rowString.map(String.init)
-            let rowSet = Set(rowArray)
-            if rowSet.count < rowArray.count {
-                let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
-            } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
-                let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
-            
-            } else {
-                generateMatrix(rowString: rowTextField.text!)
-                collectionView.isHidden = false
-                saveButton.isEnabled = true
-            }
-        }
+//        if rowTextField.text! == "" {
+//            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least one value to process.", preferredStyle: .alert)
+//            ac.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(ac, animated: true)
+//        } else {
+//            let rowString = rowTextField.text!
+//            let rowArray = rowString.map(String.init)
+//            let rowSet = Set(rowArray)
+//            if rowSet.count < rowArray.count {
+//                let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                present(ac, animated: true)
+//            } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
+//                let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                present(ac, animated: true)
+//
+//            } else {
+//                generateMatrix(rowString: rowTextField.text!)
+//                collectionView.isHidden = false
+//                saveButton.isEnabled = true
+//            }
+//        }
+        generateMatrix(rowString: rowTextField.text!)
     }
     
     @IBAction func matrixUnwind(unwindSegue: UIStoryboardSegue) {
@@ -124,7 +167,15 @@ class MatrixTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
+        setViewModel = SetViewModel(set: selectedCells)
+        networkManager = NetworkManager()
+        networkManager?.parseJSON { sets in
+            self.listOfSets = sets
+            self.setViewModel?.listOfSets.value = sets
+            print(sets)
+            self.setViewModel?.populateText(workingSet: self.selectedCells)
+        }
         rowTextField.delegate = self
         collectionView.isHidden = true
         saveButton.isEnabled = false
@@ -161,8 +212,13 @@ class MatrixTableViewController: UITableViewController {
             self.selectedCells = selectedCells
             if selectedCells.count >= 2 {
                 self.setInfoButton.isEnabled = true
+                self.quickInfoButton.isEnabled = true
+            } else if selectedCells.count == 1 {
+                self.clearPCButton.isEnabled = true
             } else {
+                self.clearPCButton.isEnabled = false
                 self.setInfoButton.isEnabled = false
+                self.quickInfoButton.isEnabled = false
             }
         })
         
@@ -176,9 +232,30 @@ class MatrixTableViewController: UITableViewController {
     func generateMatrix(rowString: String) {
         rowTextField.resignFirstResponder() // dismiss keyoard
         
-        let _ = matrixViewModel?.generateMatrix(rowString: rowString)
-        updateMatrix()
-        
+        if rowString == "" {
+            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least one value to process.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let rowString = rowTextField.text!
+            let rowArray = rowString.map(String.init)
+            let rowSet = Set(rowArray)
+            if rowSet.count < rowArray.count {
+                let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+            } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
+                let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+                
+            } else {
+                let _ = matrixViewModel?.generateMatrix(rowString: rowString)
+                updateMatrix()
+                collectionView.isHidden = false
+                saveButton.isEnabled = true
+            }
+        }
         collectionView.reloadData()
     }
     
@@ -200,18 +277,41 @@ class MatrixTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 3
+        case 1:
+            return 1
+        default:
+            return 1
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        return 4
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.text = header.textLabel?.text?.capitalized
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        header.textLabel?.frame = header.bounds
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return 2
+        default:
+            return 20
+        }
         
-        return 5
-        
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
 
 }

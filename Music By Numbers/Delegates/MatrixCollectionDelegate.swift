@@ -25,7 +25,7 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("HERE'S THE INDEX PATH SECTION \(indexPath.section) and the matrix data count \(matrixData.row[0].count)")
+//        print("HERE'S THE INDEX PATH SECTION \(indexPath.section) and the matrix data count \(matrixData.row[0].count)")
         if indexPath.section == 0 || indexPath.section == matrixData.row[0].count - 1 || indexPath.row == 0 || indexPath.row == matrixData.row[0].count - 1 {
             let ac = UIAlertController(title: "Selection Error", message: "You cannot add a row or column label to the pitch class collection. Please only select a PC from inside the body of the matrix.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -70,5 +70,7 @@ class MatrixCollectionDelegate: NSObject, UICollectionViewDelegate, UICollection
         return CGSize(width: size, height: size)
         
     }
+    
+    
     
 }

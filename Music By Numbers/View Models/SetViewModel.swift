@@ -43,6 +43,7 @@ class SetViewModel {
         }
         let newNormal = findNormalForm(pcSet: workingRow)
         self.workingSet.value = newNormal
+        print("in set view model here is newNormal \(newNormal) and here is working set \(workingSet.value)")
         self.searchField.value = ""
         populateText(workingSet: self.workingSet.value)
     }
@@ -51,6 +52,7 @@ class SetViewModel {
         self.workingSet.value = [Int]()
         self.setDescription.value = ""
         self.searchField.value = ""
+        populateText(workingSet: self.workingSet.value)
     }
     
     func invert(workingSet: [Int]) {
@@ -122,7 +124,7 @@ class SetViewModel {
     }
     
     func populateText(workingSet: [Int]) {
-        
+        print("from func",workingSet)
         if workingSet.count < 2 {
             
             self.setDescription.value = """
@@ -165,7 +167,10 @@ Interval class vector:
     Prime form: \(primeDisplay)
     """
         } else if workingSet.count >= 2 {
-            guard let index = listOfSets.value?.pcSets.firstIndex(where: { $0.primeForm == findPrimeForm(normalForm: workingSet) }) else { return }
+            print("in the right spot \(listOfSets.value)")
+            let localNorm = findNormalForm(pcSet: workingSet)
+            guard let index = listOfSets.value?.pcSets.firstIndex(where: { $0.primeForm == findPrimeForm(normalForm: localNorm) }) else { return }
+            print("did not return early")
             self.setIndex.value = index
             let forteNumber = listOfSets.value?.pcSets[setIndex.value ?? 0].forteNumber
             let primeForm = listOfSets.value?.pcSets[setIndex.value ?? 0].primeForm
