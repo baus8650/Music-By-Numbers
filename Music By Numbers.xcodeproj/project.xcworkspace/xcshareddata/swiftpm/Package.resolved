@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "purelayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/PureLayout/PureLayout",
+      "state" : {
+        "branch" : "master",
+        "revision" : "f88012e606baae91eb32fc0448d4f34e7f0d7d98"
+      }
+    }
+  ],
+  "version" : 2
+}

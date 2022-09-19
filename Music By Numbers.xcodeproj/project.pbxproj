@@ -17,6 +17,7 @@
 		22768EFC27A25B35007A984F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22768EFB27A25B35007A984F /* NetworkManager.swift */; };
 		22768EFE27A25CFD007A984F /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22768EFD27A25CFD007A984F /* Binder.swift */; };
 		22768F0027A26E6C007A984F /* MatrixViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22768EFF27A26E6C007A984F /* MatrixViewModel.swift */; };
+		22B02E6628D8E9D8003DF70A /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 22B02E6528D8E9D8003DF70A /* PureLayout */; };
 		22B29D1A279A7E77006776F7 /* PCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D19279A7E77006776F7 /* PCollectionViewCell.swift */; };
 		22B29D1C279A7E8C006776F7 /* RCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1B279A7E8C006776F7 /* RCollectionViewCell.swift */; };
 		22B29D1E279A7E91006776F7 /* ICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B29D1D279A7E91006776F7 /* ICollectionViewCell.swift */; };
@@ -93,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22B02E6628D8E9D8003DF70A /* PureLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +259,7 @@
 			);
 			name = "Music By Numbers";
 			packageProductDependencies = (
+				22B02E6528D8E9D8003DF70A /* PureLayout */,
 			);
 			productName = "Music By Numbers";
 			productReference = 22B94F5D2739E211002F66A0 /* Music By Numbers.app */;
@@ -287,6 +290,7 @@
 			);
 			mainGroup = 22B94F542739E211002F66A0;
 			packageReferences = (
+				22B02E6428D8E9D8003DF70A /* XCRemoteSwiftPackageReference "PureLayout" */,
 			);
 			productRefGroup = 22B94F5E2739E211002F66A0 /* Products */;
 			projectDirPath = "";
@@ -568,6 +572,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22B02E6428D8E9D8003DF70A /* XCRemoteSwiftPackageReference "PureLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PureLayout/PureLayout";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22B02E6528D8E9D8003DF70A /* PureLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22B02E6428D8E9D8003DF70A /* XCRemoteSwiftPackageReference "PureLayout" */;
+			productName = PureLayout;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		22D55C4427A8B0A2004E3BFF /* MusicByNumbers.xcdatamodeld */ = {
