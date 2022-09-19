@@ -7,6 +7,7 @@
 
 import CoreData
 import UIKit
+import StoreKit
 
 protocol UpdateTableDelegate {
     func updateTable()
@@ -105,6 +106,8 @@ class DetailTableViewController: UITableViewController {
                 }
             }
         }
+        guard let scene = view.window?.windowScene else { return }
+        SKStoreReviewController.requestReview(in: scene)
         //        saveData()
     }
     

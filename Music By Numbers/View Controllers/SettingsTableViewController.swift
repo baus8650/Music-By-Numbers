@@ -5,6 +5,7 @@
 //  Created by Tim Bausch on 5/6/22.
 //
 
+import StoreKit
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
@@ -24,7 +25,7 @@ class SettingsTableViewController: UITableViewController {
             matrixColorSwatch.layer.borderWidth = 1
         }
     }
-
+    
     @IBOutlet var shapeColorSwatch: UIView! {
         didSet{
             shapeColorSwatch.layer.borderWidth = 1
@@ -36,11 +37,8 @@ class SettingsTableViewController: UITableViewController {
             axisColorSwatch.layer.borderWidth = 1
         }
     }
-
-
     
     // MARK: - IBActions
-    
     
     @IBAction func toLibrary(_ sender: Any) {
         tabBarController?.selectedIndex = 0
@@ -58,7 +56,7 @@ class SettingsTableViewController: UITableViewController {
             break
         }
     }
-
+    
     @IBAction func matrixCellColorSelect(_ sender: Any) {
         colorTarget = 0
         self.present(picker!, animated: true, completion: nil)
@@ -110,6 +108,11 @@ class SettingsTableViewController: UITableViewController {
         present(ac, animated: true)
     }
     
+    @IBAction func leaveReview(_ sender: Any) {
+        guard let scene = view.window?.windowScene else { return }
+        SKStoreReviewController.requestReview(in: scene)
+    }
+    
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
@@ -127,7 +130,7 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Tableview Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,6 +141,8 @@ class SettingsTableViewController: UITableViewController {
             return 4
         case 2:
             return 3
+        case 3:
+            return 1
         default:
             return 0
         }
