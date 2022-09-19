@@ -34,10 +34,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let tabBarVC = UITabBarController()
-        let vc1 = SavedItemsTableViewController()
-        let vc2 = MatrixTableViewController()
-        let vc3 = SetTableViewController()
-        let vc4 = SettingsTableViewController()
+        let vc1 = UINavigationController(rootViewController: SavedItemsTableViewController())
+        let vc2 = UINavigationController(rootViewController: MatrixTableViewController())
+        let vc3 = UINavigationController(rootViewController: SetTableViewController())
+        let vc4 = UINavigationController(rootViewController: SettingsTableViewController())
         vc1.title = "Library"
         vc2.title = "Matrix"
         vc3.title = "Set"
