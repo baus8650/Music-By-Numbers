@@ -33,8 +33,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        let tabBarVC = UITabBarController()
+        let vc1 = SavedItemsTableViewController()
+        let vc2 = MatrixTableViewController()
+        let vc3 = SetTableViewController()
+        let vc4 = SettingsTableViewController()
+        vc1.title = "Library"
+        vc2.title = "Matrix"
+        vc3.title = "Set"
+        vc4.title = "Settings"
+        tabBarVC.setViewControllers([vc1, vc2, vc3, vc4], animated: true)
+        tabBarVC.tabBar.items?[0].image = UIImage(systemName: "list.bullet")
+        tabBarVC.tabBar.items?[1].image = UIImage(named: "matrixIcon")
+        tabBarVC.tabBar.items?[2].image = UIImage(named: "setIcon")
+        tabBarVC.tabBar.items?[3].image = UIImage(systemName: "gear")
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = SavedItemsTableViewController()
+        window.rootViewController = tabBarVC
         self.window = window
         window.makeKeyAndVisible()
     }
