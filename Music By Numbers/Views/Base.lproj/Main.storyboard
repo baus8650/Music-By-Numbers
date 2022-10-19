@@ -1481,6 +1481,32 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="0jQ-Jz-noh">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Nn6-sA-3qR">
+                                        <rect key="frame" x="20" y="564.0000057220459" width="350" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nn6-sA-3qR" id="5ib-CM-GAs">
+                                            <rect key="frame" x="0.0" y="0.0" width="350" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYb-5d-gSI">
+                                                    <rect key="frame" x="101.33333333333333" y="4.6666666666666679" width="147.33333333333337" height="34.333333333333329"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Leave A Review!"/>
+                                                    <connections>
+                                                        <action selector="leaveReview:" destination="bFY-kV-0aB" eventType="touchUpInside" id="vJK-Ai-Cbj"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="sYb-5d-gSI" firstAttribute="centerX" secondItem="5ib-CM-GAs" secondAttribute="centerX" id="Xh2-2w-Rnl"/>
+                                                <constraint firstItem="sYb-5d-gSI" firstAttribute="centerY" secondItem="5ib-CM-GAs" secondAttribute="centerY" id="z8C-Sn-Leq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="bFY-kV-0aB" id="dNt-FV-HUf"/>
