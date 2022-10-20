@@ -46,14 +46,14 @@ class SavedItemsTableDelegate: NSObject, UITableViewDelegate {
                     let row = revertRow(row: savedRows[indexPath.row].value(forKey: "userRow") as! [Int])
                     if rowVC.isViewLoaded {
                         rowVC.generateMatrix(rowString: row)
-                        rowVC.collectionView.isHidden = false
-                        rowVC.saveButton.isEnabled = true
+//                        rowVC.collectionView.isHidden = false
+//                        rowVC.saveButton.isEnabled = true
                         parentViewController.tabBarController?.selectedIndex = 1
                     } else{
                         let _ = rowVC.view
                         rowVC.generateMatrix(rowString: row)
-                        rowVC.collectionView.isHidden = false
-                        rowVC.saveButton.isEnabled = true
+//                        rowVC.collectionView.isHidden = false
+//                        rowVC.saveButton.isEnabled = true
                         parentViewController.tabBarController?.selectedIndex = 1
                     }
                 } else {
