@@ -31,13 +31,6 @@ class MatrixTableViewController: UIViewController {
     
     let acceptedInputs = "0123456789teab"
     
-    // MARK: - IBOutlets
-    
-    @IBOutlet var setInfoButton: UIButton!
-    @IBOutlet var saveButton: UIBarButtonItem!
-    @IBOutlet var quickInfoButton: UIButton!
-    @IBOutlet var clearPCButton: UIButton!
-    
     // MARK: - IBActions
     
     @IBAction func quickDetailsPressed(_ sender: Any) {
@@ -98,7 +91,6 @@ class MatrixTableViewController: UIViewController {
     @IBAction func clearSelectionPressed(_ sender: UIButton) {
         matrixDelegate?.selectedCells.value = [Int]()
         selectedCells = [Int]()
-        setInfoButton.isEnabled = false
     }
     
     @IBAction func saveRow(_ sender: Any) {
@@ -150,7 +142,6 @@ class MatrixTableViewController: UIViewController {
             print(sets)
             self.setViewModel?.populateText(workingSet: self.selectedCells)
         }
-        saveButton.isEnabled = false
         matrixViewModel = MatrixViewModel(row: "t50e96137824")
         matrixDelegate = MatrixCollectionDelegate(row: userRow, parent: self)
         matrixData = MatrixDataSource(row: userRow, prLabels: prLabels, iriLabels: iriLabels)
@@ -181,14 +172,12 @@ class MatrixTableViewController: UIViewController {
         matrixDelegate?.selectedCells.bind(listener: { selectedCells in
             self.selectedCells = selectedCells
             if selectedCells.count >= 2 {
-                self.setInfoButton.isEnabled = true
-                self.quickInfoButton.isEnabled = true
+//                self.quickInfoButton.isEnabled = true
             } else if selectedCells.count == 1 {
-                self.clearPCButton.isEnabled = true
+//                self.clearPCButton.isEnabled = true
             } else {
-                self.clearPCButton.isEnabled = false
-                self.setInfoButton.isEnabled = false
-                self.quickInfoButton.isEnabled = false
+//                self.clearPCButton.isEnabled = false
+//                self.quickInfoButton.isEnabled = false
             }
         })
         
@@ -219,7 +208,6 @@ class MatrixTableViewController: UIViewController {
             } else {
                 let _ = matrixViewModel?.generateMatrix(rowString: rowString)
                 updateMatrix()
-                saveButton.isEnabled = true
             }
         }
     }
