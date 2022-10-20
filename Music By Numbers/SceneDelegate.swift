@@ -31,7 +31,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = UITabBar.appearance().standardAppearance
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let mainVC = MatrixTableViewController()
+        window?.rootViewController = mainVC
+        window?.makeKeyAndVisible()
     }
 
 
