@@ -33,7 +33,6 @@ class MatrixTableViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var rowTextField: UITextField!
     @IBOutlet var setInfoButton: UIButton!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var quickInfoButton: UIButton!
@@ -89,7 +88,7 @@ class MatrixTableViewController: UIViewController {
     }
     
     @IBAction func generatePressed(_ sender: UIButton) {
-        generateMatrix(rowString: rowTextField.text!)
+//        generateMatrix(rowString: rowTextField.text!)
     }
     
     @IBAction func matrixUnwind(unwindSegue: UIStoryboardSegue) {
@@ -151,7 +150,6 @@ class MatrixTableViewController: UIViewController {
             print(sets)
             self.setViewModel?.populateText(workingSet: self.selectedCells)
         }
-        rowTextField.delegate = self
         saveButton.isEnabled = false
         matrixViewModel = MatrixViewModel(row: "t50e96137824")
         matrixDelegate = MatrixCollectionDelegate(row: userRow, parent: self)
@@ -202,7 +200,6 @@ class MatrixTableViewController: UIViewController {
     }
     
     func generateMatrix(rowString: String) {
-        rowTextField.resignFirstResponder() // dismiss keyoard
         if rowString == "" {
             let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least one value to process.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -284,16 +281,16 @@ class MatrixTableViewController: UIViewController {
 }
 
 extension MatrixTableViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if rowTextField.text! == "" {
-            return false
-        } else {
-            generateMatrix(rowString: rowTextField.text!)
-            rowTextField.resignFirstResponder() // dismiss keyboard
-            saveButton.isEnabled = true
-            return true
-        }
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        if rowTextField.text! == "" {
+//            return false
+//        } else {
+//            generateMatrix(rowString: rowTextField.text!)
+//            rowTextField.resignFirstResponder() // dismiss keyboard
+//            saveButton.isEnabled = true
+//            return true
+//        }
+//    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let cs = NSCharacterSet(charactersIn: acceptedInputs).inverted
