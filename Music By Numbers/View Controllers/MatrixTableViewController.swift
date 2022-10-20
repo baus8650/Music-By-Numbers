@@ -133,7 +133,6 @@ class MatrixTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         setViewModel = SetViewModel(set: selectedCells)
         networkManager = NetworkManager()
         networkManager?.parseJSON { sets in
@@ -143,7 +142,7 @@ class MatrixTableViewController: UIViewController {
             self.setViewModel?.populateText(workingSet: self.selectedCells)
         }
         matrixViewModel = MatrixViewModel(row: "t50e96137824")
-        matrixDelegate = MatrixCollectionDelegate(row: userRow, parent: self)
+//        matrixDelegate = MatrixCollectionDelegate(row: userRow, parent: self)
         matrixData = MatrixDataSource(row: userRow, prLabels: prLabels, iriLabels: iriLabels)
         
         updateMatrix()
