@@ -225,47 +225,6 @@ class MatrixTableViewController: UIViewController {
         }
         return rowString
     }
-    
-    // MARK: - Tableview Methods
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return 2
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 3
-        case 1:
-            return 1
-        default:
-            return 1
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.text = header.textLabel?.text?.capitalized
-        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        header.textLabel?.frame = header.bounds
-        
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 2
-        default:
-            return 20
-        }
-        
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0
-    }
 }
 
 extension MatrixTableViewController: UITextFieldDelegate {
