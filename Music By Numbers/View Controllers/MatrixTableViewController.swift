@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class MatrixTableViewController: UITableViewController {
+class MatrixTableViewController: UIViewController {
     
     // MARK: - Properties
     
