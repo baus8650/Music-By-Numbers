@@ -33,7 +33,6 @@ class MatrixTableViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var rowTextField: UITextField!
     @IBOutlet var setInfoButton: UIButton!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -90,29 +89,6 @@ class MatrixTableViewController: UIViewController {
     }
     
     @IBAction func generatePressed(_ sender: UIButton) {
-        //        if rowTextField.text! == "" {
-        //            let ac = UIAlertController(title: "Empty submission", message: "The generator needs at least one value to process.", preferredStyle: .alert)
-        //            ac.addAction(UIAlertAction(title: "OK", style: .default))
-        //            present(ac, animated: true)
-        //        } else {
-        //            let rowString = rowTextField.text!
-        //            let rowArray = rowString.map(String.init)
-        //            let rowSet = Set(rowArray)
-        //            if rowSet.count < rowArray.count {
-        //                let ac = UIAlertController(title: "Repetition error", message: "The row should not repeat any pitch classes.", preferredStyle: .alert)
-        //                ac.addAction(UIAlertAction(title: "OK", style: .default))
-        //                present(ac, animated: true)
-        //            } else if rowArray.contains("a") && rowArray.contains("t") || rowArray.contains("b") && rowArray.contains("e") {
-        //                let ac = UIAlertController(title: "Variable Mix Error", message: "The row should not mix a/b and t/e. Please use one or the other.", preferredStyle: .alert)
-        //                ac.addAction(UIAlertAction(title: "OK", style: .default))
-        //                present(ac, animated: true)
-        //
-        //            } else {
-        //                generateMatrix(rowString: rowTextField.text!)
-        //                collectionView.isHidden = false
-        //                saveButton.isEnabled = true
-        //            }
-        //        }
         generateMatrix(rowString: rowTextField.text!)
     }
     
@@ -121,7 +97,6 @@ class MatrixTableViewController: UIViewController {
     }
     
     @IBAction func clearSelectionPressed(_ sender: UIButton) {
-        collectionView.reloadData()
         matrixDelegate?.selectedCells.value = [Int]()
         selectedCells = [Int]()
         setInfoButton.isEnabled = false
@@ -177,13 +152,10 @@ class MatrixTableViewController: UIViewController {
             self.setViewModel?.populateText(workingSet: self.selectedCells)
         }
         rowTextField.delegate = self
-        collectionView.isHidden = true
         saveButton.isEnabled = false
         matrixViewModel = MatrixViewModel(row: "t50e96137824")
         matrixDelegate = MatrixCollectionDelegate(row: userRow, parent: self)
         matrixData = MatrixDataSource(row: userRow, prLabels: prLabels, iriLabels: iriLabels)
-        collectionView.delegate = matrixDelegate
-        collectionView.dataSource = matrixData
         
         updateMatrix()
         title = "Matrix"
@@ -250,11 +222,9 @@ class MatrixTableViewController: UIViewController {
             } else {
                 let _ = matrixViewModel?.generateMatrix(rowString: rowString)
                 updateMatrix()
-                collectionView.isHidden = false
                 saveButton.isEnabled = true
             }
         }
-        collectionView.reloadData()
     }
     
     func makeRowText(row: [Int]) -> String {
@@ -320,7 +290,6 @@ extension MatrixTableViewController: UITextFieldDelegate {
         } else {
             generateMatrix(rowString: rowTextField.text!)
             rowTextField.resignFirstResponder() // dismiss keyboard
-            collectionView.isHidden = false
             saveButton.isEnabled = true
             return true
         }
